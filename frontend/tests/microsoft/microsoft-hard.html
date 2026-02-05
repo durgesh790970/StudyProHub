@@ -1,0 +1,40 @@
+{% include 'test-page.html' with company='microsoft' difficulty='hard' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}
+
+<script>
+// Microsoft HARD - 20 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which is for distributed tracing in Azure?', option_a: 'Application Insights / Distributed Tracing', option_b: 'Blob', option_c: 'Table', option_d: 'Queue', correct_answer: 'A' },
+  { question_text: 'Which is for multi-region deployments?', option_a: 'Traffic Manager', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'What is eventual vs strong consistency?', option_a: 'Tradeoffs in distributed systems', option_b: 'Same', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for service mesh on Azure?', option_a: 'Open Service Mesh / Istio', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for scalable functions?', option_a: 'Durable Functions', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is IaC choice?', option_a: 'Bicep/Terraform', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Aptitude: 17*6 = ?', option_a: '102', option_b: '100', option_c: '112', option_d: '92', correct_answer: 'A' },
+  { question_text: 'Which is for event streaming?', option_a: 'Event Hubs', option_b: 'Blob', option_c: 'Table', option_d: 'Queue', correct_answer: 'A' },
+  { question_text: 'Which is for identity federation?', option_a: 'OAuth/OIDC', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for confidentiality at rest?', option_a: 'Encryption (Key Vault + Disk Encryption)', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for data lake?', option_a: 'Azure Data Lake', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for streaming analytics?', option_a: 'Stream Analytics', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for batch processing?', option_a: 'Azure Batch', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for model deployment?', option_a: 'Azure ML', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for durable messaging?', option_a: 'Service Bus', option_b: 'Blob', option_c: 'Table', option_d: 'Queue', correct_answer: 'A' },
+  { question_text: 'Which supports multi-master?', option_a: 'Cosmos DB', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for geo-replication?', option_a: 'Cosmos DB / Geo-replication', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for advanced security?', option_a: 'Azure Defender', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which improves performance?', option_a: 'Caching + Indexing + Sharding', option_b: 'Only caching', option_c: 'Only indexing', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for autoscaling?', option_a: 'Azure Autoscale', option_b: 'None', option_c: 'All', option_d: 'CSS', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>
+{% include 'test-page.html' with company='microsoft' difficulty='hard' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}

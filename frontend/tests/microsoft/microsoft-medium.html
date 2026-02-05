@@ -1,0 +1,35 @@
+{% include 'test-page.html' with company='microsoft' difficulty='medium' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}
+
+<script>
+// Microsoft MEDIUM - 15 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which Azure service is for Kubernetes?', option_a: 'AKS', option_b: 'Aksio', option_c: 'AppService', option_d: 'Blob', correct_answer: 'A' },
+  { question_text: 'Which is for serverless compute?', option_a: 'Azure Functions', option_b: 'AKS', option_c: 'VM', option_d: 'Blob', correct_answer: 'A' },
+  { question_text: 'Which is PaaS offering?', option_a: 'App Service', option_b: 'VM', option_c: 'Bare metal', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for identity management?', option_a: 'Azure AD', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for managed DB?', option_a: 'Azure SQL', option_b: 'Postgres only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for monitoring logs?', option_a: 'Log Analytics', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Aptitude: 11*11 = ?', option_a: '121', option_b: '111', option_c: '131', option_d: '101', correct_answer: 'A' },
+  { question_text: 'Which is for caching in Azure?', option_a: 'Azure Cache for Redis', option_b: 'Blob', option_c: 'Table', option_d: 'Queue', correct_answer: 'A' },
+  { question_text: 'Which is for event streaming?', option_a: 'Event Hubs', option_b: 'Blob', option_c: 'Table', option_d: 'Queue', correct_answer: 'A' },
+  { question_text: 'Which is for messaging?', option_a: 'Service Bus', option_b: 'Blob', option_c: 'Table', option_d: 'Queue', correct_answer: 'A' },
+  { question_text: 'Which is for infra as code?', option_a: 'Bicep/Terraform', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for container registry?', option_a: 'ACR', option_b: 'Docker Hub only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for identity protection?', option_a: 'Azure AD Identity Protection', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for hybrid connectivity?', option_a: 'VPN/ExpressRoute', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for secrets management?', option_a: 'Key Vault', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>
+{% include 'test-page.html' with company='microsoft' difficulty='medium' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}

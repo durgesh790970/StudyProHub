@@ -1,0 +1,37 @@
+{% include 'test-page.html' with company='google' difficulty='medium' company_logo_url='/static/accounts/img/logos/google.svg' %}
+
+<script>
+// Inline question data for Google - MEDIUM (15 questions)
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What is the average-case time complexity of quicksort?', option_a: 'O(n^2)', option_b: 'O(n log n)', option_c: 'O(log n)', option_d: 'O(n)', correct_answer: 'B' },
+	{ question_text: 'Which data structure uses key-value mapping?', option_a: 'Array', option_b: 'Stack', option_c: 'Hash Map', option_d: 'Tree', correct_answer: 'C' },
+	{ question_text: 'What data structure is ideal for breadth-first search?', option_a: 'Queue', option_b: 'Stack', option_c: 'Heap', option_d: 'Set', correct_answer: 'A' },
+	{ question_text: 'Which algorithm finds shortest paths in weighted graphs (non-negative)?', option_a: 'Dijkstra', option_b: 'Prim', option_c: 'Kruskal', option_d: 'Floyd-Warshall', correct_answer: 'A' },
+	{ question_text: 'What is tail recursion?', option_a: 'Recursion where last action is a recursive call', option_b: 'Recursion with two calls', option_c: 'Non-terminating recursion', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'A linked list insertion at head is what complexity?', option_a: 'O(1)', option_b: 'O(n)', option_c: 'O(log n)', option_d: 'O(n log n)', correct_answer: 'A' },
+	{ question_text: 'Which is best for priority queue?', option_a: 'Stack', option_b: 'Queue', option_c: 'Heap', option_d: 'Graph', correct_answer: 'C' },
+	{ question_text: 'A small aptitude: 12% of 250 = ?', option_a: '30', option_b: '28', option_c: '24', option_d: '20', correct_answer: 'A' },
+	{ question_text: 'Which traversal gives sorted order for BST?', option_a: 'Preorder', option_b: 'Inorder', option_c: 'Postorder', option_d: 'Levelorder', correct_answer: 'B' },
+	{ question_text: 'Which sort is in-place and unstable?', option_a: 'Merge sort', option_b: 'Insertion sort', option_c: 'Quick sort', option_d: 'Counting sort', correct_answer: 'C' },
+	{ question_text: 'Which structure helps detect cycles in linked list?', option_a: 'Floyd’s cycle-finding', option_b: 'Binary search', option_c: 'Hash table', option_d: 'Stack', correct_answer: 'A' },
+	{ question_text: 'What is amortized time of dynamic array append?', option_a: 'O(1)', option_b: 'O(n)', option_c: 'O(log n)', option_d: 'O(n log n)', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is used for topological sort?', option_a: 'DFS', option_b: 'BFS', option_c: 'Dijkstra', option_d: 'KMP', correct_answer: 'A' },
+	{ question_text: 'Which string search algorithm is linear in average?', option_a: 'KMP', option_b: 'Rabin-Karp', option_c: 'Boyer-Moore', option_d: 'Naive', correct_answer: 'A' },
+	{ question_text: 'Simple aptitude: If 3 workers finish job in 6 days, 6 workers will finish in?', option_a: '3 days', option_b: '2 days', option_c: '4 days', option_d: '1 day', correct_answer: 'A' }
+];
+
+// 20 minutes
+window.INLINE_TIME_LIMIT = 20 * 60;
+
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

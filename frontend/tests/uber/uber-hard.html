@@ -1,0 +1,39 @@
+{% include 'test-page.html' with company='uber' difficulty='hard' company_logo_url='/static/accounts/img/logos/uber.svg' %}
+
+<script>
+// Uber HARD - 20 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Which algorithm solves max flow?', option_a: 'Edmonds-Karp', option_b: 'Dijkstra', option_c: 'Kruskal', option_d: 'Prim', correct_answer: 'A' },
+	{ question_text: 'What is sharding?', option_a: 'Partitioning data across nodes', option_b: 'Encrypting data', option_c: 'Caching', option_d: 'Indexing', correct_answer: 'A' },
+	{ question_text: 'Which is actor model implementation?', option_a: 'Akka', option_b: 'Django', option_c: 'Flask', option_d: 'Rails', correct_answer: 'A' },
+	{ question_text: 'Which is for approximate nearest neighbour?', option_a: 'Annoy/FAISS', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'What is exponential backoff used for?', option_a: 'Retry with increasing delays', option_b: 'Sorting', option_c: 'Sharding', option_d: 'Indexing', correct_answer: 'A' },
+	{ question_text: 'Which is consensus used by Raft?', option_a: 'Leader election and log replication', option_b: 'Sorting', option_c: 'Hashing', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is used for time-series DB?', option_a: 'InfluxDB', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'Which scheduling reduces tail latency?', option_a: 'Priority scheduling', option_b: 'FCFS', option_c: 'SJF', option_d: 'Round Robin', correct_answer: 'A' },
+	{ question_text: 'Which is vectorized inference optimization?', option_a: 'Batching', option_b: 'Indexing', option_c: 'CSS', option_d: 'HTML', correct_answer: 'A' },
+	{ question_text: 'Aptitude: 13*7 = ?', option_a: '91', option_b: '81', option_c: '101', option_d: '111', correct_answer: 'A' },
+	{ question_text: 'Which is for service mesh?', option_a: 'Istio', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+	{ question_text: 'Which is for distributed tracing?', option_a: 'Jaeger', option_b: 'MySQL', option_c: 'Redis', option_d: 'Kafka', correct_answer: 'A' },
+	{ question_text: 'Which is for heavy write throughput?', option_a: 'Cassandra', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'Which is gossip protocol use?', option_a: 'Membership and failure detection', option_b: 'Sorting', option_c: 'Indexing', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is idempotent?', option_a: 'PUT', option_b: 'POST', option_c: 'PATCH', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is used for log compaction?', option_a: 'Kafka', option_b: 'MySQL', option_c: 'Redis', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which avoids hotspots for keys?', option_a: 'Consistent hashing', option_b: 'Sequential keys', option_c: 'No hashing', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is for multi-region replication?', option_a: 'Active-active/active-passive patterns', option_b: 'Single leader only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+	{ question_text: 'Which is eventual consistency example?', option_a: 'DNS', option_b: 'Single node DB', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+	{ question_text: 'Which is a priority queue implementation?', option_a: 'Binary heap', option_b: 'Array', option_c: 'Linked list', option_d: 'Stack', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

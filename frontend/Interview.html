@@ -1,0 +1,153 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Interview — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .interview-wrap{max-width:920px;margin:2rem auto;padding:1rem}
+    .intro-card{background:var(--surface);padding:1.25rem;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.04)}
+    .actions{display:flex;gap:.6rem;margin-top:1rem}
+    .muted-small{color:var(--muted);font-size:.95rem}
+    .center{display:flex;justify-content:center}
+    @media(max-width:600px){.actions{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+        
+        <a href="videos.html">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+		<a href="quiz.html">Mock</a>
+		
+      </nav>
+    </div>
+  </header>
+
+  <main class="container interview-wrap">
+    <div class="intro-card">
+      <h2 style="margin:.1rem 0">AI-based Interview — Pre-Interview</h2>
+      <p class="muted" style="margin:.25rem 0 1rem">Please read the short description below and when you're ready click Continue to open the pre-interview Google Form. After submitting the form, come back and click "I've submitted" to reveal the Start Interview button.</p>
+
+      <!-- 500-word description -->
+      <div style="max-height:420px;overflow:auto;padding:.6rem;border-radius:8px;background:linear-gradient(180deg,#fbfcfe,#ffffff);border:1px solid #eef6ff">
+        <p style="text-align:justify;margin:0;padding:.25rem 0">
+          In this AI-driven interview experience, you will be guided through a simulated interview designed to evaluate your technical knowledge, problem-solving approach, and communication skills. The session begins with a short pre-interview form that collects background details, role preferences, and a few quick situational answers to help the AI adapt questions to your profile. After you complete the form, the interview sequence will tailor its prompts based on the information you provided, ensuring a focused and relevant evaluation.
+
+          During the interview, you can expect a mix of behavioral, situational and technical questions. The AI interviewer will present questions clearly, allow you time to think, and — when appropriate — ask follow-up questions to probe deeper into your reasoning. For coding or technical prompts, you may be asked to describe algorithms, explain system design choices, or outline approaches to debugging and optimization. Behavioral questions will explore how you handle collaboration, conflict resolution, deadlines, and stakeholder communication.
+
+          This environment is intended for practice and growth. The AI will not judge you; it will provide structured feedback at the end of the session highlighting areas of strength and opportunities for improvement. If you choose to enable feedback, the summary will include suggestions on how to improve answers, which subjects to review further, and tips for clearer explanations. The interview flow is paced to give you time to think, but you can also ask for clarifications or request the question be repeated.
+
+          Your responses are stored temporarily in your browser to preserve progress if you need to refresh or return. If you prefer server-side storage, the platform can be configured to save results to your account (requires login and backend support). For now, the experience is privacy-conscious: the temporary data remains on your device until you clear it or retake the interview. After completing the session, you will receive a concise performance summary and optional recommended resources to study.
+
+          Before starting, please ensure you have a stable internet connection and are ready to answer freely and thoughtfully. When you're ready, click Continue to fill the quick Google Form. Once you submit the form, return to this page and click "I've submitted" to unlock the Start Interview button. This flow ensures we have basic context to personalize the AI questions and makes the practice as effective as possible. Good luck — and treat this as a safe practice space to sharpen your interview skills.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button id="continueBtn" class="btn">Continue to Pre-Interview Form</button>
+        <button id="confirmSubmitted" class="btn secondary" style="display:none">I've submitted the form</button>
+        <button id="startInterview" class="btn" style="display:none;background:#16a34a">Start Interview</button>
+      </div>
+
+      <div id="statusMessage" class="muted-small" style="margin-top:.75rem">When you click Continue the Google Form will open in a new tab. After submitting the form, come back and click "I've submitted" to proceed.</div>
+    </div>
+
+    <!-- Interview area with video preview and countdown -->
+    <div id="interviewArea" style="margin-top:1rem;display:none">
+      <div class="intro-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">Interview Session</h3>
+          <div id="countdown" style="font-size:1.5rem;font-weight:600;color:var(--primary)"></div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap">
+          <div style="flex:1;min-width:320px">
+            <video id="videoPreview" autoplay playsinline muted style="width:100%;border-radius:12px;background:#000;aspect-ratio:16/9;margin-bottom:.75rem;box-shadow:0 8px 24px rgba(2,6,23,0.08)"></video>
+            <div style="background:rgba(2,6,23,0.04);padding:.5rem .75rem;border-radius:8px;margin-bottom:.75rem">
+              <strong>Tips:</strong>
+              <ul style="margin:.25rem 0;padding-left:1.5rem;color:var(--muted)">
+                <li>Ensure good lighting and a quiet environment</li>
+                <li>Position yourself in the center of the frame</li>
+                <li>Test your mic by speaking briefly</li>
+                <li>Have a notepad ready for technical questions</li>
+              </ul>
+            </div>
+          </div>
+          <div style="width:320px">
+            <div id="interviewConsole" style="background:#fff;padding:1rem;border-radius:8px;min-height:140px;box-shadow:0 6px 18px rgba(2,6,23,0.04)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdHqJA0KIL4PDSSwbjgGCJGHCP0SbwXC1b0-KVDf5rwpFlAWA/viewform?usp=publish-editor';
+      const continueBtn = document.getElementById('continueBtn');
+      const confirmBtn = document.getElementById('confirmSubmitted');
+      const startBtn = document.getElementById('startInterview');
+      const status = document.getElementById('statusMessage');
+      const interviewArea = document.getElementById('interviewArea');
+      const interviewConsole = document.getElementById('interviewConsole');
+
+      // Restore state from localStorage
+      const submittedKey = 'ai_interview_form_submitted_v1';
+      const openedKey = 'ai_interview_form_opened_v1';
+      function updateUI(){
+        const submitted = localStorage.getItem(submittedKey) === '1';
+        const opened = localStorage.getItem(openedKey) === '1';
+        if(submitted){
+          confirmBtn.style.display = 'none';
+          startBtn.style.display = '';
+          status.textContent = 'Form submission confirmed. Click Start Interview to begin.';
+        } else if(opened){
+          confirmBtn.style.display = '';
+          startBtn.style.display = 'none';
+          status.textContent = 'Please complete and submit the Google Form in the opened tab, then return and click "I\'ve submitted".';
+        } else {
+          confirmBtn.style.display = 'none';
+          startBtn.style.display = 'none';
+          status.textContent = 'When you click Continue the Google Form will open in a new tab. After submitting the form, come back and click "I\'ve submitted" to proceed.';
+        }
+      }
+
+      continueBtn.addEventListener('click', ()=>{
+        // open form in new tab and mark opened
+        try{
+          window.open(FORM_URL, '_blank');
+        }catch(e){ window.location.href = FORM_URL; }
+        localStorage.setItem(openedKey, '1');
+        updateUI();
+      });
+
+      confirmBtn.addEventListener('click', ()=>{
+        // user confirms they submitted the form
+        localStorage.setItem(submittedKey, '1');
+        updateUI();
+      });
+
+      startBtn.addEventListener('click', ()=>{
+        // Check if form was submitted
+        const submitted = localStorage.getItem(submittedKey) === '1';
+        if(!submitted){
+          status.innerHTML = '<span style="color:#b91c1c">Please fill and submit the Google Form before starting the interview.</span>';
+          return;
+        }
+
+        // Redirect to interview session
+        window.location.href = 'interview-session.html';
+      });
+
+      // Initialize UI on load
+      updateUI();
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+.payment-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.payment-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 92%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+  margin: 1rem;
+}
+
+.payment-modal h3 {
+  margin: 0 0 1rem;
+}
+
+.payment-modal .close {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.qr-area {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+}
+
+#qrCode {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  display: inline-block;
+  margin: 0.5rem auto;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1);
+}
+
+#qrCode img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.method-area {
+  display: flex;
+  gap: .6rem;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.method-btn {
+  flex: 1 1 0;
+  padding: .75rem;
+  border-radius: 8px;
+  border: 1px solid #e6eef8;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.method-btn:hover { background: #f1f5f9; }
+
+.back-btn {
+  display: inline-block;
+  margin-top: .5rem;
+  color: #374151;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.countdown {
+  font-weight: 600;
+  color: #6b7280;
+  margin-top: .5rem;
+}
+
+.modal-back-action {
+  display: inline-block;
+  margin-top: .75rem;
+  background: #e6f0ff;
+  color: #1e40af;
+  border: 1px solid #c7e0ff;
+  padding: .5rem .75rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.payment-amount {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin: 1rem 0;
+}
+
+.transaction-area {
+  margin-top: 1.5rem;
+}
+
+.transaction-area input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  margin: 0.5rem 0 1rem;
+}
+
+.btn-verify {
+  width: 100%;
+  background: #2563eb;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-verify:hover {
+  background: #1d4ed8;
+}
+
+.error-msg {
+  color: #dc2626;
+  margin: 0.5rem 0;
+  display: none;
+}
+
+.success-msg {
+  color: #16a34a;
+  margin: 0.5rem 0;
+  display: none;
+}
+
+.spinner {
+  display: inline-block;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid #f3f4f6;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 480px) {
+  .payment-modal {
+    padding: 1.25rem;
+    width: 96%;
+    margin: 0.5rem;
+  }
+  
+  .method-area {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .method-btn {
+    width: 100%;
+    padding: 1rem;
+  }
+  
+  .qr-area {
+    padding: 2rem;
+  }
+  
+  .payment-amount {
+    font-size: 1.75rem;
+    margin: 0.75rem 0;
+  }
+  
+  #qrCode {
+    padding: 0.75rem;
+  }
+}

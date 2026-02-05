@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ company }} Interview Test - StudyPro Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/test-page.css' %}">
+</head>
+<body>
+<div class="test-container">
+    <!-- Premium Header -->
+    <div class="test-header">
+        <div class="header-left">
+            <!-- Company & Difficulty Selector (before test starts) -->
+            <div id="selectorContainer" style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
+                
+                <button id="startTestBtn" class="btn btn-primary" style="padding:8px 24px;">Start Test</button>
+            </div>
+
+            <!-- Test Header (after test starts) -->
+            <div id="testHeaderContent" style="display:none; display:flex; align-items:center;">
+                <div class="company-logo" id="companyLogo" style="display:none; margin-right:12px;">
+                    <img id="companyLogoImg" src="" alt="company logo" style="height:48px; width:auto; vertical-align:middle;" onerror="this.parentElement.style.display='none'" />
+                </div>
+                <h1 class="company-name" id="companyName">{{ company|title }}</h1>
+                <div class="difficulty-badge" id="difficultyBadge">{{ difficulty }}</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="timer">
+                <span class="timer-icon">⏳</span>
+                <span class="timer-display" id="timerDisplay">30:00</span>
+            </div>
+            <div class="score-display" style="margin-left:16px; display:flex; align-items:center;">
+                <span style="font-weight:600; margin-right:8px;">Score</span>
+                <span id="liveScore">0 / 0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div class="progress-container">
+        <div class="progress-info">
+            <div class="progress-text">
+                <span>Progress: <strong><span id="currentQuestion">1</span> / <span id="totalQuestions">20</span></strong></span>
+                <span id="answeredCount">0 answered</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="test-content">
+        <!-- Question Card -->
+        <div class="question-card">
+            <div class="question-header">
+                <h2 class="question-number" id="questionNumber">Q1</h2>
+                <span class="question-mark">5 marks</span>
+            </div>
+
+            <div class="question-text" id="questionText">
+                Loading question...
+            </div>
+
+            <!-- Options -->
+            <div class="options-container" id="optionsContainer">
+                <!-- Options will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <!-- Navigation & Actions -->
+        <div class="test-actions">
+            <button class="btn btn-secondary prev-btn" id="prevBtn" disabled>
+                ← Previous
+            </button>
+
+            <button class="btn btn-primary next-btn" id="nextBtn">
+                Next →
+            </button>
+        </div>
+
+        <!-- Submit Button (Hidden until last question) -->
+        <div class="submit-container" id="submitContainer" style="display: none;">
+            <button class="btn btn-success submit-btn" id="submitBtn">
+                Submit Test ✓
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Unanswered Warning Modal -->
+<div class="modal" id="unansweredModal" style="display: none;">
+    <div class="modal-content">
+        <h3>⚠️ Question Not Answered</h3>
+        <p>You haven't selected an answer for this question.</p>
+        <div class="unanswered-warning" id="unansweredList"></div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="cancelBtn">Go Back</button>
+            <button class="btn btn-primary" id="continueBtn">Continue Anyway</button>
+        </div>
+    </div>
+</div>
+
+<!-- Submit Confirmation Modal -->
+<div class="modal" id="submitModal" style="display: none;">
+    <div class="modal-content">
+        <h3>📤 Submit Test?</h3>
+        <p>Are you sure you want to submit? You cannot change your answers after submission.</p>
+        <div id="submitStats" style="background: #2563eb; padding: 16px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2563eb;"></div>
+        <div class="unanswered-warning" id="unansweredWarning" style="display: none;">
+            ⚠️ You have <span id="unansweredCount">0</span> unanswered questions
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-secondary" id="cancelSubmitBtn">Continue Test</button>
+            <button class="btn btn-success" id="confirmSubmitBtn">Submit Now ✓</button>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Spinner -->
+<div class="spinner" id="spinner" style="display: none;"></div>
+
+<script src="{% static 'js/test-page.js' %}"></script>
+<!-- EmailJS SDK (client-side email sending) -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/sdk/3.2.0/email.min.js"></script>
+<script>
+    // EmailJS Credentials (from your EmailJS dashboard)
+    (function() {
+      const SERVICE_ID = 'service_ezhr476';
+      const TEMPLATE_ID = 'template_45wwzh7';
+      const USER_ID = 'qj6a6uFf7_8k-lBpF'; // Public key from EmailJS
+      
+      // Store in localStorage so test-page.js can access them
+      localStorage.setItem('emailjs_service_id', SERVICE_ID);
+      localStorage.setItem('emailjs_template_id', TEMPLATE_ID);
+      localStorage.setItem('emailjs_user_id', USER_ID);
+      
+      // Initialize EmailJS on page load
+      try {
+        emailjs.init(USER_ID);
+        window.emailjs_initialized = true;
+        console.log('EmailJS initialized successfully');
+      } catch(e) {
+        console.warn('EmailJS init error:', e);
+      }
+    })();
+
+    // Initialize test page with URL parameters
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const company = urlParams.get('company') || '{{ company|escapejs|default:"Google" }}';
+        const difficulty = urlParams.get('difficulty') || '{{ difficulty|escapejs|default:"medium" }}';
+
+        // Update difficulty badge class
+        const badge = document.getElementById('difficultyBadge');
+        badge.classList.add(difficulty);
+        badge.textContent = difficulty.charAt(0).toUpperCase() + difficulty.slice(1);
+
+        // Initialize test with parameters
+        if (window.TestPage) {
+            window.testInstance = new TestPage({
+                company: company,
+                difficulty: difficulty,
+                totalQuestions: 20,
+                timeLimit: 30 * 60 // 30 minutes in seconds
+            });
+        }
+    });
+</script>
+</body>
+</html>

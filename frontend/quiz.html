@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+
+		<a href="mock_test.html">Mock</a>
+        <a href="videos.html">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div style="display:flex;gap:1.25rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1;min-width:320px">
+        <h2 style="margin:.2rem 0">Practice Quizzes</h2>
+        <p class="muted">Choose a focused test below. Each opens in a new tab and uses the same quiz UI.</p>
+
+        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem">
+          <a href="quiz-aptitude.html" target="_blank" class="btn" style="background:#2b6cb0;color:#fff;flex:1;min-width:200px">Start Aptitude Test</a>
+          <a href="quiz-technical.html" target="_blank" class="btn" style="background:#38a169;color:#fff;flex:1;min-width:200px">Start Technical Test</a>
+          <a href="quiz-hr.html" target="_blank" class="btn" style="background:#ed8936;color:#fff;flex:1;min-width:200px">Open HR Mock / Sample Answers</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+  <main class="container py-4">
+

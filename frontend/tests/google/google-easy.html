@@ -1,0 +1,33 @@
+{% include 'test-page.html' with company='google' difficulty='easy' company_logo_url='/static/accounts/img/logos/google.svg' %}
+
+<script>
+// Inline question data for Google - EASY (10 questions)
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What is the time complexity of binary search on a sorted array?', option_a: 'O(n)', option_b: 'O(log n)', option_c: 'O(n log n)', option_d: 'O(1)', correct_answer: 'B' },
+	{ question_text: 'Which data structure uses LIFO order?', option_a: 'Queue', option_b: 'Stack', option_c: 'Tree', option_d: 'Graph', correct_answer: 'B' },
+	{ question_text: 'What is the output of: 2 + 3 * 4?', option_a: '20', option_b: '14', option_c: '24', option_d: 'None', correct_answer: 'B' },
+	{ question_text: 'Which sorting algorithm is stable?', option_a: 'Quick sort', option_b: 'Heap sort', option_c: 'Merge sort', option_d: 'Selection sort', correct_answer: 'C' },
+	{ question_text: 'What does FIFO stand for?', option_a: 'First In First Out', option_b: 'Fast Input Fast Output', option_c: 'First In Fast Out', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which structure is best for implementing undo functionality?', option_a: 'Queue', option_b: 'Array', option_c: 'Stack', option_d: 'LinkedList', correct_answer: 'C' },
+	{ question_text: 'What is the base case in recursion?', option_a: 'Termination condition', option_b: 'Loop start', option_c: 'Function call', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'What is a prime use of hashing?', option_a: 'Sorting', option_b: 'Searching', option_c: 'Indexing/lookup', option_d: 'Recursion', correct_answer: 'C' },
+	{ question_text: 'Which is NOT a valid binary tree traversal?', option_a: 'Inorder', option_b: 'Postorder', option_c: 'Sideorder', option_d: 'Preorder', correct_answer: 'C' },
+	{ question_text: 'Simple aptitude: If a train travels 60 km in 1.5 hours, what is its speed?', option_a: '40 km/h', option_b: '30 km/h', option_c: '45 km/h', option_d: '60 km/h', correct_answer: 'A' }
+];
+
+// 10 minutes
+window.INLINE_TIME_LIMIT = 10 * 60;
+
+(function(){
+	// Override loadQuestions to prefer inline data if available
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

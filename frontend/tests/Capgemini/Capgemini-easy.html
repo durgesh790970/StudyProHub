@@ -1,0 +1,30 @@
+{% include 'test-page.html' with company='capgemini' difficulty='easy' company_logo_url='/static/accounts/img/logos/capgemini.svg' %}
+
+<script>
+// Capgemini EASY - 10 general technical + aptitude
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What does HTTP stand for?', option_a: 'HyperText Transfer Protocol', option_b: 'Hyperlink Transfer Protocol', option_c: 'HyperText Transaction Protocol', option_d: 'Hyper Transfer Text Protocol', correct_answer: 'A' },
+	{ question_text: 'Which is a stable sort?', option_a: 'Quick sort', option_b: 'Merge sort', option_c: 'Heap sort', option_d: 'Selection sort', correct_answer: 'B' },
+	{ question_text: 'Simple aptitude: 20% of 150 = ?', option_a: '30', option_b: '20', option_c: '40', option_d: '25', correct_answer: 'A' },
+	{ question_text: 'Data structure: FIFO refers to?', option_a: 'Stack', option_b: 'Queue', option_c: 'Tree', option_d: 'Graph', correct_answer: 'B' },
+	{ question_text: 'Which is immutable in Python?', option_a: 'List', option_b: 'Tuple', option_c: 'Dict', option_d: 'Set', correct_answer: 'B' },
+	{ question_text: 'What is the output of: 5+3*2?', option_a: '16', option_b: '11', option_c: '13', option_d: '10', correct_answer: 'B' },
+	{ question_text: 'Which traversal visits root first?', option_a: 'Inorder', option_b: 'Preorder', option_c: 'Postorder', option_d: 'Levelorder', correct_answer: 'B' },
+	{ question_text: 'What is a base case in recursion?', option_a: 'Termination condition', option_b: 'Loop start', option_c: 'Function pointer', option_d: 'Return type', correct_answer: 'A' },
+	{ question_text: 'Simple aptitude: If a=3 and b=4, a^2 + b^2 = ?', option_a: '25', option_b: '24', option_c: '7', option_d: '12', correct_answer: 'A' },
+	{ question_text: 'Which HTTP status means OK?', option_a: '200', option_b: '404', option_c: '500', option_d: '301', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+

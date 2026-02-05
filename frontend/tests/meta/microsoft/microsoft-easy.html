@@ -1,0 +1,30 @@
+{% include 'test-page.html' with company='microsoft' difficulty='easy' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}
+
+<script>
+// Meta->Microsoft EASY mirror - 10 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'What is a cloud region?', option_a: 'Geographic location of data centers', option_b: 'Local network', option_c: 'CSS file', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is auth protocol?', option_a: 'OAuth/OIDC', option_b: 'FTP', option_c: 'SMTP', option_d: 'DNS', correct_answer: 'A' },
+  { question_text: 'Which is for real-time features?', option_a: 'WebSockets', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for graphs?', option_a: 'Graph DB/Neo4j', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: '2+6 = ?', option_a: '8', option_b: '7', option_c: '6', option_d: '9', correct_answer: 'A' },
+  { question_text: 'Which is for data lake?', option_a: 'Data lake storage', option_b: 'Blob only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for AB testing?', option_a: 'Feature flags', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for deployment automation?', option_a: 'CI/CD pipelines', option_b: 'Manual scripts', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for in-memory cache?', option_a: 'Redis', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for observability?', option_a: 'Metrics + Logs + Traces', option_b: 'Only logs', option_c: 'Only metrics', option_d: 'None', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>
+{% include 'test-page.html' with company='microsoft' difficulty='easy' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}

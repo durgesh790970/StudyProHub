@@ -1,0 +1,34 @@
+{% include 'test-page.html' with company='Infosys' difficulty='medium' company_logo_url='/static/accounts/img/logos/infosys.svg' %}
+
+<script>
+// Infosys MEDIUM - 15 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which is for distributed caching?', option_a: 'Redis Cluster', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for pub/sub?', option_a: 'Kafka', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for orchestration?', option_a: 'Kubernetes', option_b: 'Docker only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is used for CI?', option_a: 'Jenkins/GHA', option_b: 'Manual', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for monitoring?', option_a: 'Prometheus + Grafana', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Aptitude: 8*7 = ?', option_a: '56', option_b: '54', option_c: '58', option_d: '60', correct_answer: 'A' },
+  { question_text: 'Which is for idempotency?', option_a: 'Idempotent design (PUT)', option_b: 'POST only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for ACID?', option_a: 'Relational DBs', option_b: 'NoSQL wide-column', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which reduces tail latency?', option_a: 'Priority scheduling + headroom', option_b: 'None', option_c: 'All', option_d: 'CSS', correct_answer: 'A' },
+  { question_text: 'Which is for transactional messaging?', option_a: 'Service Bus / Kafka transactional', option_b: 'Blob', option_c: 'Table', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for schema migrations?', option_a: 'Migration tools (Flyway/Alembic)', option_b: 'Manual only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for feature flags?', option_a: 'LaunchDarkly/Flagsmith', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for vector DB?', option_a: 'Milvus/FAISS', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for job scheduling?', option_a: 'Airflow/Cron', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for secrets?', option_a: 'Vault/Key Vault', option_b: 'Plain file', option_c: 'None', option_d: 'All', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

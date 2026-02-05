@@ -1,0 +1,29 @@
+{% include 'test-page.html' with company='TCS' difficulty='easy' company_logo_url='/static/accounts/img/logos/tcs.svg' %}
+
+<script>
+// TCS EASY - 10 Quant + Verbal
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Quant: What is 15% of 200?', option_a: '30', option_b: '25', option_c: '35', option_d: '20', correct_answer: 'A' },
+	{ question_text: 'Verbal: Choose the correct synonym for "happy".', option_a: 'Sad', option_b: 'Elated', option_c: 'Angry', option_d: 'Tired', correct_answer: 'B' },
+	{ question_text: 'Quant: 7 + 6 * 5 = ?', option_a: '65', option_b: '37', option_c: '41', option_d: '45', correct_answer: 'C' },
+	{ question_text: 'Verbal: Fill in: She ___ to the store yesterday.', option_a: 'go', option_b: 'went', option_c: 'gone', option_d: 'goes', correct_answer: 'B' },
+	{ question_text: 'Quant: If x=3, x^2 + 2x = ?', option_a: '15', option_b: '9', option_c: '21', option_d: '12', correct_answer: 'A' },
+	{ question_text: 'Verbal: Antonym of "increase"?', option_a: 'Rise', option_b: 'Grow', option_c: 'Decrease', option_d: 'Expand', correct_answer: 'C' },
+	{ question_text: 'Quant: What is average of 3,5,7?', option_a: '5', option_b: '4', option_c: '6', option_d: '7', correct_answer: 'A' },
+	{ question_text: 'Verbal: Choose correct article: ___ apple', option_a: 'A', option_b: 'An', option_c: 'The', option_d: 'No article', correct_answer: 'B' },
+	{ question_text: 'Quant: 100/4 = ?', option_a: '20', option_b: '25', option_c: '15', option_d: '40', correct_answer: 'B' },
+	{ question_text: 'Verbal: Select the correctly spelled word.', option_a: 'Recieve', option_b: 'Receive', option_c: 'Recive', option_d: 'Receeve', correct_answer: 'B' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

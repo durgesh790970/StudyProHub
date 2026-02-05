@@ -1,0 +1,41 @@
+{% include 'test-page.html' with company='capgemini' difficulty='hard' company_logo_url='/static/accounts/img/logos/capgemini.svg' %}
+
+<script>
+// Capgemini HARD - 20 technical + aptitude
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What is the time complexity of Dijkstra using a binary heap?', option_a: 'O(E log V)', option_b: 'O(V^2)', option_c: 'O(E + V)', option_d: 'O(V log V)', correct_answer: 'A' },
+	{ question_text: 'Which algorithm finds SCCs?', option_a: 'Kosaraju', option_b: 'Dijkstra', option_c: 'Prim', option_d: 'Bellman-Ford', correct_answer: 'A' },
+	{ question_text: 'What is the complexity of building a heap?', option_a: 'O(n)', option_b: 'O(n log n)', option_c: 'O(n^2)', option_d: 'O(log n)', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is used for maximum flow?', option_a: 'Dijkstra', option_b: 'Ford-Fulkerson', option_c: 'Kruskal', option_d: 'Prim', correct_answer: 'B' },
+	{ question_text: 'What is an AVL tree?', option_a: 'Self-balancing BST', option_b: 'Heap', option_c: 'HashMap', option_d: 'Graph', correct_answer: 'A' },
+	{ question_text: 'Which is NP-complete problem?', option_a: 'Sorting', option_b: 'Traveling Salesman (decision)', option_c: 'Binary search', option_d: 'Matrix multiply', correct_answer: 'B' },
+	{ question_text: 'Which technique reduces recursion using stored results?', option_a: 'Memoization', option_b: 'Greedy', option_c: 'Divide and Conquer', option_d: 'Backtracking', correct_answer: 'A' },
+	{ question_text: 'Aptitude: 7! = ?', option_a: '5040', option_b: '720', option_c: '120', option_d: '40320', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is used for topological sort?', option_a: 'DFS based', option_b: 'BFS based', option_c: 'Dijkstra', option_d: 'Kruskal', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is linear for string matching in worst-case?', option_a: 'Naive', option_b: 'KMP', option_c: 'Rabin-Karp', option_d: 'Boyer-Moore', correct_answer: 'B' },
+	{ question_text: 'Which data structure supports range minimum query efficiently?', option_a: 'Segment tree', option_b: 'Stack', option_c: 'Queue', option_d: 'LinkedList', correct_answer: 'A' },
+	{ question_text: 'Which is used to detect cycles in directed graphs?', option_a: 'DFS with coloring', option_b: 'BFS only', option_c: 'Dijkstra', option_d: 'Kruskal', correct_answer: 'A' },
+	{ question_text: 'What is the space complexity of merge sort?', option_a: 'O(1)', option_b: 'O(n)', option_c: 'O(log n)', option_d: 'O(n log n)', correct_answer: 'B' },
+	{ question_text: 'Which hashing technique resolves collisions with open addressing?', option_a: 'Separate chaining', option_b: 'Linear probing', option_c: 'Double hashing', option_d: 'Both B and C', correct_answer: 'D' },
+	{ question_text: 'Aptitude: If ratio 2:3 and total 50, first = ?', option_a: '20', option_b: '30', option_c: '25', option_d: '10', correct_answer: 'A' },
+	{ question_text: 'Which algorithm computes MST with sorted edges?', option_a: 'Prim', option_b: 'Kruskal', option_c: 'Dijkstra', option_d: 'Bellman-Ford', correct_answer: 'B' },
+	{ question_text: 'Which data structure gives O(1) average lookup?', option_a: 'Hash table', option_b: 'BST', option_c: 'LinkedList', option_d: 'Heap', correct_answer: 'A' },
+	{ question_text: 'Which is divide and conquer example?', option_a: 'Quick sort', option_b: 'Dijkstra', option_c: 'BFS', option_d: 'Dynamic programming', correct_answer: 'A' },
+	{ question_text: 'What is the order of a binary tree with n nodes (worst-case height)?', option_a: 'O(n)', option_b: 'O(log n)', option_c: 'O(1)', option_d: 'O(n log n)', correct_answer: 'A' },
+	{ question_text: 'Which is used for substring search optimized with failure function?', option_a: 'KMP', option_b: 'Rabin-Karp', option_c: 'Naive', option_d: 'Boyer-Moore', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 30 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+
+{% include 'test-page.html' with company='capgemini' difficulty='hard' company_logo_url='/static/accounts/img/logos/capgemini.svg' %}

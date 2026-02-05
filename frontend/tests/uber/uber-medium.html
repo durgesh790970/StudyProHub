@@ -1,0 +1,34 @@
+{% include 'test-page.html' with company='uber' difficulty='medium' company_logo_url='/static/accounts/img/logos/uber.svg' %}
+
+<script>
+// Uber MEDIUM - 15 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Which algorithm finds minimum spanning tree?', option_a: 'Dijkstra', option_b: 'Kruskal', option_c: 'Binary search', option_d: 'Quick sort', correct_answer: 'B' },
+	{ question_text: 'Which database is column-oriented?', option_a: 'Cassandra', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'What is jitter in networking?', option_a: 'Variation in packet delay', option_b: 'Packet loss', option_c: 'Throughput', option_d: 'Bandwidth', correct_answer: 'A' },
+	{ question_text: 'Which is an LRU cache implementation?', option_a: 'LinkedHashMap', option_b: 'Array', option_c: 'Stack', option_d: 'Tree', correct_answer: 'A' },
+	{ question_text: 'Which is used for stream processing?', option_a: 'Spark Streaming', option_b: 'MySQL', option_c: 'CSS', option_d: 'HTML', correct_answer: 'A' },
+	{ question_text: 'Which is CAP tradeoff?', option_a: 'Choose two of three: Consistency, Availability, Partition tolerance', option_b: 'All three always possible', option_c: 'None', option_d: 'Only one', correct_answer: 'A' },
+	{ question_text: 'Which is a graph traversal?', option_a: 'BFS', option_b: 'Binary search', option_c: 'Heapify', option_d: 'Quick sort', correct_answer: 'A' },
+	{ question_text: 'Which is used for rate limiting?', option_a: 'Token bucket', option_b: 'Round Robin', option_c: 'SJF', option_d: 'FCFS', correct_answer: 'A' },
+	{ question_text: 'Which is for message durability?', option_a: 'Write-ahead log', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+	{ question_text: 'Aptitude: 7*8 = ?', option_a: '56', option_b: '54', option_c: '58', option_d: '60', correct_answer: 'A' },
+	{ question_text: 'Which is consistent hashing use-case?', option_a: 'Distributed caches', option_b: 'CSS', option_c: 'HTML', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is used for service discovery?', option_a: 'Consul', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+	{ question_text: 'Which is for observability?', option_a: 'Prometheus + Grafana', option_b: 'MongoDB', option_c: 'MySQL', option_d: 'Kafka', correct_answer: 'A' },
+	{ question_text: 'Which is used for A/B testing?', option_a: 'Feature flags', option_b: 'CSS', option_c: 'HTML', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is for idempotent operations?', option_a: 'PUT', option_b: 'POST', option_c: 'PATCH', option_d: 'DELETE', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

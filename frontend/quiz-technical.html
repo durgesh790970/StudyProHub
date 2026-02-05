@@ -1,0 +1,111 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Technical Test — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+       
+        <a href="videos.html">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+		<a href="quiz.html">Mock</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding:2rem 0">
+    <div style="margin-bottom:3rem">
+      <h1 style="margin:0 0 0.5rem 0;font-size:2.5rem;font-weight:700;color:#0b2545">Technical — Interview Practice</h1>
+      <p style="margin:0;font-size:1rem;line-height:1.6;color:#666">Practice common technical questions. Click each question to view a short sample answer (2–3 lines).</p>
+    </div>
+
+    <div id="quizApp" class="quiz-card" style="background:white;border-radius:8px;box-shadow:0 4px 20px rgba(12,38,63,0.1);overflow:hidden;padding:2.5rem">
+      <!-- Quiz UI will be rendered here by JS -->
+    </div>
+  </main>
+
+  <!-- Aptitude-only quiz data (10 questions). The page uses the main quiz renderer which will pick this up. -->
+  <script id="quiz-data" type="application/json">
+{
+  "sections": [
+    {
+      "id": "technical",
+      "title": "Technical (Programming / Core)",
+      "questions": [
+        { "q": "Which of the following is not a programming language?", "options": ["Python","Java","HTML","C++"], "answer": 2 },
+        { "q": "What is the output of: System.out.println(10 + 20 + \"30\"); in Java?", "options": ["3030","102030","3030","3030"], "answer": 1 },
+        { "q": "Which of the following is a mutable data type in Python?", "options": ["Tuple","List","String","Integer"], "answer": 1 },
+        { "q": "In C, what is the output of printf(\"%d\", 5/2); ?", "options": ["2","2.5","3","Error"], "answer": 0 },
+        { "q": "What does SQL stand for?", "options": ["Structured Query Language","Simple Query Language","Structured Question Language","Sequential Query Language"], "answer": 0 },
+        { "q": "Which data structure uses FIFO principle?", "options": ["Stack","Queue","Tree","Graph"], "answer": 1 },
+        { "q": "Which of the following is used for exception handling in Java?", "options": ["try-catch","if-else","for loop","switch"], "answer": 0 },
+        { "q": "Which of the following is not a valid Python keyword?", "options": ["pass","eval","assert","lambda"], "answer": 1 },
+        { "q": "What is the time complexity of binary search?", "options": ["O(n)","O(log n)","O(n log n)","O(1)"], "answer": 1 },
+        { "q": "Which sorting algorithm is the fastest on average for large datasets?", "options": ["Bubble Sort","Quick Sort","Insertion Sort","Selection Sort"], "answer": 1 },
+
+        { "q": "Which of the following is a NoSQL database?", "options": ["MySQL","MongoDB","Oracle","PostgreSQL"], "answer": 1 },
+        { "q": "In C++, which feature allows one function to have multiple forms?", "options": ["Polymorphism","Encapsulation","Inheritance","Abstraction"], "answer": 0 },
+        { "q": "Which of these is used to define a constant in C?", "options": ["const","final","#define","constant"], "answer": 2 },
+        { "q": "Which Python keyword is used to define a function?", "options": ["function","def","fun","lambda"], "answer": 1 },
+        { "q": "Which of the following is used to terminate a loop immediately in C++?", "options": ["exit","continue","break","return"], "answer": 2 },
+        { "q": "In Java, which data type is used to store true/false values?", "options": ["int","boolean","char","float"], "answer": 1 },
+        { "q": "Which of the following is not a type of inheritance in OOP?", "options": ["Single","Multiple","Hierarchical","Conditional"], "answer": 3 },
+        { "q": "Which is a valid identifier in C?", "options": ["2var","var_2","var-2","var 2"], "answer": 1 },
+        { "q": "Which operator is used for exponentiation in Python?", "options": ["^","**","exp()","pow()"], "answer": 1 },
+        { "q": "Which of the following is a linear data structure?", "options": ["Tree","Stack","Graph","Heap"], "answer": 1 },
+
+        { "q": "In C, size of int on a 32-bit system is usually?", "options": ["2 bytes","4 bytes","8 bytes","1 byte"], "answer": 1 },
+        { "q": "Which SQL command is used to remove a table from the database?", "options": ["DELETE","REMOVE","DROP","TRUNCATE"], "answer": 2 },
+        { "q": "What is the output of: print(type({1,2,3})) in Python?", "options": ["<class 'list'>","<class 'set'>","<class 'tuple'>","<class 'dict'>"], "answer": 1 },
+        { "q": "Which is the default access specifier for class members in C++?", "options": ["private","protected","public","default"], "answer": 0 },
+        { "q": "Which of the following is used for recursion termination in a function?", "options": ["Base case","Recursive case","Loop","Condition"], "answer": 0 },
+        { "q": "In Java, which of the following is a wrapper class for int?", "options": ["Integer","Int","Float","Double"], "answer": 0 },
+        { "q": "Which of these is not a characteristic of OOP?", "options": ["Encapsulation","Polymorphism","Compilation","Inheritance"], "answer": 2 },
+        { "q": "What is the output of: print(2**3**2) in Python?", "options": ["512","64","256","8"], "answer": 0 },
+        { "q": "Which traversal method uses a queue in tree?", "options": ["Inorder","Preorder","Postorder","Level-order"], "answer": 3 },
+        { "q": "Which of the following is an immutable type in Python?", "options": ["List","Dictionary","Tuple","Set"], "answer": 2 },
+
+        { "q": "Which of these is used to comment a single line in Python?", "options": ["//","/* */","#","<!-- -->"], "answer": 2 },
+        { "q": "Which is the correct way to declare an array in C of size 10?", "options": ["int arr[10];","int arr;","int arr();","array arr[10];"], "answer": 0 },
+        { "q": "Which operator is used for logical AND in C++?", "options": ["&","&&","|","||"], "answer": 1 },
+        { "q": "Which of the following is not a primitive data type in Java?", "options": ["int","char","String","double"], "answer": 2 },
+        { "q": "What is the default value of a local variable in Java?", "options": ["0","null","Depends on type","No default"], "answer": 3 },
+        { "q": "Which method is used to start a thread in Java?", "options": ["run()","start()","execute()","init()"], "answer": 1 },
+        { "q": "Which of the following is a Python loop?", "options": ["for","foreach","loop","repeat"], "answer": 0 },
+        { "q": "Which SQL command is used to add a column to an existing table?", "options": ["ALTER TABLE","UPDATE TABLE","MODIFY TABLE","INSERT INTO"], "answer": 0 },
+        { "q": "Which of these is a non-linear data structure?", "options": ["Stack","Queue","Tree","Array"], "answer": 2 },
+        { "q": "Which of these is used for database normalization?", "options": ["1NF","OOP","Recursion","Polymorphism"], "answer": 0 },
+        { "q": "Which of the following is not a looping construct in C?", "options": ["for","while","do-while","foreach"], "answer": 3 },
+        { "q": "Which of these searches sequentially through elements?", "options": ["Binary Search","Linear Search","Quick Search","Hash Search"], "answer": 1 },
+        { "q": "Which of these is used to connect to a database in Java?", "options": ["JDBC","JRE","JVM","JDK"], "answer": 0 },
+        { "q": "Which of these is a hierarchical database model?", "options": ["MongoDB","Oracle","IMS","MySQL"], "answer": 2 },
+        { "q": "What does CSS stand for?", "options": ["Computer Style Sheets","Cascading Style Sheets","Colorful Style Sheets","Creative Style Sheets"], "answer": 1 },
+        { "q": "Which of the following is used to create GUI applications in Python?", "options": ["Tkinter","NumPy","Pandas","Matplotlib"], "answer": 0 },
+        { "q": "Which is used to check equality of objects in Java?", "options": ["==","equals()","compare()","match()"], "answer": 1 },
+        { "q": "Which of these is a Python dictionary method?", "options": ["append()","keys()","insert()","popitem()"], "answer": 1 },
+        { "q": "Which sorting algorithm is stable?", "options": ["Quick Sort","Merge Sort","Heap Sort","Selection Sort"], "answer": 1 },
+        { "q": "Which of these is used to store key-value pairs in Python?", "options": ["List","Tuple","Dictionary","Set"], "answer": 2 },
+        { "q": "Which of the following is a build automation tool?", "options": ["Git","Maven","Jenkins","Docker"], "answer": 1 },
+        { "q": "Which of these is a type of SQL JOIN?", "options": ["Inner","Outer","Left","All of these"], "answer": 3 },
+        { "q": "Which of the following is a linear search technique?", "options": ["Binary Search","Sequential Search","Interpolation Search","Exponential Search"], "answer": 1 },
+        { "q": "Which of these is used to implement stack?", "options": ["Array","Linked List","Both","Queue"], "answer": 2 },
+        { "q": "Which of the following is used for version control?", "options": ["Git","Jenkins","Docker","Jira"], "answer": 0 },
+        { "q": "Which method converts string to integer in Java?", "options": ["Integer.parseInt()","int()","convertInt()","strtoint()"], "answer": 0 },
+        { "q": "Which of these is a Python set operation?", "options": ["union()","join()","merge()","append()"], "answer": 0 }
+      ]
+    }
+  ]
+}
+
+  </script>
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% include 'test-page.html' with company='hcl' difficulty='hard' company_logo_url='/static/accounts/img/logos/hcl.svg' %}
+
+<script>
+// HCL HARD - 20 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What is the time complexity of FFT?', option_a: 'O(n log n)', option_b: 'O(n^2)', option_c: 'O(n)', option_d: 'O(log n)', correct_answer: 'A' },
+	{ question_text: 'Which is NP-complete problem?', option_a: 'Sorting', option_b: 'Subset sum', option_c: 'Binary search', option_d: 'Matrix multiplication', correct_answer: 'B' },
+	{ question_text: 'Which is correct about RSA?', option_a: 'Symmetric', option_b: 'Asymmetric', option_c: 'Hashing', option_d: 'Stream cipher', correct_answer: 'B' },
+	{ question_text: 'Which is used for distributed consensus?', option_a: 'Paxos', option_b: 'Bubble sort', option_c: 'FFT', option_d: 'Dijkstra', correct_answer: 'A' },
+	{ question_text: 'Aptitude: LCM of 4 and 6?', option_a: '12', option_b: '24', option_c: '6', option_d: '2', correct_answer: 'A' },
+	{ question_text: 'Which is a functional programming language?', option_a: 'Haskell', option_b: 'C', option_c: 'Java', option_d: 'HTML', correct_answer: 'A' },
+	{ question_text: 'Which protocol handles routing?', option_a: 'BGP', option_b: 'HTTP', option_c: 'TLS', option_d: 'FTP', correct_answer: 'A' },
+	{ question_text: 'What does CAP theorem stand for?', option_a: 'Consistency, Availability, Partition tolerance', option_b: 'Cache, Access, Protocol', option_c: 'Compute, Application, Platform', option_d: 'Consistency, Authority, Partition', correct_answer: 'A' },
+	{ question_text: 'Which DB uses documents?', option_a: 'MySQL', option_b: 'MongoDB', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'B' },
+	{ question_text: 'Which is actor model based system?', option_a: 'Akka', option_b: 'Django', option_c: 'Flask', option_d: 'Rails', correct_answer: 'A' },
+	{ question_text: 'Which is used for pub/sub?', option_a: 'Kafka', option_b: 'MySQL', option_c: 'Nginx', option_d: 'Docker', correct_answer: 'A' },
+	{ question_text: 'Which is a consistent hashing algorithm?', option_a: 'Rendezvous', option_b: 'Bubble sort', option_c: 'Dijkstra', option_d: 'Prim', correct_answer: 'A' },
+	{ question_text: 'What is tail recursion?', option_a: 'Recursion where last call is return', option_b: 'No recursion', option_c: 'Infinite loop', option_d: 'Call stack overflow', correct_answer: 'A' },
+	{ question_text: 'Which is a NoSQL wide-column store?', option_a: 'Cassandra', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'Which hashing avoids collisions ideally?', option_a: 'Perfect hashing', option_b: 'Linear probing', option_c: 'Chaining', option_d: 'Open addressing', correct_answer: 'A' },
+	{ question_text: 'Aptitude: 15*3 = ?', option_a: '45', option_b: '50', option_c: '35', option_d: '40', correct_answer: 'A' },
+	{ question_text: 'Which is used for container orchestration?', option_a: 'Kubernetes', option_b: 'Docker', option_c: 'Nginx', option_d: 'Redis', correct_answer: 'A' },
+	{ question_text: 'Which is for configuration management?', option_a: 'Ansible', option_b: 'MySQL', option_c: 'Kafka', option_d: 'Terraform', correct_answer: 'A' },
+	{ question_text: 'Which language compiles to wasm?', option_a: 'Rust', option_b: 'HTML', option_c: 'CSS', option_d: 'SQL', correct_answer: 'A' },
+	{ question_text: 'Which is a lock-free data structure?', option_a: 'Concurrent queue', option_b: 'Linked list', option_c: 'Binary tree', option_d: 'Array', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+

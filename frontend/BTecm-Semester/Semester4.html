@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTech Semester Materials | StudyPro Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+body {
+    background-color: #f7f9fc;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.pdf-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.breadcrumb {
+    margin-bottom: 2rem;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.breadcrumb a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    margin: 0.5rem 0 0.75rem 0;
+    font-size: 2rem;
+    color: #111;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.pdf-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.pdf-title {
+    color: #1a56db;
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.pdf-description {
+    color: #555;
+    font-size: 0.9rem;
+    margin: 0 0 1rem 0;
+    flex-grow: 1;
+    line-height: 1.5;
+}
+
+.pdf-meta {
+    color: #999;
+    font-size: 0.85rem;
+    margin: 0.75rem 0;
+}
+
+.download-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: auto;
+    text-align: center;
+}
+
+.download-btn:hover {
+    background: #1d4ed8;
+}
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav-wrap">
+            <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+            <nav class="main-nav">
+                <a href="videos.html">Videos</a>
+                <a href="Interview.html">Interview</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pdf-container">
+        <div class="breadcrumb">
+            <a href="../BTech.html">PDFs</a> &raquo; 
+            <span>BTech Materials</span>
+        </div>
+
+        <div class="page-header">
+            <h1>BTech PDF Materials</h1>
+            <p>Access comprehensive PDF materials for BTech Semester 4 exam preparation including notes and previous year question papers.</p>
+        </div>
+        
+        <div class="pdf-grid"></div>
+    </main>
+
+    <script>
+        // PDF data for Capgemini materials
+        const pdfData = [
+            {
+                title: "Semester 4 — Exam based Notes",
+                description: "Concise notes covering common topics asked in Semester 1 exams.",
+                pages: 45,
+                year: 2023,
+                url: "../assets/pdf/Switch.pdf"
+            },
+			{
+                title: "Semester 4 previous year Exam paper",
+                description: "previous year exam paper for Semester 1 exams.",
+                pages: 45,
+                year: 2023,
+                url: "../assets/pdf/Switch.pdf"
+            }
+            
+        ];
+
+        // Populate PDF grid
+        const pdfGrid = document.querySelector('.pdf-grid');
+        pdfData.forEach(pdf => {
+            const card = document.createElement('div');
+            card.className = 'pdf-card';
+            card.innerHTML = `
+                <h3 class="pdf-title">${pdf.title}</h3>
+                <p class="pdf-description">${pdf.description}</p>
+                <div class="pdf-meta">${pdf.pages} pages • ${pdf.year}</div>
+                <button class="download-btn" onclick="openPDF('${pdf.url}')">Open PDF</button>
+            `;
+            pdfGrid.appendChild(card);
+        });
+
+        // Function to open PDF file
+        function openPDF(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

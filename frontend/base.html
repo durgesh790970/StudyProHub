@@ -1,0 +1,48 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}StudyPro Hub{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-wrap">
+        <a href="{% url 'accounts:index' %}" class="brand">
+          <span class="logo">SP</span>
+          <span>StudyPro Hub</span>
+        </a>
+
+        <nav class="main-nav">
+          <a href="{% url 'accounts:index' %}">Home</a>
+          <a href="{% url 'accounts:videos_page' %}">Videos</a>
+          <a href="{% url 'accounts:pdfs_page' %}">PDFs</a>
+          <a href="{% url 'accounts:quiz_page' %}">Quiz</a>
+          <a href="{% url 'accounts:dynamic_html' path='apply-jobs.html' %}">Apply</a>
+          <a href="{% url 'accounts:contect_page' %}">Contact</a>
+		
+          {% if request.session.user_id or request.session.phone %}
+            <a href="{% url 'accounts:logout_page' %}" class="cta">Logout</a>
+          {% else %}
+            <a href="{% url 'accounts:login_page' %}" class="cta">Login</a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p class="muted">&copy; {% now "Y" %} StudyPro Hub — All rights reserved</p>
+    </div>
+  </footer>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

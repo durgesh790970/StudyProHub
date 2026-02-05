@@ -1,0 +1,35 @@
+{% include 'test-page.html' with company='microsoft' difficulty='medium' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}
+
+<script>
+// Meta->Microsoft MEDIUM mirror - 15 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which is for large-scale storage?', option_a: 'Blob / Data Lake', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for stream processing?', option_a: 'Event Hubs / Stream Analytics', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for messaging?', option_a: 'Service Bus / Queue', option_b: 'Blob', option_c: 'Table', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for serverless?', option_a: 'Azure Functions', option_b: 'VM', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Aptitude: 13*3 = ?', option_a: '39', option_b: '36', option_c: '33', option_d: '42', correct_answer: 'A' },
+  { question_text: 'Which is for identity?', option_a: 'Azure AD', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for caching?', option_a: 'Redis', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is for CI/CD?', option_a: 'Azure DevOps/GitHub Actions', option_b: 'Manual only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for monitoring?', option_a: 'Azure Monitor', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for secrets?', option_a: 'Key Vault', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for hybrid cloud?', option_a: 'ExpressRoute / VPN', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for geo-replication?', option_a: 'Cosmos DB geo-replication', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for PII protection?', option_a: 'Data masking & encryption', option_b: 'Plain text', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for scaling compute?', option_a: 'Autoscale / AKS', option_b: 'Manual only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for backup?', option_a: 'Azure Backup', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>
+{% include 'test-page.html' with company='microsoft' difficulty='medium' company_logo_url='/static/accounts/img/logos/microsoft.svg' %}

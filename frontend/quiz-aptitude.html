@@ -1,0 +1,105 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aptitude Test — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+        <a href="videos.html">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+		<a href="quiz.html">Mock</a>
+		
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" style="padding:2rem 0">
+    <div style="margin-bottom:3rem">
+      <h1 style="margin:0 0 0.5rem 0;font-size:2.5rem;font-weight:700;color:#0b2545">Aptitude — Interview Practice</h1>
+      <p style="margin:0;font-size:1rem;line-height:1.6;color:#666">Practice common aptitude questions. Click each question to view a short sample answer (2–3 lines).</p>
+    </div>
+
+    <div id="quizApp" class="quiz-card" style="background:white;border-radius:8px;box-shadow:0 4px 20px rgba(12,38,63,0.1);overflow:hidden;padding:2.5rem">
+      <!-- Quiz UI will be rendered here by JS -->
+    </div>
+  </main>
+
+  <!-- Aptitude-only quiz data (10 questions). The page uses the main quiz renderer which will pick this up. -->
+  <script id="quiz-data" type="application/json">
+{
+  "sections": [
+    {
+      "id": "aptitude",
+      "title": "Aptitude (Quantitative, Logical, Verbal Ability)",
+      "questions": [
+        { "q": "If 20% of a number is 30, what is the number?", "options": ["120","150","180","200"], "answer": 1 },
+        { "q": "A and B are in the ratio 3:4. If A + B = 105, what is A?", "options": ["30","45","60","75"], "answer": 1 },
+        { "q": "Pipe A can fill a tank in 12 hours and Pipe B can fill it in 8 hours. If both are opened together, how long will it take to fill the tank?", "options": ["4 hours","4.8 hours","5 hours","6 hours"], "answer": 1 },
+        { "q": "A car travels at 60 km/h for 2.5 hours. How far does it travel?", "options": ["120 km","130 km","150 km","160 km"], "answer": 2 },
+        { "q": "From a bag containing 3 red and 2 blue balls, one ball is drawn and then another without replacement. What is the probability of drawing a red then a blue?", "options": ["1/5","3/10","1/2","3/5"], "answer": 1 },
+        { "q": "If the average age of 5 people is 24, what is the total of their ages?", "options": ["100","110","120","130"], "answer": 2 },
+        { "q": "A shopkeeper buys an item for ₹500 and sells it for ₹600. What is the profit percent?", "options": ["10%","15%","20%","25%"], "answer": 2 },
+        { "q": "Simple interest on a principal of ₹1000 at 5% p.a. for 2 years is:", "options": ["₹50","₹100","₹150","₹200"], "answer": 1 },
+        { "q": "Syllogism: All cats are animals. Some animals are pets. Can we conclude that some cats are pets?", "options": ["Yes, definitely","No, not necessarily","Only if stated","None of these"], "answer": 1 },
+        { "q": "Choose the correct sentence:", "options": ["He don't like apples.","She and I is going.","They were playing in the park.","Him went to school."], "answer": 2 },
+
+        { "q": "What is the next number in the series 2, 6, 12, 20, 30, ?", "options": ["36","40","42","56"], "answer": 2 },
+        { "q": "The average of five numbers is 27. If one number is removed, the average becomes 25. What is the number removed?", "options": ["27","30","35","37"], "answer": 2 },
+        { "q": "If a clock is started at 8 a.m., what will be the angle between the hands at 9:20 a.m.?", "options": ["10°","20°","30°","40°"], "answer": 2 },
+        { "q": "A man can row 6 km/h in still water. If the speed of the stream is 2 km/h, how long will he take to go 12 km downstream?", "options": ["1 hr","1.5 hr","2 hr","3 hr"], "answer": 1 },
+        { "q": "Find the odd one out: 2, 3, 5, 7, 9, 11", "options": ["5","7","9","11"], "answer": 2 },
+        { "q": "If the selling price of 10 items equals the cost price of 11 items, find the loss percent.", "options": ["9.09%","10%","11%","12%"], "answer": 0 },
+        { "q": "Which of the following is the synonym of 'ABATE'?", "options": ["Increase","Lessen","Delay","Continue"], "answer": 1 },
+        { "q": "Choose the correctly spelled word:", "options": ["Recieve","Receive","Recieeve","Receeve"], "answer": 1 },
+        { "q": "Find the antonym of 'GENEROSITY'.", "options": ["Kindness","Greed","Charity","Benevolence"], "answer": 1 },
+        { "q": "If TRAIN is coded as UQBJO, how is PLANE coded?", "options": ["QMBOD","OKBMD","QMBOD","QKAMD"], "answer": 2 },
+
+        { "q": "Simplify: (15% of 200) + (25% of 120) = ?", "options": ["60","70","80","90"], "answer": 1 },
+        { "q": "The sum of three consecutive even numbers is 108. What is the middle number?", "options": ["34","36","38","40"], "answer": 2 },
+        { "q": "If 8 workers can complete a task in 20 days, how many days will 10 workers take?", "options": ["12","14","16","18"], "answer": 2 },
+        { "q": "Find the missing term: 1, 4, 9, 16, 25, ?", "options": ["30","35","36","49"], "answer": 2 },
+        { "q": "Which word is opposite in meaning to 'ABUNDANT'?", "options": ["Plenty","Scarce","Overflowing","Sufficient"], "answer": 1 },
+        { "q": "In a code, CAT = 3120 and DOG = 4157. What does BAT represent?", "options": ["2130","2140","3120","2110"], "answer": 1 },
+        { "q": "Pointing to a man, Rina said, 'He is the son of my grandfather’s only son.' How is the man related to Rina?", "options": ["Brother","Cousin","Uncle","Father"], "answer": 0 },
+        { "q": "A man’s present age is twice the age of his son. 10 years ago, he was three times the age of his son. Find the present age of the son.", "options": ["10","15","20","25"], "answer": 1 },
+        { "q": "Which one of the following is correctly punctuated?", "options": ["Its a nice day.","It's a nice day.","Its' a nice day.","Its a' nice day."], "answer": 1 },
+        { "q": "If the perimeter of a square is 48 cm, find its area.", "options": ["121","144","169","196"], "answer": 1 },
+
+        { "q": "Choose the correct analogy: Book is to Reading as Knife is to ___?", "options": ["Cutting","Writing","Cooking","Drawing"], "answer": 0 },
+        { "q": "In a group of 80 students, 60 like tea and 50 like coffee. How many like both?", "options": ["20","25","30","35"], "answer": 2 },
+        { "q": "What is the average of first five multiples of 3?", "options": ["9","12","15","18"], "answer": 2 },
+        { "q": "If x = 2 and y = 3, find the value of 2x² + 3y².", "options": ["13","17","31","33"], "answer": 3 },
+        { "q": "Which of these is not a vowel?", "options": ["A","E","I","Y"], "answer": 3 },
+        { "q": "If a train runs at 60 km/h and crosses a pole in 30 seconds, find its length.", "options": ["400 m","450 m","500 m","550 m"], "answer": 2 },
+        { "q": "Choose the correct synonym for 'DILIGENT'.", "options": ["Lazy","Careful","Clever","Slow"], "answer": 1 },
+        { "q": "Find the missing term: 2, 6, 12, 20, ?", "options": ["24","28","30","36"], "answer": 1 },
+        { "q": "Find the odd word: Apple, Banana, Carrot, Mango", "options": ["Apple","Banana","Carrot","Mango"], "answer": 2 },
+        { "q": "Choose the correctly spelled word:", "options": ["Definately","Definitely","Definetely","Definitly"], "answer": 1 },
+
+        { "q": "Which one of the following is not an article?", "options": ["A","An","The","This"], "answer": 3 },
+        { "q": "If 15 men can do a job in 20 days, how many men are needed to do it in 10 days?", "options": ["25","30","35","40"], "answer": 1 },
+        { "q": "What is 75% of 160?", "options": ["100","110","120","130"], "answer": 2 },
+        { "q": "If P = 5, Q = 7, R = 9, find (P×Q) + R.", "options": ["39","44","45","49"], "answer": 1 },
+        { "q": "Which word is most similar to 'AMBIGUOUS'?", "options": ["Clear","Vague","Certain","Definite"], "answer": 1 },
+        { "q": "The ratio of ages of A and B is 4:5. After 5 years, it becomes 5:6. Find A’s present age.", "options": ["15","20","25","30"], "answer": 1 },
+        { "q": "Which of these completes the analogy: Hot : Cold :: Fire : ___", "options": ["Water","Smoke","Heat","Ice"], "answer": 3 },
+        { "q": "If 3x + 5 = 20, what is x?", "options": ["4","5","6","7"], "answer": 1 },
+        { "q": "Choose the correct form: Neither of the boys ___ present.", "options": ["were","are","was","have"], "answer": 2 },
+        { "q": "Which number should replace the question mark: 3, 9, 27, ?, 243", "options": ["54","72","81","90"], "answer": 2 }
+      ]
+    }
+  ]
+}
+
+  </script>
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

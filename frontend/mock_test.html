@@ -1,0 +1,317 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Mock Tests</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      margin: 0;
+      color: #222;
+    }
+
+    /* Main Page Styles (unchanged) */
+    .container {
+      width: 90%;
+      max-width: 1150px;
+      margin: 40px auto;
+    }
+    h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    select, .clear-btn {
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: 1px solid #ddd;
+      background: #fff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+    .clear-btn {
+      border: 2px solid #ff5722;
+      color: #ff5722;
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 16px;
+      padding: 20px;
+      transition: 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+    }
+    .logo {
+      width: 100%;
+      height: 130px;
+      border-radius: 12px;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .logo img {
+      max-height: 70px;
+      object-fit: contain;
+    }
+    .role {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .company {
+      font-size: 15px;
+      color: #666;
+      margin-bottom: 18px;
+    }
+    .category {
+      display: none;
+    }
+    .start {
+      color: #0a66ff;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .start:hover {
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
+    }
+	
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="nav-wrap">
+        <a href="{% url 'accounts:index' %}" class="brand">
+          <span class="logo">SP</span>
+          <span>StudyPro Hub</span>
+        </a>
+
+        <nav class="main-nav">
+          <a href="{% url 'accounts:videos_page' %}">Videos</a>
+          <a href="{% url 'accounts:pdfs_page' %}">PDFs</a>
+          <a href="{% url 'accounts:quiz_page' %}">Quiz</a>
+          <a href="{% url 'accounts:contect_page' %}">Contact</a>
+          
+          {% if request.session.user_id or request.session.phone %}
+            <a href="{% url 'accounts:profile' %}">Profile</a>
+          {% endif %}
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Choose From The Top Roles</h2>
+
+    <div class="filters">
+      <select id="categoryFilter">
+        <option value="All">Category: All</option>
+        <option value="AI/ML">AI/ML</option>
+        <option value="Development">Development</option>
+        <option value="Security">Security</option>
+        <option value="Data">Data</option>
+        <option value="Blockchain">Blockchain</option>
+      </select>
+
+      <select id="companyFilter">
+        <option value="All">Select Company</option>
+        <option value="Google">Google</option>
+        <option value="OpenAI">OpenAI</option>
+        <option value="Uber">Uber</option>
+        <option value="Microsoft">Microsoft</option>
+        <option value="BCG">BCG</option>
+        <option value="StarkWare">StarkWare</option>
+      </select>
+
+      <select id="roleFilter">
+        <option value="All">Select Role</option>
+        <option value="Engineer">Engineer</option>
+        <option value="Developer">Developer</option>
+        <option value="Analyst">Analyst</option>
+      </select>
+
+      <button class="clear-btn" id="clearFilters">⟳ Clear All</button>
+    </div>
+
+    <div class="grid" id="cardsGrid">
+      <div class="card" data-company="Google" data-role="Engineer" data-category="AI/ML">
+        <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"></div>
+        <div class="role">AI Engineer</div>
+        <div class="company">Google</div>
+        <div class="category">AI/ML</div>
+        <div class="start">Start Test ↗</div>
+      </div>
+
+      <div class="card" data-company="OpenAI" data-role="Engineer" data-category="AI/ML">
+        <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg"></div>
+        <div class="role">Machine Learning Engineer</div>
+        <div class="company">OpenAI</div>
+        <div class="category">AI/ML</div>
+        <div class="start">Start Test ↗</div>
+      </div>
+
+      <div class="card" data-company="Uber" data-role="Developer" data-category="Development">
+        <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"></div>
+        <div class="role">iOS Developer</div>
+        <div class="company">Uber</div>
+        <div class="category">Development</div>
+        <div class="start">Start Test ↗</div>
+      </div>
+
+      <div class="card" data-company="Microsoft" data-role="Engineer" data-category="Security">
+        <div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg"></div>
+        <div class="role">Cyber Security Engineer</div>
+        <div class="company">Microsoft</div>
+        <div class="category">Security</div>
+        <div class="start">Start Test ↗</div>
+      </div>
+
+		<div class="card" data-company="Amazon">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg"></div>
+		<div class="company">Amazon</div>
+		<div class="role">SDE-1</div>
+		<div class="category">Technology</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="Meta">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Meta_Platforms_Inc._logo.svg"></div>
+		<div class="company">Meta</div>
+		<div class="role">ML Engineer</div>
+		<div class="category">AI/ML</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="Paytm">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Paytm_logo.png"></div>
+		<div class="company">Paytm</div>
+		<div class="role">Backend Developer</div>
+		<div class="category">Fintech</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="TCS">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Tata_Consultancy_Services_Logo.svg"></div>
+		<div class="company">TCS</div>
+		<div class="role">Software Engineer</div>
+		<div class="category">IT Services</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="Infosys">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Infosys_logo.svg"></div>
+		<div class="company">Infosys</div>
+		<div class="role">System Engineer</div>
+		<div class="category">IT</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="Capgemini">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Capgemini_201x_logo.svg"></div>
+		<div class="company">Capgemini</div>
+		<div class="role">Analyst</div>
+		<div class="category">Consultancy</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="Wipro">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Wipro_Logo_2017.svg"></div>
+		<div class="company">Wipro</div>
+		<div class="role">Project Engineer</div>
+		<div class="category">Software</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+		<div class="card" data-company="HCL">
+		<div class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/7/74/HCL_Technologies_logo.svg"></div>
+		<div class="company">HCL</div>
+		<div class="role">Graduate Trainee</div>
+		<div class="category">IT Services</div>
+		<div class="start">Start Test ↗</div>
+		</div>
+
+    </div>
+  </div>
+
+  <script>
+    const categoryFilter = document.getElementById('categoryFilter');
+    const companyFilter = document.getElementById('companyFilter');
+    const roleFilter = document.getElementById('roleFilter');
+    const clearFilters = document.getElementById('clearFilters');
+    const cards = document.querySelectorAll('.card');
+
+    function applyFilters() {
+      const category = categoryFilter.value;
+      const company = companyFilter.value;
+      const role = roleFilter.value;
+      cards.forEach(card => {
+        const matchCategory = (category === 'All' || card.dataset.category === category);
+        const matchCompany = (company === 'All' || card.dataset.company === company);
+        const matchRole = (role === 'All' || card.dataset.role === role);
+        if (matchCategory && matchCompany && matchRole) card.classList.remove('hidden');
+        else card.classList.add('hidden');
+      });
+    }
+    categoryFilter.addEventListener('change', applyFilters);
+    companyFilter.addEventListener('change', applyFilters);
+    roleFilter.addEventListener('change', applyFilters);
+    clearFilters.addEventListener('click', () => {
+      categoryFilter.value = 'All';
+      companyFilter.value = 'All';
+      roleFilter.value = 'All';
+      applyFilters();
+    });
+    document.querySelectorAll('.start').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const card = e.target.closest('.card');
+        const companyText = card.querySelector('.company').textContent.trim();
+
+        // Map visible company names to canonical keys used by tests
+        const map = {
+          'Google': 'google',
+          'Amazon': 'amazon',
+          'TCS': 'tcs',
+          'Microsoft': 'microsoft',
+          'Infosys': 'infosys'
+        };
+
+        const companyKey = map[companyText] || companyText.toLowerCase();
+
+        // Save selection to localStorage and go to difficulty selector
+        try { localStorage.setItem('selectedCompany', companyKey); } catch (err) { console.warn(err); }
+        window.location.href = '/select-difficulty/';
+      });
+    });
+  </script>
+</body>
+</html>

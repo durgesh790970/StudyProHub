@@ -1,0 +1,538 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Interview Session — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    .interview-wrap{width:100%;margin:2rem auto;padding:1rem}
+    .intro-card{background:var(--surface);padding:1.25rem;border-radius:12px;box-shadow:0 8px 24px rgba(2,6,23,0.04)}
+    .actions{display:flex;gap:.6rem;margin-top:1rem}
+    .muted-small{color:var(--muted);font-size:.95rem}
+    .center{display:flex;justify-content:center}
+    @media(max-width:600px){.actions{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+    
+        <a href="videos.html">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container interview-wrap">
+    <div id="permissionRequest" class="intro-card">
+      <h2 style="margin:.1rem 0">Camera & Microphone Access</h2>
+      <p class="muted" style="margin:.5rem 0">Please allow access to your camera and microphone to begin the interview.</p>
+      <div style="display:flex;gap:.5rem;align-items:center;margin-top:.5rem">
+        <input id="userEmail" type="email" placeholder="your.email@example.com" style="flex:1;padding:.5rem;border-radius:6px;border:1px solid #e6eefb" />
+        <button id="saveEmail" class="btn secondary">Save</button>
+      </div>
+      <div style="margin-top:.5rem">
+        <button id="startBtn" class="btn">Start Interview</button>
+      </div>
+    </div>
+
+    <!-- Interview area with video preview and countdown -->
+    <div id="interviewArea" style="margin-top:1rem;display:none">
+      <div class="intro-card">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h3 style="margin:0">Interview Session</h3>
+          <div style="display:flex;gap:.75rem;align-items:center">
+            <div id="countdown" style="font-size:1.25rem;font-weight:600;color:var(--primary)"></div>
+            <div id="recordingStatus" style="font-size:.95rem;color:var(--muted)"></div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;display:flex;gap:1rem;flex-wrap:wrap">
+          <div style="flex:1;min-width:320px">
+            <video id="videoPreview" autoplay playsinline muted style="width:100%;border-radius:12px;background:#000;aspect-ratio:16/9;margin-bottom:.75rem;box-shadow:0 8px 24px rgba(2,6,23,0.08)"></video>
+            <div style="background:rgba(2,6,23,0.04);padding:.5rem .75rem;border-radius:8px;margin-bottom:.75rem">
+              <strong>Tips:</strong>
+              <ul style="margin:.25rem 0;padding-left:1.5rem;color:var(--muted)">
+                <li>Ensure good lighting and a quiet environment</li>
+                <li>Position yourself in the center of the frame</li>
+                <li>Test your mic by speaking briefly</li>
+                <li>Have a notepad ready for technical questions</li>
+              </ul>
+            </div>
+          </div>
+            <div style="width:420px">
+              <div id="interviewConsole" style="background:#fff;padding:1rem;border-radius:8px;min-height:220px;box-shadow:0 6px 18px rgba(2,6,23,0.04)"></div>
+              <div id="transcriptArea" style="margin-top:.75rem;background:rgba(2,6,23,0.02);padding:.75rem;border-radius:8px;display:none">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem">
+                  <div style="font-weight:500">Your Answer (Live Transcript)</div>
+                  <div id="transcriptStatus" style="font-size:.85rem;color:var(--muted)">Listening...</div>
+                </div>
+                <div id="currentTranscript" style="background:#fff;padding:.75rem;border-radius:6px;min-height:100px;white-space:pre-wrap;font-size:.95rem"></div>
+              </div>
+              <div style="margin-top:.5rem;display:flex;gap:.5rem;align-items:center">
+                <div style="flex:1">
+                  <div style="font-size:.85rem;color:var(--muted);margin-bottom:.25rem">Mic level</div>
+                  <div id="audioLevel" style="height:8px;background:#e6eefb;border-radius:6px;overflow:hidden"><div id="audioLevelFill" style="height:100%;width:0%;background:#16a34a"></div></div>
+                </div>
+              </div>
+            <div style="margin-top:.75rem;display:flex;gap:.5rem">
+              <button id="nextQuestion" class="btn" style="flex:1;display:none;background:#2563eb">Next Question</button>
+              <button id="endInterview" class="btn" style="background:#b91c1c;display:none">End Interview</button>
+            </div>
+            <div id="downloadArea" style="margin-top:.5rem"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function(){
+      // Check if user came from form submission
+      const submittedKey = 'ai_interview_form_submitted_v1';
+      if(localStorage.getItem(submittedKey) !== '1'){
+        window.location.href = 'Interview.html';
+      }
+
+      const startBtn = document.getElementById('startBtn');
+      const permissionRequest = document.getElementById('permissionRequest');
+      const interviewArea = document.getElementById('interviewArea');
+      const interviewConsole = document.getElementById('interviewConsole');
+      const emailInput = document.getElementById('userEmail');
+      const saveEmailBtn = document.getElementById('saveEmail');
+      const EMAIL_KEY = 'ai_interview_user_email_v1';
+
+      // Restore email if saved
+      const savedEmail = localStorage.getItem(EMAIL_KEY);
+      if(savedEmail){ emailInput.value = savedEmail; }
+
+      saveEmailBtn.addEventListener('click', ()=>{
+        const val = (emailInput.value || '').trim();
+        if(!val || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)){
+          alert('Please enter a valid email address to receive feedback.');
+          return;
+        }
+        localStorage.setItem(EMAIL_KEY, val);
+        // small visual confirmation
+        saveEmailBtn.textContent = 'Saved';
+        setTimeout(()=> saveEmailBtn.textContent = 'Save', 1500);
+      });
+
+      startBtn.addEventListener('click', ()=>{
+        // Ensure user email is saved before starting
+        const emailVal = localStorage.getItem(EMAIL_KEY) || (emailInput.value || '').trim();
+        if(!emailVal){
+          alert('Please enter and save your email address before starting the interview so we can send feedback.');
+          emailInput.focus();
+          return;
+        }
+
+        // Request camera and mic access
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+          .then(stream => {
+            // Hide permission request, show interview area
+            permissionRequest.style.display = 'none';
+            interviewArea.style.display = '';
+
+            const video = document.getElementById('videoPreview');
+            video.srcObject = stream;
+
+            // Setup audio analyser for level meter
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const source = audioContext.createMediaStreamSource(stream);
+            const analyser = audioContext.createAnalyser();
+            analyser.fftSize = 256;
+            source.connect(analyser);
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+            function updateAudioLevel(){
+              analyser.getByteFrequencyData(dataArray);
+              let values = 0;
+              for(let i=0;i<dataArray.length;i++){ values += dataArray[i]; }
+              const average = values / dataArray.length;
+              const pct = Math.min(100, Math.round((average / 255) * 100));
+              const fill = document.getElementById('audioLevelFill');
+              if(fill) fill.style.width = pct + '%';
+              rafId = requestAnimationFrame(updateAudioLevel);
+            }
+
+            let rafId = requestAnimationFrame(updateAudioLevel);
+
+            // Question bank (HR + MR style). Expand later or fetch from server.
+            const questions = [
+              {cat:'HR', q:'Tell me about yourself and your background.'},
+              {cat:'HR', q:'Describe a time you had a conflict at work and how you resolved it.'},
+              {cat:'HR', q:'Why do you want this role, and what motivates you?'},
+              {cat:'MR', q:'Explain a technical challenge you solved and the steps you took.'},
+              {cat:'MR', q:'How would you design a system to handle large amounts of concurrent users? Outline the high-level components.'},
+              {cat:'MR', q:'Describe how you prioritize tasks when facing tight deadlines.'},
+              {cat:'HR', q:'Tell us about a time you took initiative without being asked.'},
+              {cat:'MR', q:'How do you approach debugging a performance issue in production?'},
+              {cat:'HR', q:'How do you handle feedback and criticism?'},
+              {cat:'MR', q:'Explain the trade-offs between consistency and availability in distributed systems.'}
+            ];
+
+            // UI elements
+            interviewConsole.innerHTML = '<p>Camera and microphone access granted. Interview will begin in <span id="timer">30</span> seconds.</p><p class="muted" style="margin-top:.5rem">Please use this time to adjust your position and check audio.</p>';
+            const timerEl = document.getElementById('timer');
+            const countdownEl = document.getElementById('countdown');
+            const recordingStatus = document.getElementById('recordingStatus');
+            const nextBtn = document.getElementById('nextQuestion');
+            const endBtn = document.getElementById('endInterview');
+            const downloadArea = document.getElementById('downloadArea');
+
+            let preSeconds = 10;
+            let preTimer = setInterval(() => {
+              preSeconds--;
+              if(timerEl) timerEl.textContent = preSeconds;
+              countdownEl.textContent = preSeconds;
+              if(preSeconds <= 0){
+                clearInterval(preTimer);
+                countdownEl.textContent = '';
+                beginInterview();
+              } else if(preSeconds === 5){
+                interviewConsole.innerHTML += '<p class="muted" style="margin-top:.5rem">Interview starting in <strong>5</strong> seconds...</p>';
+              }
+            }, 1000);
+
+            // Variables for interview
+            let mediaRecorder, recordedChunks = [], interviewSeconds = 30 * 60, interviewTimerId;
+            let interviewStartTime = null;
+            let questionIndex = 0;
+            const questionLog = [];
+            let recognition = null;
+            let currentTranscript = '';
+            let transcriptHistory = {};
+
+            // Initialize speech recognition if available
+            if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+              recognition = new (window.webkitSpeechRecognition || window.SpeechRecognition)();
+              recognition.continuous = false; // Changed to false to reset per question
+              recognition.interimResults = true;
+              recognition.lang = 'en-US'; // can be made configurable
+
+              recognition.onstart = () => {
+                document.getElementById('transcriptStatus').textContent = 'Listening...';
+                document.getElementById('transcriptArea').style.display = 'block';
+              };
+
+              recognition.onresult = (event) => {
+                let interim = '';
+                let final = transcriptHistory[questionIndex] || '';
+                
+                // Process only the latest results
+                const results = event.results;
+                const lastResult = results[results.length - 1];
+                
+                if(lastResult.isFinal) {
+                  final += lastResult[0].transcript + ' ';
+                  transcriptHistory[questionIndex] = final;
+                  currentTranscript = final;
+                } else {
+                  interim = lastResult[0].transcript;
+                }
+                
+                // Update display with current question's answer only
+                document.getElementById('currentTranscript').textContent = final + (interim ? '... ' + interim : '');
+              };
+
+              recognition.onerror = (event) => {
+                if(event.error === 'no-speech'){
+                  document.getElementById('transcriptStatus').textContent = 'No speech detected';
+                } else {
+                  console.error('Speech recognition error:', event.error);
+                  document.getElementById('transcriptStatus').textContent = 'Error: ' + event.error;
+                }
+              };
+
+              recognition.onend = () => {
+                // Store final transcript for current question
+                if(currentTranscript) {
+                  transcriptHistory[questionIndex] = currentTranscript;
+                }
+                // Auto-restart unless we're ending the interview
+                if(document.getElementById('transcriptArea').style.display !== 'none'){
+                  recognition.start();
+                }
+              };
+            }
+
+            function beginInterview(){
+              // Start speech recognition if available
+              if(recognition){
+                try{
+                  recognition.start();
+                }catch(e){
+                  console.error('Could not start speech recognition:', e);
+                }
+              } else {
+                console.warn('Speech recognition not available');
+                document.getElementById('transcriptArea').innerHTML = '<div style="color:#b91c1c;padding:.5rem">Speech-to-text not available in this browser</div>';
+              }
+
+              // Start MediaRecorder
+              try{
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp8,opus' });
+              }catch(e){
+                try{ mediaRecorder = new MediaRecorder(stream); }catch(e2){
+                  console.error('MediaRecorder not supported or cannot be created', e2);
+                  interviewConsole.innerHTML = '<div style="color:#b91c1c">Recording not supported in this browser. Interview will continue without recording.</div>';
+                  mediaRecorder = null;
+                }
+              }
+
+              if(mediaRecorder){
+                recordedChunks = [];
+                mediaRecorder.ondataavailable = function(e){ if(e.data && e.data.size) recordedChunks.push(e.data); };
+                mediaRecorder.start();
+                recordingStatus.textContent = 'Recording';
+                recordingStatus.style.color = '#16a34a';
+              }
+
+              interviewStartTime = Date.now();
+              // Start interview timer (10 minutes)
+              let remaining = 1 * 60;
+              updateInterviewTimerDisplay(remaining);
+              interviewTimerId = setInterval(()=>{
+                remaining--;
+                updateInterviewTimerDisplay(remaining);
+                if(remaining <= 0){
+                  clearInterval(interviewTimerId);
+                  finishInterview();
+                }
+              }, 1000);
+
+              // show controls
+              nextBtn.style.display = '';
+              endBtn.style.display = '';
+
+              // Ask first question
+              questionIndex = 0;
+              askQuestion(questionIndex);
+            }
+
+            function updateInterviewTimerDisplay(sec){
+              const mm = Math.floor(sec/60).toString().padStart(2,'0');
+              const ss = (sec%60).toString().padStart(2,'0');
+              const countdownEl = document.getElementById('countdown');
+              if(countdownEl) countdownEl.textContent = mm + ':' + ss;
+            }
+
+            // Simple rule-based feedback generator. Replace with AI-driven analysis if desired.
+            function generateFeedback(data){
+              const lines = [];
+              lines.push('Interview Summary');
+              lines.push('Time: ' + data.interviewTime);
+              lines.push('Duration (s): ' + data.duration);
+              lines.push('');
+
+              let strengths = [];
+              let improvements = [];
+
+              data.questions.forEach((q, i) => {
+                const answer = (q.answer || '').toLowerCase();
+                const words = (q.answer || '').trim().split(/\s+/).filter(Boolean).length;
+                if(words >= 40) strengths.push('Q'+(i+1)+': Provided a detailed answer.');
+                if(words > 0 && words < 15) improvements.push('Q'+(i+1)+': Try to provide more detail and examples (short answer).');
+                if(answer.includes('i') || answer.includes('we') || answer.includes('my')){
+                  // neutral - no action
+                }
+                // MR-specific heuristics
+                if(q.category === 'MR'){
+                  if(answer.includes('design') || answer.includes('scale') || answer.includes('optim')) strengths.push('Q'+(i+1)+': Good use of engineering concepts.');
+                  else improvements.push('Q'+(i+1)+': Consider mentioning concrete design decisions (scalability, caching, trade-offs).');
+                }
+                // HR heuristics
+                if(q.category === 'HR'){
+                  if(answer.includes('team') || answer.includes('collabor') || answer.includes('lead')) strengths.push('Q'+(i+1)+': Good focus on teamwork and collaboration.');
+                }
+              });
+
+              if(strengths.length) lines.push('Strengths:\n' + strengths.join('\n'));
+              if(improvements.length) lines.push('\nAreas to improve:\n' + improvements.join('\n'));
+              if(!strengths.length && !improvements.length) lines.push('No clear automated feedback could be generated. Consider using the AI feedback option.');
+
+              return lines.join('\n\n');
+            }
+
+            function askQuestion(idx){
+              if(idx < 0 || idx >= questions.length) return;
+              const q = questions[idx];
+              const elapsed = Math.round((Date.now() - interviewStartTime)/1000);
+              
+              // Reset transcript for new question
+              currentTranscript = transcriptHistory[idx] || '';
+              document.getElementById('currentTranscript').textContent = currentTranscript;
+              
+              // push a question entry with start time; end time will be set when user clicks Next
+              questionLog.push({ index: idx, category: q.cat, question: q.q, startAtSeconds: elapsed, endAtSeconds: null, durationSeconds: null });
+              interviewConsole.innerHTML = '<p><strong>Question ' + (idx+1) + ' ('+q.cat+')</strong></p><p>' + q.q + '</p><p class="muted" style="margin-top:.5rem">When you are done answering, click Next Question.</p>';
+
+              // Use speech synthesis to ask question (if available)
+              if('speechSynthesis' in window){
+                try{
+                  const utter = new SpeechSynthesisUtterance(q.q);
+                  utter.lang = 'en-US';
+                  window.speechSynthesis.cancel();
+                  window.speechSynthesis.speak(utter);
+                }catch(e){ /* ignore */ }
+              }
+            }
+
+            // Next question handler
+            nextBtn.addEventListener('click', ()=>{
+              // mark end time for the current question
+              const nowElapsed = Math.round((Date.now() - interviewStartTime)/1000);
+              const currentLog = questionLog[questionIndex];
+              if(currentLog && currentLog.endAtSeconds === null){
+                currentLog.endAtSeconds = nowElapsed;
+                currentLog.durationSeconds = currentLog.endAtSeconds - currentLog.startAtSeconds;
+                currentLog.answer = transcriptHistory[questionIndex] || ''; // save this question's transcript
+              }
+
+              // Stop current recognition session
+              if(recognition) {
+                recognition.stop();
+              }
+              
+              // Reset transcript for next question
+              currentTranscript = '';
+              document.getElementById('currentTranscript').textContent = '';
+
+              // stop any ongoing speech
+              if('speechSynthesis' in window){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+
+              questionIndex++;
+              if(questionIndex < questions.length){
+                askQuestion(questionIndex);
+              } else {
+                // No more questions - end interview early or loop
+                interviewConsole.innerHTML = '<p><strong>No more prepared questions.</strong></p><p>You may end the interview or continue speaking until the timer ends.</p>';
+                nextBtn.style.display = 'none';
+              }
+            });
+
+            endBtn.addEventListener('click', ()=>{
+              finishInterview();
+            });
+
+            function finishInterview(){
+              // Stop timers and recording
+              if(interviewTimerId) clearInterval(interviewTimerId);
+              if(mediaRecorder && mediaRecorder.state !== 'inactive'){
+                mediaRecorder.stop();
+              }
+              recordingStatus.textContent = 'Saving...';
+              recordingStatus.style.color = 'var(--muted)';
+
+              // Stop analyser raf
+              try{ cancelAnimationFrame(rafId); }catch(e){}
+
+              // Stop speech recognition
+              if(recognition){
+                recognition.stop();
+                document.getElementById('transcriptArea').style.display = 'none';
+              }
+
+              // Stop tracks
+              try{ stream.getTracks().forEach(t=>t.stop()); }catch(e){}
+
+              // Send interview data via email
+              const emailData = {
+                interviewTime: new Date(interviewStartTime).toLocaleString(),
+                duration: Math.round((Date.now() - interviewStartTime)/1000),
+                questions: questionLog.map(q => ({
+                  question: q.question,
+                  category: q.cat,
+                  answer: q.answer || '(No transcript available)',
+                  duration: q.durationSeconds + ' seconds'
+                }))
+              };
+
+              // Generate feedback text
+              const feedbackText = generateFeedback(emailData);
+
+              // For now, we'll create a local transcript blob and also POST to backend API to send email
+              const transcriptBlob = new Blob([JSON.stringify(emailData, null, 2)], { type: 'application/json' });
+              const transcriptUrl = URL.createObjectURL(transcriptBlob);
+
+              // POST feedback + data to backend API endpoint (server required)
+              const userEmail = localStorage.getItem(EMAIL_KEY) || (document.getElementById('userEmail').value||'').trim();
+              if(userEmail){
+                // Use explicit backend URL (adjust if your backend runs on a different host/port)
+                fetch('http://localhost:5000/api/send-feedback', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ email: userEmail, feedback: feedbackText, interviewData: emailData })
+                }).then(response => {
+                  // parse JSON body safely
+                  return response.json().then(body => ({ ok: response.ok, status: response.status, body })).catch(() => ({ ok: response.ok, status: response.status, body: null }));
+                }).then(({ok, status, body})=>{
+                  const note = document.createElement('div');
+                  note.style.marginTop = '.5rem';
+                  if(ok){
+                    note.innerHTML = '<div style="color:#16a34a">Feedback sent to ' + userEmail + '.</div>';
+                  } else {
+                    const msg = body && body.message ? body.message : ('HTTP ' + status);
+                    note.innerHTML = '<div style="color:#b91c1c">Feedback could not be sent automatically: ' + msg + '. You can still download the transcript and feedback.</div>';
+                  }
+                  downloadArea.appendChild(note);
+                }).catch(err=>{
+                  console.error('Error sending feedback to backend:', err);
+                  const note = document.createElement('div');
+                  note.style.marginTop = '.5rem';
+                  note.innerHTML = '<div style="color:#b91c1c">Feedback sending failed (network). You can still download the transcript and feedback.</div>';
+                  downloadArea.appendChild(note);
+                });
+              }
+
+              // Prepare downloads
+              if(recordedChunks && recordedChunks.length){
+                const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                downloadArea.innerHTML = 
+                  '<div style="display:flex;flex-direction:column;gap:.5rem">' +
+                    '<a class="btn" href="'+url+'" download="interview_recording.webm">Download recording</a>' +
+                    '<a class="btn secondary" href="'+transcriptUrl+'" download="interview_transcript.json">Download transcript & answers</a>' +
+                    '<a class="btn secondary" id="downloadFeedback" href="#">Download generated feedback</a>' +
+                    '<a id="saveLog" class="btn secondary" href="#">Download timestamps</a>' +
+                  '</div>';
+
+                // Attach feedback download
+                document.getElementById('downloadFeedback').addEventListener('click', (e)=>{
+                  e.preventDefault();
+                  const fbBlob = new Blob([feedbackText], { type: 'text/plain' });
+                  const u = URL.createObjectURL(fbBlob);
+                  const a2 = document.createElement('a'); a2.href = u; a2.download = 'feedback.txt'; document.body.appendChild(a2); a2.click(); a2.remove();
+                });
+
+                document.getElementById('saveLog').addEventListener('click', (e)=>{
+                  e.preventDefault();
+                  const blob2 = new Blob([JSON.stringify({ startedAt: interviewStartTime, questions: questionLog }, null, 2)], { type: 'application/json' });
+                  const url2 = URL.createObjectURL(blob2);
+                  const a = document.createElement('a');
+                  a.href = url2; a.download = 'question_timestamps.json'; document.body.appendChild(a); a.click(); a.remove();
+                });
+              } else {
+                downloadArea.innerHTML = '<div class="muted-small">No recording was captured.</div>';
+              }
+
+              interviewConsole.innerHTML += '<p class="muted" style="margin-top:.5rem">Interview finished. You can download your recording and timestamps above.</p>';
+              recordingStatus.textContent = 'Stopped';
+              nextBtn.style.display = 'none';
+              endBtn.style.display = 'none';
+            }
+          })
+          .catch(err => {
+            console.error('Error accessing media devices:', err);
+            interviewConsole.innerHTML = '<div style="color:#b91c1c">Please allow camera and microphone access to continue. Refresh the page to try again.</div>';
+          });
+      });
+    })();
+  </script>
+
+</body>
+</html>

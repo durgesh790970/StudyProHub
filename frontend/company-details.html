@@ -1,0 +1,524 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ company.name }} - Interview Preparation | StudyPro Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .company-logo-section {
+            flex-shrink: 0;
+        }
+
+        .company-logo-large {
+            width: 120px;
+            height: 120px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .company-logo-large img {
+            max-width: 90px;
+            max-height: 90px;
+            object-fit: contain;
+        }
+
+        .header-text h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header-text p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+
+        .header-badges {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 1000;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .card.accent-border {
+            border-top-color: var(--accent);
+        }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card h3 .icon {
+            font-size: 1.8rem;
+        }
+
+        .card p, .card ul {
+            color: var(--muted);
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .card li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Salary Card */
+        .salary-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .salary-item {
+            background: var(--surface);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .salary-item .label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .salary-item .amount {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Interview Process Timeline */
+        .timeline {
+            margin-top: 1rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .timeline-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 50px;
+            width: 2px;
+            height: calc(100% + 30px);
+            background: var(--primary);
+            opacity: 0.3;
+        }
+
+        .timeline-dot {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-content h4 {
+            margin-bottom: 0.3rem;
+            color: var(--text);
+        }
+
+        .timeline-content p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        /* Tips Card */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tip-item {
+            background: var(--surface);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .tip-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .tip-content p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* Action Button */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--surface);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-text h1 {
+                font-size: 1.8rem;
+            }
+
+            .header-badges {
+                justify-content: center;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .salary-info {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            margin-top: 3rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animation */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header, .card, .content-grid {
+            animation: slideInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Like Dashboard -->
+    <header class="site-header">
+        <div class="container">
+            <div class="nav-wrap">
+                <a href="{% url 'accounts:index' %}" class="brand">
+                    <span class="logo">SP</span>
+                    <span>StudyPro Hub</span>
+                </a>
+                <nav class="main-nav">
+                    <a href="{% url 'accounts:pdfs_page' %}">PDF</a>
+                    <a href="{% url 'accounts:videos_page' %}">Video</a>
+                    <a href="{% url 'accounts:quiz_page' %}">Quiz</a>
+                    <a href="{% url 'accounts:BTech_page' %}">BTech</a>
+                    <a href="{% url 'accounts:select_difficulty' %}">Mock Test</a>
+                    <a href="{% url 'accounts:interview_page' %}">Interview</a>
+                    <a href="{% url 'accounts:contect_page' %}">Contact</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'accounts:profile' %}" class="profile-link">👤</a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="company-logo-section">
+                <div class="company-logo-large">
+                    {% if company.logo_url %}
+                        <img src="{{ company.logo_url }}" alt="{{ company.name }}">
+                    {% else %}
+                        <span style="font-size: 3rem">🏢</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="header-text">
+                <h1>{{ company.name }}</h1>
+                <p>{{ company.tagline }}</p>
+                <div class="header-badges">
+                    {% for industry in company.industries %}
+                        <span class="badge">{{ industry }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-grid">
+            <!-- About Company -->
+            <div class="card">
+                <h3><span class="icon">ℹ️</span> About {{ company.name }}</h3>
+                <p>{{ company.description }}</p>
+            </div>
+
+            <!-- Hiring Info -->
+            <div class="card accent-border">
+                <h3><span class="icon">👥</span> Hiring Information</h3>
+                <p><strong>Actively Hiring For:</strong></p>
+                <ul>
+                    {% for role in company.hiring_roles %}
+                        <li>{{ role }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Salary & Benefits -->
+            <div class="card">
+                <h3><span class="icon">💰</span> Salary & Benefits</h3>
+                <div class="salary-info">
+                    <div class="salary-item">
+                        <div class="label">Base Salary</div>
+                        <div class="amount">{{ company.salary_range }}</div>
+                    </div>
+                    <div class="salary-item">
+                        <div class="label">Bonus Range</div>
+                        <div class="amount">{{ company.bonus }}</div>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; margin-bottom: 0"><strong>Key Benefits:</strong></p>
+                <ul style="margin-top: 0.5rem">
+                    {% for benefit in company.benefits %}
+                        <li>{{ benefit }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Interview Process & Required Skills (Two Column) -->
+        <div class="two-column">
+            <!-- Interview Process -->
+            <div class="card">
+                <h3><span class="icon">📋</span> Interview Process</h3>
+                <div class="timeline">
+                    {% for step in company.interview_process %}
+                        <div class="timeline-item">
+                            <div class="timeline-dot">{{ forloop.counter }}</div>
+                            <div class="timeline-content">
+                                <h4>{{ step.round }}</h4>
+                                <p>{{ step.description }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Required Skills -->
+            <div class="card accent-border">
+                <h3><span class="icon">🎯</span> Required Skills</h3>
+                <div style="display: grid; gap: 1rem;">
+                    {% for skill_category in company.required_skills %}
+                        <div>
+                            <strong style="color: var(--primary);">{{ skill_category.category }}</strong>
+                            <ul style="margin-top: 0.5rem;">
+                                {% for skill in skill_category.items %}
+                                    <li>{{ skill }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Interview Tips -->
+        <div class="card" style="margin-top: 2rem;">
+            <h3><span class="icon">💡</span> Interview Tips & Preparation</h3>
+            <div class="tips-grid">
+                {% for tip in company.interview_tips %}
+                    <div class="tip-item">
+                        <div class="tip-icon">{{ tip.icon }}</div>
+                        <div class="tip-content">
+                            <p><strong>{{ tip.title }}:</strong> {{ tip.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons" style="margin-top: 2rem;">
+            <a href="{% url 'accounts:select_difficulty' %}" class="btn btn-primary">
+                📝 Start Mock Test
+            </a>
+            <a href="{% url 'accounts:pdfs_page' %}" class="btn btn-secondary">
+                📚 View Study Materials
+            </a>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Best of luck with your interview preparation! 🚀</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                <a href="{% url 'accounts:index' %}">Home</a> • 
+                <a href="{% url 'accounts:pdfs_page' %}">PDFs</a> • 
+                <a href="{% url 'accounts:select_difficulty' %}">Mock Tests</a> • 
+                <a href="{% url 'accounts:profile' %}">Profile</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

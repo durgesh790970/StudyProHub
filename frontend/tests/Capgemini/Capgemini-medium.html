@@ -1,0 +1,36 @@
+{% include 'test-page.html' with company='capgemini' difficulty='medium' company_logo_url='/static/accounts/img/logos/capgemini.svg' %}
+
+<script>
+// Capgemini MEDIUM - 15 mixed technical
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What is the average-case complexity of quicksort?', option_a: 'O(n^2)', option_b: 'O(n log n)', option_c: 'O(n)', option_d: 'O(log n)', correct_answer: 'B' },
+	{ question_text: 'Which data structure best implements LRU cache?', option_a: 'Array', option_b: 'LinkedHashMap', option_c: 'Stack', option_d: 'Queue', correct_answer: 'B' },
+	{ question_text: 'Which is used for breadth-first search?', option_a: 'Stack', option_b: 'Queue', option_c: 'Heap', option_d: 'Set', correct_answer: 'B' },
+	{ question_text: 'Which algorithm finds MST?', option_a: 'Dijkstra', option_b: 'Kruskal', option_c: 'Bellman-Ford', option_d: 'Floyd', correct_answer: 'B' },
+	{ question_text: 'Small aptitude: 15*6 = ?', option_a: '90', option_b: '75', option_c: '60', option_d: '100', correct_answer: 'A' },
+	{ question_text: 'What does SQL stand for?', option_a: 'Structured Query Language', option_b: 'Simple Query Language', option_c: 'Sequential Query Language', option_d: 'Structured Queue Language', correct_answer: 'A' },
+	{ question_text: 'Which is NOT a NoSQL DB?', option_a: 'MongoDB', option_b: 'Redis', option_c: 'MySQL', option_d: 'Cassandra', correct_answer: 'C' },
+	{ question_text: 'Which traversal yields sorted order for BST?', option_a: 'Preorder', option_b: 'Inorder', option_c: 'Postorder', option_d: 'Levelorder', correct_answer: 'B' },
+	{ question_text: 'Which is a balanced BST?', option_a: 'AVL', option_b: 'LinkedList', option_c: 'Heap', option_d: 'Stack', correct_answer: 'A' },
+	{ question_text: 'What is memoization used for?', option_a: 'Caching subproblem results', option_b: 'Sorting', option_c: 'Graph traversal', option_d: 'IO operations', correct_answer: 'A' },
+	{ question_text: 'What is tail recursion?', option_a: 'Recursive call is last action', option_b: 'Multiple recursive calls', option_c: 'Infinite recursion', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Simple aptitude: 100/25 = ?', option_a: '4', option_b: '5', option_c: '3', option_d: '2', correct_answer: 'A' },
+	{ question_text: 'Which is stable and O(n) extra memory sort?', option_a: 'Merge sort', option_b: 'Selection sort', option_c: 'Heap sort', option_d: 'Quick sort', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is used for shortest path with negative edges?', option_a: 'Dijkstra', option_b: 'Bellman-Ford', option_c: 'Prim', option_d: 'Kruskal', correct_answer: 'B' },
+	{ question_text: 'Which search is best for sorted arrays?', option_a: 'Linear', option_b: 'Binary', option_c: 'DFS', option_d: 'BFS', correct_answer: 'B' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+
+{% include 'test-page.html' with company='capgemini' difficulty='medium' company_logo_url='/static/accounts/img/logos/capgemini.svg' %}

@@ -1,0 +1,35 @@
+{% include 'test-page.html' with company='wipro' difficulty='medium' company_logo_url='/static/accounts/img/logos/wipro.svg' %}
+
+<script>
+// Wipro MEDIUM - 15 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Which algorithm finds shortest path (non-negative)?', option_a: 'Dijkstra', option_b: 'Bellman-Ford', option_c: 'Prim', option_d: 'Kruskal', correct_answer: 'A' },
+	{ question_text: 'Time complexity of quicksort average-case?', option_a: 'O(n^2)', option_b: 'O(n log n)', option_c: 'O(n)', option_d: 'O(log n)', correct_answer: 'B' },
+	{ question_text: 'Which is ACID property?', option_a: 'Atomicity', option_b: 'Availability only', option_c: 'Partition', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'What is a race condition?', option_a: 'Ordering issue in concurrency', option_b: 'A database index', option_c: 'A sorting algorithm', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which token is stateless?', option_a: 'Session id', option_b: 'JWT', option_c: 'Cookie', option_d: 'CSRF token', correct_answer: 'B' },
+	{ question_text: 'Which HTTP method is idempotent?', option_a: 'POST', option_b: 'PUT', option_c: 'PATCH', option_d: 'CONNECT', correct_answer: 'B' },
+	{ question_text: 'Which data structure is best for priority queue?', option_a: 'Heap', option_b: 'Array', option_c: 'LinkedList', option_d: 'Stack', correct_answer: 'A' },
+	{ question_text: 'DB index improves?', option_a: 'Insert speed', option_b: 'Select speed', option_c: 'Delete speed', option_d: 'All', correct_answer: 'B' },
+	{ question_text: 'Which is a message broker?', option_a: 'Kafka', option_b: 'Nginx', option_c: 'MySQL', option_d: 'Redis (not primarily)', correct_answer: 'A' },
+	{ question_text: 'Which CSS property centers text?', option_a: 'text-align:center', option_b: 'align:center', option_c: 'center:true', option_d: 'justify', correct_answer: 'A' },
+	{ question_text: 'What is referential integrity?', option_a: 'Foreign key constraints', option_b: 'CSS rule', option_c: 'API auth', option_d: 'Caching', correct_answer: 'A' },
+	{ question_text: 'Which is eventual consistency?', option_a: 'Strong consistency', option_b: 'Partitioned consistency', option_c: 'Eventual consistency', option_d: 'None', correct_answer: 'C' },
+	{ question_text: 'Which is used for containerization?', option_a: 'Docker', option_b: 'Vagrant', option_c: 'VirtualBox', option_d: 'Hyper-V', correct_answer: 'A' },
+	{ question_text: 'Which is for orchestration?', option_a: 'Docker', option_b: 'Kubernetes', option_c: 'Git', option_d: 'Jenkins', correct_answer: 'B' },
+	{ question_text: 'Aptitude: 12*12 = ?', option_a: '144', option_b: '124', option_c: '154', option_d: '134', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+

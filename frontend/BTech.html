@@ -1,0 +1,130 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDFs — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+        
+        <a href="videos.html">Videos</a>
+		<a href="Interview.html">Interview</a>
+		<a href="pdfs.html">PDFs</a>
+		<a href="quiz.html">Quiz</a>
+		
+      </nav>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+      <div>
+        <h2 style="margin:.2rem 0">B.Tech All semester</h2>
+        <p class="muted">Purchase semester notes and previous year papers for targeted practice.</p>
+      </div>
+      <div style="display:flex;gap:.5rem">
+        <input id="pdfSearch" placeholder="Search PDFs, company or topic" style="padding:.5rem .75rem;border-radius:8px;border:1px solid #e6eef8;min-width:260px" />
+        <select id="filterCompany" style="padding:.5rem .6rem;border-radius:8px;border:1px solid #e6eef8">
+          <option value="">sem1</option>
+          <option>sem2</option>
+          <option>sem3</option>
+		  <option>sem4</option>
+		  <option>sem5</option>
+		  <option>sem6</option>
+		  <option>sem7</option>
+		  <option>sem8</option>
+
+        </select>
+      </div>
+    </div>
+
+    <section id="pdfList" style="margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
+
+      <div class="card">
+        <h4 style="margin:.25rem 0">Semester 1 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 1  exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-1">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 2 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 2 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-2">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 3 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 3 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-3">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 4 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 4 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-4">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 5 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 5 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-5">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 6 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 6 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-6">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 7 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 7 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-7">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Semester 8 — Exam based Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Semester 8 exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="semester-8">Purchase ₹99</button>
+          <button class="btn" style="background:#f1f3f5;color:#111">View Notes</button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/payment.js' %}"></script>
+</body>
+</html>

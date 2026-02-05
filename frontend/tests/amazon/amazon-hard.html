@@ -1,0 +1,39 @@
+{% include 'test-page.html' with company='amazon' difficulty='hard' company_logo_url='/static/accounts/img/logos/amazon.svg' %}
+
+<script>
+// Amazon HARD - 20 logical + coding MCQ
+window.INLINE_QUESTIONS = [
+  { question_text: 'Logical: Find next: 1, 4, 9, 16, ?', option_a: '25', option_b: '20', option_c: '30', option_d: '36', correct_answer: 'A' },
+  { question_text: 'Coding: What is closure in JS?', option_a: 'Function + lexical scope', option_b: 'Object type', option_c: 'Async call', option_d: 'Prototype', correct_answer: 'A' },
+  { question_text: 'Logical: If x+y=10 and x-y=2, x=?', option_a: '6', option_b: '4', option_c: '5', option_d: '7', correct_answer: 'A' },
+  { question_text: 'Coding: Which is true about REST?', option_a: 'Stateful', option_b: 'Stateless', option_c: 'Depends', option_d: 'None', correct_answer: 'B' },
+  { question_text: 'Logical: Averages: mean of 2 and 4 is?', option_a: '3', option_b: '4', option_c: '2', option_d: '6', correct_answer: 'A' },
+  { question_text: 'Coding: Which sorting uses divide and conquer?', option_a: 'Bubble', option_b: 'Quick', option_c: 'Linear', option_d: 'Selection', correct_answer: 'B' },
+  { question_text: 'Logical: Which shape has 4 equal sides?', option_a: 'Rectangle', option_b: 'Square', option_c: 'Rhombus', option_d: 'Parallelogram', correct_answer: 'B' },
+  { question_text: 'Coding: Which is used to persist data in browser?', option_a: 'localStorage', option_b: 'RAM', option_c: 'CPU', option_d: 'Cache', correct_answer: 'A' },
+  { question_text: 'Logical: If probability of event is 0.5, odds?', option_a: '1:1', option_b: '1:2', option_c: '0.5:1', option_d: '2:1', correct_answer: 'A' },
+  { question_text: 'Coding: Which HTTP status represents Created?', option_a: '200', option_b: '201', option_c: '404', option_d: '500', correct_answer: 'B' },
+  { question_text: 'Logical: 2^5 = ?', option_a: '32', option_b: '16', option_c: '64', option_d: '8', correct_answer: 'A' },
+  { question_text: 'Coding: Which language is primarily used for Android native?', option_a: 'Java/Kotlin', option_b: 'Swift', option_c: 'C#', option_d: 'JS', correct_answer: 'A' },
+  { question_text: 'Logical: If 3x=15, x=?', option_a: '5', option_b: '4', option_c: '6', option_d: '3', correct_answer: 'A' },
+  { question_text: 'Coding: What does SQL stand for?', option_a: 'Structured Query Language', option_b: 'Simple Query List', option_c: 'Sequential Query Language', option_d: 'Structured Queue Language', correct_answer: 'A' },
+  { question_text: 'Logical: 10% of 200 = ?', option_a: '20', option_b: '10', option_c: '2', option_d: '200', correct_answer: 'A' },
+  { question_text: 'Coding: Which is NOT a NoSQL DB?', option_a: 'MongoDB', option_b: 'Redis', option_c: 'MySQL', option_d: 'Cassandra', correct_answer: 'C' },
+  { question_text: 'Logical: If speed = distance/time, distance = 60, time = 2, speed?', option_a: '30', option_b: '60', option_c: '120', option_d: '15', correct_answer: 'A' },
+  { question_text: 'Coding: Which is a frontend framework?', option_a: 'React', option_b: 'Django', option_c: 'Flask', option_d: 'Express', correct_answer: 'A' },
+  { question_text: 'Logical: Sum of angles in triangle = ?', option_a: '180', option_b: '90', option_c: '360', option_d: '270', correct_answer: 'A' },
+  { question_text: 'Coding: Which protocol is used for secure HTTP?', option_a: 'FTP', option_b: 'TLS/HTTPS', option_c: 'SMTP', option_d: 'TCP', correct_answer: 'B' }
+];
+window.INLINE_TIME_LIMIT = 30 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

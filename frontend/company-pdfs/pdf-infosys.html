@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infosys PDF Materials</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+body {
+    background-color: #f7f9fc;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.pdf-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+.breadcrumb {
+    margin-bottom: 2rem;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.breadcrumb a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    margin: 0.5rem 0 0.75rem 0;
+    font-size: 2rem;
+    color: #111;
+    font-weight: 700;
+}
+
+.page-header p {
+    margin: 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.pdf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.pdf-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.pdf-title {
+    color: #1a56db;
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.pdf-description {
+    color: #555;
+    font-size: 0.9rem;
+    margin: 0 0 1rem 0;
+    flex-grow: 1;
+    line-height: 1.5;
+}
+
+.pdf-meta {
+    color: #999;
+    font-size: 0.85rem;
+    margin: 0.75rem 0;
+}
+
+.download-btn {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: auto;
+    text-align: center;
+}
+
+.download-btn:hover {
+    background: #1d4ed8;
+}
+    </style>
+</head>
+<body>
+    {% include 'includes/site_header.html' %}
+
+    <main class="pdf-container">
+        <div class="breadcrumb">
+            <a href="../pdfs.html">PDFs</a> &raquo; 
+            <span>Infosys Materials</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Infosys PDF Materials</h1>
+            <p>Access comprehensive PDF materials for Infosys interview preparation including assessments and technical interviews.</p>
+        </div>
+        
+        <div class="pdf-grid">
+            <!-- PDF cards will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // Sample PDF data specific to Infosys
+        const pdfData = [
+            {
+                title: "Infosys All Round Details ",
+                description: "Infosys All Round Online Test (Reasoning + Technical + Verbal) time - 120 minutes",
+                pages: 70,
+                year: 2023,
+                url: "../assets/pdf/Info_Round.pdf"
+            },
+            {
+                title: "Infosys Reasoning Ability Guide",
+                description: "Collection of reasoning ability problems with detailed solutions",
+                pages: 95,
+                year: 2023,
+                url: "../assets/pdf/Infosys_Reasoning.pdf"
+            },
+            {
+                title: "Infosys Technical Ability Guide",
+                description: "Comprehensive technical concepts and interview questions",
+                pages: 80,
+                year: 2023,
+                url: "../assets/pdf/Info_Technical.pdf"
+            },
+            {
+                title: "Infosys Verbal Ability Guide",
+                description: "Past years question papers with solutions",
+                pages: 110,
+                year: 2023,
+                url: "../assets/pdf/Infosys_Varbal.pdf"
+            },
+            {
+                title: "Infosys Pseudocode & Programming Guide",
+                description: "Fundamental programming concepts and pseudocode examples",
+                pages: 50,
+                year: 2023,
+                url: "../assets/pdf/Infosys_PsoudoCode.pdf"
+            },
+            {
+                title: "Infosys English Grammar ",
+                description: "Comprehensive guide to English grammar and writing skills",
+                pages: 75,
+                year: 2023,
+                url: "../assets/pdf/Infosys_Grammar1.pdf"
+            },
+
+			{
+                title: "Infosys English Writing ",
+                description: "Comprehensive guide to English writing skills",
+                pages: 75,
+                year: 2023,
+                url: "../assets/pdf/Infosys_writing1.pdf"
+            },
+			{
+                title: "Infosys SP/DSE details ",
+                description: "Infosys SP/DSE Online Test 3 Coding Questions time - 180 minutes",
+                pages: 75,
+                year: 2023,
+                url: "../assets/pdf/Info_SPDPE.pdf"
+            }
+        ];
+
+        // Populate PDF grid
+        const pdfGrid = document.querySelector('.pdf-grid');
+        pdfData.forEach(pdf => {
+            const card = document.createElement('div');
+            card.className = 'pdf-card';
+            card.innerHTML = `
+                <h3 class="pdf-title">${pdf.title}</h3>
+                <p class="pdf-description">${pdf.description}</p>
+                <div class="pdf-meta">${pdf.pages} pages • ${pdf.year}</div>
+                <button class="download-btn" onclick="openPDF('${pdf.url}')">Open PDF</button>
+            `;
+            pdfGrid.appendChild(card);
+        });
+
+        // Function to open PDF file
+        function openPDF(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

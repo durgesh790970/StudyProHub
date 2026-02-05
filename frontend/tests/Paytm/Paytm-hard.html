@@ -1,0 +1,39 @@
+{% include 'test-page.html' with company='paytm' difficulty='hard' company_logo_url='/static/accounts/img/logos/paytm.svg' %}
+
+<script>
+// Paytm HARD - 20 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which is two-phase commit used for?', option_a: 'Distributed transactions', option_b: 'Styling', option_c: 'Indexing', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'What is idempotency key used for?', option_a: 'Prevent duplicate operations', option_b: 'Styling', option_c: 'Indexing', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which encryption for data at rest?', option_a: 'AES', option_b: 'TLS', option_c: 'HTTP', option_d: 'FTP', correct_answer: 'A' },
+  { question_text: 'Which is strong consistency?', option_a: 'Synchronous replication', option_b: 'Asynchronous only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for fraud detection?', option_a: 'Anomaly detection', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for high throughput writes?', option_a: 'Cassandra', option_b: 'SQLite', option_c: 'MySQL', option_d: 'Postgres', correct_answer: 'A' },
+  { question_text: 'What is tokenization in payments?', option_a: 'Replace sensitive data with tokens', option_b: 'Encrypt traffic', option_c: 'Styling', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Aptitude: 18*5 = ?', option_a: '90', option_b: '80', option_c: '95', option_d: '85', correct_answer: 'A' },
+  { question_text: 'Which is for eventual consistency?', option_a: 'Asynchronous replication', option_b: 'Synchronous replication', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for payment gateway?', option_a: 'PG provider', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for PCI compliance?', option_a: 'Security standards', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for idempotent REST?', option_a: 'PUT/DELETE', option_b: 'POST only', option_c: 'PATCH only', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is used for secure key storage?', option_a: 'HSM', option_b: 'Public folder', option_c: 'Plain file', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for load balancing?', option_a: 'Round robin/L4/L7', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for fault tolerance?', option_a: 'Redundancy and replication', option_b: 'Single instance', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for observability?', option_a: 'Metrics/logs/traces', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is authentication vs authorization?', option_a: 'AuthN vs AuthZ', option_b: 'Same', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for background retry?', option_a: 'Dead letter queue', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for idempotent processing?', option_a: 'Deduplication', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is used for high availability?', option_a: 'Multi-region replication', option_b: 'Single server', option_c: 'None', option_d: 'All', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

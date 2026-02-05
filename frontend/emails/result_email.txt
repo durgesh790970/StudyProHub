@@ -1,0 +1,11 @@
+{{ test_name }} results for {{ name }}
+
+Score: {{ score }} / {{ total }}
+Accuracy: {{ accuracy }}%
+Time Taken: {{ time_taken }}
+Rank: {{ rank }}
+
+Feedback:
+{{ feedback }}
+
+Open your StudyPro dashboard: {{ brand_url }}

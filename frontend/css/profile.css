@@ -1,0 +1,111 @@
+/* Layout */
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1.2rem;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
+}
+
+/* Profile Side */
+
+.profile-side {
+  text-align: center;
+}
+
+.profile-header {
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: .8rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  border: 3px solid #1565d8;
+}
+
+.profile-link {
+  display: block;
+  margin-top: .5rem;
+  font-size: .95rem;
+  text-decoration: none;
+  color: #1565d8;
+  font-weight: 600;
+}
+
+/* Cards */
+.card {
+  background: #fff;
+  padding: 1.6rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+
+.pdf-list, .tx-list, .purchases-list {
+  list-style: none;
+  padding: 0;
+}
+
+.pdf-item, .tx-list li {
+  padding: .8rem 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pdf-item:hover, .tx-list li:hover {
+  background: #f5f8ff;
+  border-radius: 10px;
+  padding-left: .5rem;
+  transition: .2s ease;
+}
+
+.pdf-item a {
+  text-decoration: none;
+  color: #1565d8;
+  font-weight: 600;
+}
+
+.meta {
+  font-size: .9rem;
+  color: #666;
+}
+
+.muted {
+  font-style: italic;
+  color: #777;
+}
+
+/* Button */
+.btn.secondary {
+  background: #1565d8;
+  color: #fff;
+  padding: .6rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: .3s ease;
+}
+
+.btn.secondary:hover {
+  background: #0b4ba8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}

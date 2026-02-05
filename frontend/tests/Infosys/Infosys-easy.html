@@ -1,0 +1,29 @@
+{% include 'test-page.html' with company='Infosys' difficulty='easy' company_logo_url='/static/accounts/img/logos/infosys.svg' %}
+
+<script>
+// Infosys EASY - 10 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'What is agile?', option_a: 'Iterative development', option_b: 'Waterfall', option_c: 'Design only', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is a programming language?', option_a: 'Java', option_b: 'HTML', option_c: 'CSS', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which DB is relational?', option_a: 'Postgres', option_b: 'MongoDB', option_c: 'Cassandra', option_d: 'Redis', correct_answer: 'A' },
+  { question_text: '2+7 = ?', option_a: '9', option_b: '10', option_c: '8', option_d: '7', correct_answer: 'B' },
+  { question_text: 'Which is for caching?', option_a: 'Redis', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is used for APIs?', option_a: 'REST/GraphQL', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for web UI?', option_a: 'React/Angular', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for unit tests?', option_a: 'pytest / JUnit', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for CI?', option_a: 'Jenkins/GitHub Actions', option_b: 'Manual', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for container runtime?', option_a: 'Docker', option_b: 'VM', option_c: 'None', option_d: 'All', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

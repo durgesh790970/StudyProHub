@@ -1,0 +1,34 @@
+{% include 'test-page.html' with company='TCS' difficulty='medium' company_logo_url='/static/accounts/img/logos/tcs.svg' %}
+
+<script>
+// TCS MEDIUM - 15 Quant + Verbal
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Quant: If 4x=20, x=?', option_a: '5', option_b: '4', option_c: '6', option_d: '3', correct_answer: 'A' },
+	{ question_text: 'Verbal: Choose the synonym for "quick".', option_a: 'Slow', option_b: 'Rapid', option_c: 'Lazy', option_d: 'Weak', correct_answer: 'B' },
+	{ question_text: 'Quant: 8*7 - 10 = ?', option_a: '46', option_b: '56', option_c: '54', option_d: '36', correct_answer: 'A' },
+	{ question_text: 'Verbal: Fill: They have ___ their work.', option_a: 'finished', option_b: 'finish', option_c: 'finishing', option_d: 'finishes', correct_answer: 'A' },
+	{ question_text: 'Quant: What is 20% of 150?', option_a: '30', option_b: '25', option_c: '35', option_d: '40', correct_answer: 'A' },
+	{ question_text: 'Verbal: Choose correct preposition: He sits ___ the table', option_a: 'on', option_b: 'in', option_c: 'at', option_d: 'over', correct_answer: 'C' },
+	{ question_text: 'Quant: Average of first 5 natural numbers?', option_a: '3', option_b: '2', option_c: '4', option_d: '5', correct_answer: 'A' },
+	{ question_text: 'Verbal: Which is a noun?', option_a: 'Run', option_b: 'Happy', option_c: 'Dog', option_d: 'Quickly', correct_answer: 'C' },
+	{ question_text: 'Quant: 9*9 = ?', option_a: '81', option_b: '72', option_c: '90', option_d: '99', correct_answer: 'A' },
+	{ question_text: 'Verbal: Correct sentence?', option_a: 'She don\'t like it.', option_b: 'She doesn\'t like it.', option_c: 'She not like it.', option_d: 'She isn\'t like it.', correct_answer: 'B' },
+	{ question_text: 'Quant: 45/9 = ?', option_a: '5', option_b: '6', option_c: '9', option_d: '7', correct_answer: 'A' },
+	{ question_text: 'Verbal: Choose antonym for "ancient"', option_a: 'Modern', option_b: 'Old', option_c: 'Elder', option_d: 'Historic', correct_answer: 'A' },
+	{ question_text: 'Quant: If x=2, 2^x + 3 = ?', option_a: '7', option_b: '5', option_c: '6', option_d: '9', correct_answer: 'A' },
+	{ question_text: 'Verbal: Which is an adjective?', option_a: 'Run', option_b: 'Blue', option_c: 'Quickly', option_d: 'Speak', correct_answer: 'B' },
+	{ question_text: 'Quant: 7+7+7 = ?', option_a: '21', option_b: '14', option_c: '28', option_d: '35', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

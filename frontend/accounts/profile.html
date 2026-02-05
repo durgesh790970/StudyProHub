@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+<!-- Live Toast Notification -->
+
+<!-- Socket.IO client (CDN) and live-update script -->
+<script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
+<script>
+  (function(){
+    const userId = '{{ profile_user_id|default:"" }}';
+    if (!userId) return;
+
+    const socket = io('http://localhost:3000');
+    socket.on('connect', () => {
+      socket.emit('join', { userId: String(userId) });
+    });
+
+    socket.on('profileUpdated', (profile) => {
+      showToast('✓ Profile updated live!');
+      fetch(`/user/${userId}/profile/`).then(r=>r.json()).then(data=>{
+        if (!data.ok) return;
+        renderProfile(data.profile);
+      }).catch(()=>{});
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('liveToast');
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    function renderProfile(profile){
+      if (!profile) return;
+      const purchasedEl = document.getElementById('purchased-pdfs');
+      if (purchasedEl){
+        if ((profile.purchasedItems || []).length === 0){
+          purchasedEl.innerHTML = '<p class="muted">No purchased items yet.</p>';
+        } else {
+          purchasedEl.innerHTML = '<ul class="pdf-list">' + (profile.purchasedItems||[]).map(p=>
+            `<li class="pdf-item"><a href="#">📄 ${escapeHtml(p.title)}</a><div class="meta">${escapeHtml(p.itemType)} • ${formatDate(p.purchasedAt)}</div></li>`
+          ).join('') + '</ul>';
+        }
+      }
+
+      const attemptsEl = document.getElementById('attempted-mocks');
+      if (attemptsEl){
+        if ((profile.attemptedMocks || []).length === 0){
+          attemptsEl.innerHTML = '<p class="muted">No mock attempts yet.</p>';
+        } else {
+          attemptsEl.innerHTML = '<ul class="attempt-list">' + (profile.attemptedMocks||[]).map(a=>
+            `<li>🎯 <strong>Mock #${escapeHtml(a.mockId)}</strong> — Score: <strong style="color:#4caf50">${escapeHtml(a.score)}/100</strong> — ${formatDate(a.attemptDate)}</li>`
+          ).join('') + '</ul>';
+        }
+      }
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"'`]/g, function(c){
+        return ({  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' })[c] || c;
+      });
+    }
+
+    function formatDate(dateStr) {
+      try { return new Date(dateStr).toLocaleDateString('en-IN', {year:'numeric', month:'short', day:'numeric'}); }
+      catch { return dateStr; }
+    }
+  })();
+</script>
+
+<div class="container">
+  <div class="profile-grid">
+
+    <!-- Profile Left Section (Glassmorphic Card) -->
+    <aside class="profile-side" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2);">
+      <div class="profile-header">
+        <img src="https://ui-avatars.com/api/?name={{ user_obj.first_name }}&background=1565d8&color=fff&size=150"
+             class="avatar" alt="Profile">
+        <h2>{{ user_obj.first_name }}</h2>
+      </div>
+
+      {% if email_user %}
+        <p><strong>Name:</strong> {{ user_obj.first_name }}</p>
+        <p><strong>Email:</strong> {{ user_obj.email }}</p>
+        <a href="{% url 'accounts:password_reset' %}" class="profile-link">🔐 Reset Password</a>
+        <a href="{% url 'accounts:login_page' %}" class="profile-link">🚪 Back to Login</a>
+
+      {% else %}
+        <p><strong>📱 Phone:</strong> {{ user_obj.phone }}</p>
+        <p><strong>✅ Paid Access:</strong> {% if user_obj.has_paid %}Yes{% else %}No{% endif %}</p>
+        <p><strong>🏢 Paid companies:</strong></p>
+
+        {% if purchases %}
+          <ul class="purchases-list" style="color: rgba(255,255,255,0.9);">
+            {% for c in purchases %}
+              <li style="padding: 0.3rem 0;">✓ {{ c }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted" style="color: rgba(255,255,255,0.7); padding: 0;">No purchases yet</p>
+        {% endif %}
+      {% endif %}
+    </aside>
+
+    <!-- Right Main Content -->
+    <section class="profile-main">
+      <!-- Purchased Items Card -->
+      <div class="card">
+        <h3>📚 Purchased Items</h3>
+        <div id="purchased-pdfs">
+          {% if purchased_items %}
+            <ul class="pdf-list">
+              {% for item in purchased_items %}
+                <li class="pdf-item">
+                  <div>
+                    <strong>📄 {{ item.title }}</strong>
+                    <div class="meta">
+                      Type: {{ item.item_type|title }} • Amount: ₹{{ item.amount_paid|floatformat:2 }} 
+                      {% if item.transaction_id %}• TXN: {{ item.transaction_id }}{% endif %}
+                      • {{ item.purchased_at|date:"M d, Y H:i" }}
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="muted">No purchased items yet.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Test Results Card -->
+      <div class="card">
+        <h3>🏆 Test Results</h3>
+        <div id="test-results">
+          {% if test_results %}
+            <ul class="results-list" style="list-style: none; padding: 0;">
+              {% for result in test_results %}
+                <li style="background: rgba(102, 126, 234, 0.1); padding: 1rem; margin-bottom: 0.8rem; border-radius: 8px; border-left: 4px solid #667eea;">
+                  <div style="display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: 1rem;">
+                    <div style="flex: 1; min-width: 200px;">
+                      <strong style="color: #667eea; font-size: 1.1rem;">{{ result.test_name }}</strong><br>
+                      {% if result.company %}<span style="font-size: 0.85rem; color: #7f8c8d;">{{ result.company|title }} - {{ result.difficulty|title }}</span>{% endif %}
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; text-align: center;">
+                      <div>
+                        <div style="font-size: 0.8rem; color: #7f8c8d; text-transform: uppercase; letter-spacing: 0.5px;">Score</div>
+                        <div style="font-size: 1.2rem; font-weight: 700; color: #4caf50;">{{ result.correct_answers }}/{{ result.total_questions }}</div>
+                      </div>
+                      <div>
+                        <div style="font-size: 0.8rem; color: #7f8c8d; text-transform: uppercase; letter-spacing: 0.5px;">Accuracy</div>
+                        <div class="accuracy-display" data-percentage="{{ result.score }}" style="font-size: 1.2rem; font-weight: 700;">{{ result.score }}%</div>
+                      </div>
+                    </div>
+
+                    <div style="text-align: right; min-width: 150px;">
+                      <div style="font-size: 0.85rem; color: #7f8c8d;">
+                        {% if result.time_taken %}⏱️ {{ result.time_taken }}<br>{% endif %}
+                        📅 {{ result.attempt_date|date:"M d, Y H:i" }}
+                      </div>
+                      <button class="btn-delete" onclick="deleteResult(this, '{{ result.id }}')" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem; font-size: 0.8rem; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">🗑️ Delete</button>
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="muted">No test results yet. Start taking tests to see your performance here!</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Transactions & Mocks Card -->
+      <div class="card">
+        <h3>💳 Transactions</h3>
+        {% if transactions %}
+          <ul class="tx-list">
+            {% for t in transactions %}
+              <li>
+                <div style="flex: 1;">
+                  <strong>{{ t.company }}</strong><br>
+                  <span style="font-size: 0.85rem; color: #7f8c8d;">ID: {{ t.transaction_id }}</span>
+                </div>
+                <span style="font-weight: 600; color: #4caf50;">₹{{ t.amount }}</span>
+                <span style="font-size: 0.85rem; color: #7f8c8d; white-space: nowrap;">{{ t.created_at|date:"M d, Y H:i" }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="muted">No transactions found</p>
+        {% endif %}
+
+        <!-- Attempted Mocks Section -->
+        <hr style="margin: 1.5rem 0; border: 1px solid #ecf0f1;">
+        <h4>🎯 Attempted Mocks</h4>
+        <div id="attempted-mocks">
+          <p class="muted">No mock attempts yet.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div style="margin-top: 2rem; text-align: center;">
+    <a href="{% url 'accounts:dashboard' %}" class="btn secondary">← Back to Dashboard</a>
+  </div>
+</div>
+
+<script defer src="{% static 'js/profile.js' %}"></script>
+
+<script>
+  // Delete test result from profile
+  async function deleteResult(btn, resultId) {
+    if (!confirm('Are you sure you want to delete this test result? This cannot be undone.')) {
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Deleting...';
+
+    try {
+      const response = await fetch('/api/delete-test-result/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrfToken()
+        },
+        body: JSON.stringify({ result_id: resultId })
+      });
+
+      const json = await response.json();
+
+      if (response.ok && json.ok) {
+        // Remove from DOM
+        btn.closest('li').style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+          btn.closest('li').remove();
+          
+          // Check if list is empty
+          const resultsList = document.getElementById('test-results');
+          if (resultsList.querySelector('li') === null) {
+            resultsList.innerHTML = '<p class="muted">No test results yet. Start taking tests to see your performance here!</p>';
+          }
+        }, 300);
+
+        showToast('✓ Test result deleted!');
+      } else {
+        throw new Error(json.error || 'Failed to delete');
+      }
+    } catch (error) {
+      console.error('Delete error:', error);
+      alert('Failed to delete result: ' + error.message);
+      btn.disabled = false;
+      btn.textContent = '🗑️ Delete';
+    }
+  }
+
+  // Get CSRF token
+  function getCsrfToken() {
+    const name = 'csrftoken';
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let cookie of cookies) {
+        cookie = cookie.trim();
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  // Show notification
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4caf50;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 8px;
+      z-index: 9999;
+      font-weight: 600;
+      animation: slideIn 0.3s ease;
+    `;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  // Add CSS animations
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(20px); }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(400px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .accuracy-display {
+      color: #4caf50;
+    }
+    .accuracy-display[data-percentage*="5"],
+    .accuracy-display[data-percentage*="6"] {
+      color: #ff9800;
+    }
+    .accuracy-display[data-percentage="0"],
+    .accuracy-display[data-percentage="1"],
+    .accuracy-display[data-percentage="2"],
+    .accuracy-display[data-percentage="3"],
+    .accuracy-display[data-percentage="4"] {
+      color: #f44336;
+    }
+  `;
+  document.head.appendChild(style);
+  
+  // Set accuracy colors based on percentage
+  document.querySelectorAll('.accuracy-display').forEach(el => {
+    const percentage = parseInt(el.getAttribute('data-percentage') || 0);
+    if (percentage >= 70) {
+      el.style.color = '#4caf50';
+    } else if (percentage >= 50) {
+      el.style.color = '#ff9800';
+    } else {
+      el.style.color = '#f44336';
+    }
+  });
+</script>
+
+{% endblock %}

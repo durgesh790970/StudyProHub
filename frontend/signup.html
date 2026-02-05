@@ -1,0 +1,188 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(120deg, #e0e7ff 0%, #f7f9fb 100%);
+            color: #222;
+        }
+        .container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .signup-box {
+            background: #fff;
+            padding: 3rem 2.2rem 2.2rem 2.2rem;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px rgba(37,99,235,0.10), 0 1.5px 8px rgba(0,0,0,0.04);
+            width: 100%;
+            position: relative;
+        }
+        .signup-title {
+            font-family: 'Montserrat', 'Inter', Arial, sans-serif;
+            font-size: 2.1rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin-bottom: 1.2rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .form-group {
+            margin-bottom: 1.4rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.45rem;
+            font-weight: 600;
+            color: #374151;
+            font-size: 1.02rem;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 10px;
+            background: #f3f6fa;
+            font-size: 1.08rem;
+            font-family: 'Inter', Arial, sans-serif;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px rgba(37,99,235,0.03);
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 2px #2563eb22;
+        }
+        .signup-btn {
+            width: 100%;
+            padding: 0.95rem;
+            background: linear-gradient(90deg, #2563eb 60%, #1e40af 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.15rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(37,99,235,0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        .signup-btn:hover {
+            background: linear-gradient(90deg, #1e40af 60%, #2563eb 100%);
+            box-shadow: 0 4px 16px rgba(37,99,235,0.13);
+        }
+        .error-message {
+            color: #ef4444;
+            background: #fef2f2;
+            border-radius: 6px;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.98rem;
+            text-align: center;
+            display: none;
+        }
+        .login-link {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-family: 'Inter', Arial, sans-serif;
+            font-size: 1rem;
+        }
+        .login-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .login-link a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+        @media (max-width: 480px) {
+            .signup-box {
+                padding: 1.2rem 0.5rem;
+                max-width: 98vw;
+            }
+            .signup-title {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="signup-box">
+            <div class="signup-title">Create Account</div>
+            <form id="signupForm" autocomplete="off">
+                <div class="error-message" id="errorMsg"></div>
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                </div>
+                <button type="submit" class="signup-btn">Create Account</button>
+            </form>
+            <div class="login-link">
+                Already have an account? <a href="login.html">Login here</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        const errorMsg = document.getElementById('errorMsg');
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            errorMsg.style.display = 'none';
+            const fullname = signupForm.fullname.value.trim();
+            const email = signupForm.email.value.trim();
+            const password = signupForm.password.value;
+            const confirmPassword = signupForm.confirmPassword.value;
+            if (!fullname || !email || !password || !confirmPassword) {
+                errorMsg.textContent = 'Please fill in all fields.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            if (password.length < 6) {
+                errorMsg.textContent = 'Password must be at least 6 characters.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            if (password !== confirmPassword) {
+                errorMsg.textContent = 'Passwords do not match.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            // Success: You can add AJAX or backend integration here
+            errorMsg.style.display = 'none';
+            alert('Account created successfully!');
+            signupForm.reset();
+        });
+    </script>
+</body>
+</html>

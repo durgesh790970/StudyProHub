@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}StudyPro Hub — Home{% endblock %}
+
+{% block content %}
+    <section class="hero" style="background: linear-gradient(135deg, #0d6efd 0%, #0056ca 100%); margin-top: 0;">
+      <div>
+        <h1 style="color: #ffffff; margin: 0 0 1rem 0; font-size: 2.5rem; font-weight: 700;">Prepare smart, land the job.</h1>
+        <p style="color: rgba(255, 255, 255, 0.95); margin: 0 0 2rem 0; font-size: 1.1rem; line-height: 1.7;">Video lessons, curated PDFs and practice quizzes — 
+			all designed to get you <br> interview-ready for top companies.</p>
+
+        <div class="hero-cta" style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+			
+          <a class="btn" href="videos.html" style="background: #ffffff; color: #0d6efd; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 8px; border: 2px solid #ffffff; text-decoration: none; transition: all 0.3s ease;">Explore Videos</a>
+          <a class="btn secondary" href="pdfs.html" style="background: transparent; color: #ffffff; border: 2px solid #ffffff; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 8px; text-decoration: none; transition: all 0.3s ease;">Browse PDFs</a>
+        </div>
+
+        <div class="companies" aria-hidden="true" style="display: flex; gap: 1.5rem; align-items: center; margin-top: 2rem; flex-wrap: wrap;">
+          <div class="company-logo" style="background: rgba(255,255,255,0.95); padding: .8rem 1rem; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); min-width: 100px; text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="uber" style="max-width: 110px; max-height: 40px; object-fit: contain;"></div>
+          <div class="company-logo" style="background: rgba(255,255,255,0.95); padding: .8rem 1rem; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); min-width: 100px; text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" style="max-width: 110px; max-height: 40px; object-fit: contain;"></div>
+          <div class="company-logo" style="background: rgba(255,255,255,0.95); padding: .8rem 1rem; border-radius: 10px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); min-width: 100px; text-align: center;"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" style="max-width: 110px; max-height: 40px; object-fit: contain;"></div>
+        </div>
+      </div>
+	  <div class="hero-visual">
+                <img src="{% static 'img/Study.png' %}" alt="Study illustration">
+            </div>
+    </section>
+
+    <section class="features" id="features">
+      <div class="feature">
+        <div class="icon">V</div>
+        <h4>High-quality video lessons</h4>
+        <p>Bite-sized lectures with real interview insights and walkthroughs.</p>
+      </div>
+
+      <div class="feature">
+        <div class="icon">P</div>
+        <h4>Curated PDFs & notes</h4>
+        <p>Download concise notes and previous company papers for targeted preparation.</p>
+      </div>
+
+      <div class="feature">
+        <div class="icon">Q</div>
+        <h4>Practice quizzes</h4>
+        <p>Timed quizzes and instant feedback to track your progress.</p>
+      </div>
+
+	  <div class="feature">
+        <div class="icon">V</div>
+        <h4>High-quality video lessons</h4>
+        <p>Bite-sized lectures with real interview insights and walkthroughs.</p>
+      </div>
+
+      <div class="feature">
+        <div class="icon">P</div>
+        <h4>Curated PDFs & notes</h4>
+        <p>Download concise notes and previous company papers for targeted preparation.</p>
+      </div>
+
+      <div class="feature">
+        <div class="icon">Q</div>
+        <h4>Practice quizzes</h4>
+        <p>Timed quizzes and instant feedback to track your progress.</p>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <h3 style="margin:0 0 .75rem">What students say</h3>
+      <div class="testimonial">
+        <div class="avatar">A</div>
+        <p>"StudyPro Hub helped me prepare efficiently — the mock quizzes were closest to the real interviews." <br/><strong>— A. Kapoor</strong></p>
+      </div>
+    </section>
+
+    <section class="text-center" style="margin-top:2rem">
+      <h3>Ready to get started?</h3>
+      <p class="muted">Join thousands of learners preparing for company interviews.</p>
+      <a class="btn" href="signup.html">Sign up — it's free</a>
+    </section>
+
+{% endblock %}

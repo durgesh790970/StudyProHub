@@ -1,0 +1,34 @@
+{% include 'test-page.html' with company='paytm' difficulty='medium' company_logo_url='/static/accounts/img/logos/paytm.svg' %}
+
+<script>
+// Paytm MEDIUM - 15 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which payment model supports wallets?', option_a: 'E-wallets', option_b: 'FTP', option_c: 'SMTP', option_d: 'DNS', correct_answer: 'A' },
+  { question_text: 'Which algorithm sorts in O(n log n)?', option_a: 'Bubble sort', option_b: 'Merge sort', option_c: 'Selection sort', option_d: 'None', correct_answer: 'B' },
+  { question_text: 'Which is used for message queues?', option_a: 'RabbitMQ', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is eventual consistency example?', option_a: 'DNS', option_b: 'ACID DB', option_c: 'Single node', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is secure token format?', option_a: 'JWT', option_b: 'HTML', option_c: 'CSS', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is used for rate limiting?', option_a: 'Token bucket', option_b: 'SJF', option_c: 'Round Robin', option_d: 'FCFS', correct_answer: 'A' },
+  { question_text: 'Which is symmetric encryption?', option_a: 'AES', option_b: 'RSA', option_c: 'ECDSA', option_d: 'SHA', correct_answer: 'A' },
+  { question_text: 'Which is used for analytics?', option_a: 'Data warehouse', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is used for streaming?', option_a: 'Kafka', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Aptitude: 9*9 = ?', option_a: '81', option_b: '72', option_c: '99', option_d: '90', correct_answer: 'A' },
+  { question_text: 'Which is idempotent method?', option_a: 'PUT', option_b: 'POST', option_c: 'PATCH', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is horizontal scaling?', option_a: 'Add more machines', option_b: 'Increase CPU', option_c: 'Upgrade RAM', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is suitable for financial transactions?', option_a: 'ACID DBs', option_b: 'Eventual DBs', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for background processing?', option_a: 'Workers/Jobs', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is used for secure storage?', option_a: 'Encrypted DB', option_b: 'Plain files', option_c: 'CSS', option_d: 'HTML', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

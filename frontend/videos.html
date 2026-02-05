@@ -1,0 +1,195 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Videos — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+        
+        <a href="videos.html" class="cta">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <section style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap">
+      <div>
+        <h2 style="margin:.2rem 0">Video Lectures</h2>
+        <p class="muted">Curated playlists and topic-based lessons to speed up your preparation.</p>
+      </div>
+      <div>
+        <input id="videoSearch" placeholder="Search videos" style="padding:.5rem 0.75rem;border-radius:8px;border:1px solid #e6eef8;min-width:220px" />
+      </div>
+    </section>
+
+    <section class="grid-videos" id="videoGrid">
+      <!-- sample cards (thumbnail left, meta right) -->
+      <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg" alt="System Design Essentials" /></div>
+        <div class="video-meta">
+          <h4>System Design Essentials</h4>
+          <p class="muted">Scalable architecture patterns explained.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=9bZkp7q19f0" target="_blank">Watch</a>
+            <button class="btn" data-video-id="9bZkp7q19f0" data-title="System Design Essentials">Preview</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/3JZ_D3ELwOQ/hqdefault.jpg" alt="Coding Interview Tips" /></div>
+        <div class="video-meta">
+          <h4>Coding Interview Tips</h4>
+          <p class="muted">How to approach interviews and time management.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=3JZ_D3ELwOQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="3JZ_D3ELwOQ" data-title="Coding Interview Tips">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+
+	  <div class="card video">
+        <div class="video-thumb"><img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Intro to Algorithms" /></div>
+        <div class="video-meta">
+          <h4>Intro to Algorithms</h4>
+          <p class="muted">Fundamentals and problem solving approach.</p>
+          <div class="video-actions">
+            <a class="btn" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Watch</a>
+            <button class="btn" data-video-id="dQw4w9WgXcQ" data-title="Intro to Algorithms">Preview</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video preview modal -->
+    <div id="videoModal" style="display:none;position:fixed;inset:0;background:rgba(2,6,23,0.6);align-items:center;justify-content:center;z-index:9999">
+      <div style="width:100%;background:#fff;border-radius:12px;overflow:hidden">
+        <div style="padding:0.5rem 1rem;background:#f8fafc;display:flex;justify-content:space-between;align-items:center">
+          <strong id="videoModalTitle">Preview</strong>
+          <button id="closeVideoModal" style="background:transparent;border:none;font-size:1.1rem;cursor:pointer">✕</button>
+        </div>
+        <div style="background:#000"><iframe id="videoModalFrame" width="100%" height="480" src="" frameborder="0" allowfullscreen></iframe></div>
+      </div>
+    </div>
+
+  </main>
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

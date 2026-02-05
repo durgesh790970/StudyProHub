@@ -1,0 +1,245 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PDFs — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+        
+		<a href="BTech.html">B.Tech</a>
+        <a href="videos.html">Videos</a>
+		<a href="Interview.html">Interview</a>
+		<a href="pdfs.html">PDFs</a>
+		<a href="quiz.html">Quiz</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+      <div>
+        <h2 style="margin:.2rem 0">Company PDFs & Notes</h2>
+        <p class="muted">Parches company-wise notes and previous year papers for targeted practice.</p>
+      </div>
+      <div style="display:flex;gap:.5rem">
+        <input id="pdfSearch" placeholder="Search PDFs, company or topic" style="padding:.5rem .75rem;border-radius:8px;border:1px solid #e6eef8;min-width:260px" />
+        <select id="filterCompany" style="padding:.5rem .6rem;border-radius:8px;border:1px solid #e6eef8">
+          <option value="">companies</option>
+          <option>Capgemini</option>
+          <option>HCL</option>
+          <option>Infosys</option>
+		  <option>Cognizant</option>
+		  <option>TCS</option>
+
+        </select>
+      </div>
+    </div>
+
+    <section id="pdfList" style="margin-top:1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem">
+      <div class="card">
+        <h4 style="margin:.25rem 0">Capgemini — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Capgemini exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="capgemini-1">Purchase ₹99</button>
+          <a href="/company/capgemini/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 style="margin:.25rem 0">Cognizant — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Cognizant exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="cognizant-1">Purchase ₹99</button>
+          <a href="/company/cognizant/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">TCS — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in TCS exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="tcs-1">Purchase ₹99</button>
+          <a href="/company/tcs/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+      
+	  <div class="card">
+        <h4 style="margin:.25rem 0">HCL — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in HCL exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="hcl-1">Purchase ₹99</button>
+          <a href="/company/hcl/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+      
+	  <div class="card">
+        <h4 style="margin:.25rem 0">IBM — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in IBM exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="ibm-1">Purchase ₹99</button>
+          <a href="/company/ibm/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Infosys — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Infosys exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="infosys-1">Purchase ₹99</button>
+          <a href="/company/infosys/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Accenture — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Accenture exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="accenture-1">Purchase ₹99</button>
+          <a href="/company/accenture/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Accolite — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Accolite exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="accolite-1">Purchase ₹99</button>
+          <a href="/company/accolite/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Wipro — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Wipro exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="wipro-1">Purchase ₹99</button>
+          <a href="/company/wipro/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">SAP — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in SAP exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="sap-1">Purchase ₹99</button>
+          <a href="/company/sap/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Amazon — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Amazon exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="amazon-1">Purchase ₹99</button>
+          <a href="/company/amazon/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Hexaware — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Hexaware exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="hexaware-1">Purchase ₹99</button>
+          <a href="/company/hexaware/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Deloitte — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Deloitte exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="deloitte-1">Purchase ₹99</button>
+          <a href="/company/deloitte/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Paloalto — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Paloalto exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="paloalto-1">Purchase ₹99</button>
+          <a href="/company/paloalto/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Goldman Sachs — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Goldman Sachs exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="goldman-sachs-1">Purchase ₹99</button>
+          <a href="/company/goldman-sachs/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">AIRBUS — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in AIRBUS exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="airbus-1">Purchase ₹99</button>
+          <a href="/company/airbus/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">ZScaler — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in ZScaler exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="zscaler-1">Purchase ₹99</button>
+          <a href="/company/zscaler/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Amandeus — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Amandeus exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="amandeus-1">Purchase ₹99</button>
+          <a href="/company/amandeus/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">Morgan Stanley — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in Morgan Stanley exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="morgan-stanley-1">Purchase ₹99</button>
+          <a href="/company/morgan-stanley/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">KPIT — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in KPIT exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="kpit-1">Purchase ₹99</button>
+          <a href="/company/kpit/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+        </div>
+      </div>
+
+	  <div class="card">
+        <h4 style="margin:.25rem 0">THERMAX — Exam PDF & Notes</h4>
+        <p class="muted">Concise notes covering common topics asked in THERMAX exams.</p>
+        <div style="display:flex;gap:.5rem;margin-top:.75rem">
+          <button class="btn purchase-btn" data-pdf-id="thermax-1">Purchase ₹99</button>
+          <a href="/company/thermax/" class="btn" style="background:#f1f3f5;color:#111;text-decoration:none;display:flex;align-items:center;justify-content:center">Round</a>
+		  
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/payment.js' %}"></script>
+</body>
+</html>

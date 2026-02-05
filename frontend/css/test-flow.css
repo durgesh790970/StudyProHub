@@ -1,0 +1,781 @@
+/* ===================================
+   TEST FLOW CSS - PROFESSIONAL PREMIUM DESIGN
+   Difficulty Selection & Instructions Pages
+   =================================== */
+
+:root {
+  --primary: #1e3a8a;
+  --primary-light: #2563eb;
+  --primary-dark: #1e40af;
+  --secondary: #0f172a;
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --bg-light: #f8fafc;
+  --bg-card: #ffffff;
+  --border-color: #e2e8f0;
+  --text-dark: #1e293b;
+  --text-muted: #64748b;
+  --easy-color: #22c55e;
+  --medium-color: #f59e0b;
+  --hard-color: #ef4444;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  padding: 16px;
+  color: var(--text-dark);
+}
+
+/* ===================================
+   LAYOUT & CONTAINER
+   =================================== */
+
+.test-flow-container {
+  min-height: 100vh;
+  background: transparent;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.test-flow-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #1e40af 100%);
+  border-radius: 16px;
+  padding: 28px 40px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.test-flow-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,50 Q300,10 600,50 T1200,50 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+  background-size: cover;
+  pointer-events: none;
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.back-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  padding: 10px 18px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateX(-4px);
+}
+
+.page-title {
+  color: white;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0;
+  flex: 1;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.test-flow-main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+/* ===================================
+   DIFFICULTY & INSTRUCTIONS SECTIONS
+   =================================== */
+
+.difficulty-section,
+.instructions-section {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 1000px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.difficulty-section h2,
+.instructions-section h2 {
+  color: var(--text-dark);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+  text-align: center;
+  margin: 0 0 40px 0;
+}
+
+/* ===================================
+   DIFFICULTY BUTTONS - PREMIUM DESIGN
+   =================================== */
+
+.difficulty-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.difficulty-btn {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 36px 28px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.difficulty-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transition: left 0.6s ease;
+}
+
+.difficulty-btn:hover::before {
+  left: 100%;
+}
+
+.difficulty-btn:hover {
+  border-color: var(--primary-light);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.25);
+}
+
+.difficulty-btn.active {
+  border-color: var(--primary-light);
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.35);
+}
+
+.difficulty-icon {
+  font-size: 56px;
+  line-height: 1;
+  animation: bounce 0.6s ease infinite;
+}
+
+.difficulty-btn.active .difficulty-icon {
+  animation: bounceActive 0.4s ease infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes bounceActive {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.difficulty-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.3px;
+}
+
+.difficulty-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.difficulty-btn.active .difficulty-name {
+  color: var(--primary-light);
+}
+
+/* ===================================
+   SELECTED DIFFICULTY DISPLAY
+   =================================== */
+
+.selected-difficulty {
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border-left: 5px solid var(--primary-light);
+  padding: 20px 24px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.selected-difficulty p {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.selected-difficulty strong {
+  color: var(--primary-light);
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===================================
+   NEXT BUTTON
+   =================================== */
+
+.next-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.next-btn {
+  min-width: 160px;
+  padding: 14px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+}
+
+.next-btn.show {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.next-btn:disabled {
+  background: var(--test-border);
+  color: var(--test-text-muted);
+  cursor: not-allowed;
+}
+
+.next-btn:not(:disabled):hover {
+  background: var(--test-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+}
+
+/* ===================================
+   INSTRUCTIONS SECTION
+   =================================== */
+
+.warning-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-left: 5px solid #f59e0b;
+  padding: 24px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15);
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.warning-icon {
+  font-size: 36px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.warning-text {
+  color: #78350f;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.2px;
+}
+
+.instructions-card {
+  background: white;
+  border: 2px solid var(--border-color);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow-md);
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.05s both;
+}
+
+.instructions-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  margin-bottom: 40px;
+  padding-bottom: 40px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.instruction-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.4) 0%, rgba(191, 219, 254, 0.2) 100%);
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.instruction-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.2);
+  background: linear-gradient(135deg, rgba(219, 234, 254, 0.6) 0%, rgba(191, 219, 254, 0.4) 100%);
+  border-color: var(--primary-light);
+}
+
+.instruction-label {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.instruction-value {
+  color: var(--primary-light);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.important-notes {
+  margin-bottom: 40px;
+  padding: 32px;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.03) 100%);
+  border-left: 5px solid #ef4444;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+
+.note-title {
+  color: #dc2626;
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.2px;
+}
+
+.note-title::before {
+  content: '🔴';
+  font-size: 22px;
+}
+
+.note-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.note-list li {
+  color: var(--text-dark);
+  font-size: 16px;
+  padding: 12px 0;
+  padding-left: 32px;
+  position: relative;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.note-list li:before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  color: #ef4444;
+  font-weight: 900;
+  font-size: 20px;
+}
+
+.good-luck-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 36px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border-radius: 12px;
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.15);
+  text-align: center;
+}
+
+.luck-icon {
+  font-size: 48px;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.luck-text {
+  color: var(--test-success);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ===================================
+   ACTION BUTTONS
+   =================================== */
+
+.instructions-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 2px solid var(--border-color);
+}
+
+.btn {
+  padding: 16px 40px;
+  font-size: 17px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: -0.3px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.6s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  color: var(--text-dark);
+  border: 2px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1a2e5e 0%, #1e3a8a 100%);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(-2px);
+}
+
+.start-test-btn {
+  min-width: 200px;
+}
+
+/* ===================================
+   RESPONSIVE DESIGN
+   =================================== */
+
+@media (max-width: 768px) {
+  .test-flow-header,
+  .difficulty-section,
+  .instructions-section {
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+  }
+
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .back-link {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+
+  .page-title {
+    font-size: 28px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .difficulty-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+
+  .difficulty-btn {
+    padding: 28px 20px;
+    gap: 12px;
+  }
+
+  .difficulty-icon {
+    font-size: 48px;
+  }
+
+  .difficulty-name {
+    font-size: 18px;
+  }
+
+  .difficulty-desc {
+    font-size: 13px;
+  }
+
+  .difficulty-section h2,
+  .instructions-section h2 {
+    font-size: 24px;
+  }
+
+  .instructions-content {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+  }
+
+  .instruction-item {
+    padding: 20px;
+  }
+
+  .instruction-number {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+
+  .instruction-content h3 {
+    font-size: 16px;
+  }
+
+  .instruction-content p {
+    font-size: 14px;
+  }
+
+  .important-notes {
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+
+  .note-title {
+    font-size: 18px;
+  }
+
+  .note-list li {
+    font-size: 15px;
+  }
+
+  .instructions-actions {
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .instructions-actions .btn {
+    width: 100%;
+  }
+
+  .good-luck-message {
+    padding: 28px;
+  }
+
+  .luck-icon {
+    font-size: 44px;
+  }
+
+  .luck-text {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .test-flow-container {
+    padding: 12px;
+  }
+
+  .test-flow-header,
+  .difficulty-section,
+  .instructions-section {
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .header-content {
+    gap: 12px;
+  }
+
+  .back-link {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .page-title {
+    font-size: 20px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+  }
+
+  .difficulty-buttons {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .difficulty-btn {
+    padding: 20px 16px;
+    gap: 8px;
+  }
+
+  .difficulty-icon {
+    font-size: 36px;
+  }
+
+  .difficulty-name {
+    font-size: 18px;
+  }
+
+  .difficulty-desc {
+    font-size: 12px;
+  }
+
+  .instructions-card {
+    padding: 16px;
+  }
+
+  .instruction-value {
+    font-size: 18px;
+  }
+
+  .luck-icon {
+    font-size: 40px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}

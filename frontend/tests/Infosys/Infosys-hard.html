@@ -1,0 +1,39 @@
+{% include 'test-page.html' with company='Infosys' difficulty='hard' company_logo_url='/static/accounts/img/logos/infosys.svg' %}
+
+<script>
+// Infosys HARD - 20 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which is CAP tradeoff?', option_a: 'Choose two: Consistency, Availability, Partition tolerance', option_b: 'All three always', option_c: 'None', option_d: 'One only', correct_answer: 'A' },
+  { question_text: 'Which is for consensus?', option_a: 'Raft/Paxos', option_b: 'Sorting', option_c: 'Indexing', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for bloom filter?', option_a: 'Approx membership', option_b: 'Sorting', option_c: 'Indexing', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for distributed tracing?', option_a: 'Jaeger / Application Insights', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for streaming processing?', option_a: 'Flink / Spark Streaming', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for approximate nearest neighbour?', option_a: 'FAISS / Annoy / HNSW', option_b: 'B-Tree', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Aptitude: 23*3 = ?', option_a: '69', option_b: '66', option_c: '63', option_d: '72', correct_answer: 'A' },
+  { question_text: 'Which is for model parallelism?', option_a: 'Tensor parallelism', option_b: 'Data parallelism only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which reduces latency?', option_a: 'Caching and indexing', option_b: 'Dropping indexes', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for idempotency?', option_a: 'Design with idempotent APIs', option_b: 'None', option_c: 'All', option_d: 'CSS', correct_answer: 'A' },
+  { question_text: 'Which is for fault tolerance?', option_a: 'Replication and redundancy', option_b: 'None', option_c: 'All', option_d: 'CSS', correct_answer: 'A' },
+  { question_text: 'Which is for geo-replication?', option_a: 'Multi-region replication', option_b: 'Single server', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for transactional messaging?', option_a: 'Kafka transactions / Service Bus sessions', option_b: 'Blob', option_c: 'Table', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is for streaming durability?', option_a: 'Durable logs (Kafka)', option_b: 'MySQL', option_c: 'Redis', option_d: 'Nginx', correct_answer: 'A' },
+  { question_text: 'Which is for secrets?', option_a: 'Vault/Key Vault', option_b: 'Plain file', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for autoscaling?', option_a: 'Autoscale/Kubernetes HPA', option_b: 'Manual only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for durability?', option_a: 'Replication + WAL', option_b: 'None', option_c: 'All', option_d: 'CSS', correct_answer: 'A' },
+  { question_text: 'Which is for monitoring SLOs?', option_a: 'SLIs and SLOs + Observability', option_b: 'None', option_c: 'All', option_d: 'CSS', correct_answer: 'A' },
+  { question_text: 'Which is for job orchestration?', option_a: 'Airflow / Step Functions', option_b: 'Manual only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for throughput vs latency tradeoff?', option_a: 'Batching increases throughput but may increase latency', option_b: 'Always reduce both', option_c: 'None', option_d: 'All', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

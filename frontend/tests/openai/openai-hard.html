@@ -1,0 +1,40 @@
+{% include 'test-page.html' with company='openai' difficulty='hard' company_logo_url='/static/accounts/img/logos/openai.svg' %}
+
+<script>
+// OpenAI HARD - 20 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'Which is approximate nearest neighbour algorithm?', option_a: 'Annoy/FAISS', option_b: 'Binary search', option_c: 'Merge sort', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'What is attention complexity naive?', option_a: 'O(n^2)', option_b: 'O(n)', option_c: 'O(log n)', option_d: 'O(n log n)', correct_answer: 'A' },
+  { question_text: 'Which is knowledge distillation?', option_a: 'Teacher-student compression', option_b: 'Encryption', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which reduces memory during training?', option_a: 'Gradient checkpointing', option_b: 'Indexing', option_c: 'Styling', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'What is quantization?', option_a: 'Lowering precision to reduce size', option_b: 'Increasing precision', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Aptitude: 21*4 = ?', option_a: '84', option_b: '80', option_c: '86', option_d: '76', correct_answer: 'A' },
+  { question_text: 'Which is chunking in long-context handling?', option_a: 'Splitting input into segments', option_b: 'Merging', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is RAG used for?', option_a: 'Augment generation with retrieval', option_b: 'Styling', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for multi-modal models?', option_a: 'Image+text models', option_b: 'Only text', option_c: 'Only images', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which reduces latency of attention?', option_a: 'Efficient attention algorithms', option_b: 'Sorting', option_c: 'Indexing', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is used for vector similarity?', option_a: 'Cosine similarity', option_b: 'Binary similarity', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for ANN indexing?', option_a: 'HNSW', option_b: 'B-Tree', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for model parallelism?', option_a: 'Tensor parallelism', option_b: 'Data parallelism only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which optimizer often used?', option_a: 'AdamW', option_b: 'Vanilla SGD', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for fine-tuning efficiently?', option_a: 'LoRA', option_b: 'Full-FT only', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for batching embeddings?', option_a: 'Vectorization and batching', option_b: 'Single request', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is few-shot vs zero-shot?', option_a: 'Few-shot provides examples', option_b: 'Zero-shot none', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is prompt engineering?', option_a: 'Designing prompts to guide models', option_b: 'Styling', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Which is for caching embeddings?', option_a: 'Vector DB', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is for inference optimization?', option_a: 'Quantization/Pruning/Batching', option_b: 'None', option_c: 'All', option_d: 'None', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>
+{% include 'test-page.html' with company='openai' difficulty='hard' company_logo_url='/static/accounts/img/logos/openai.svg' %}

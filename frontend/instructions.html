@@ -1,0 +1,162 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Instructions - StudyPro Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/test-flow.css' %}">
+</head>
+<body>
+<div class="test-flow-container">
+    <!-- Header -->
+    <div class="test-flow-header">
+        <div class="header-content">
+            <a href="javascript:history.back()" class="back-link">← Back</a>
+            <h1 class="page-title" id="headerTitle">Test Instructions</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="test-flow-main">
+        <div class="instructions-section">
+            <!-- Warning Box -->
+            <div class="warning-box">
+                <div class="warning-icon">📝</div>
+                <div class="warning-text">Please Read Instructions Carefully</div>
+            </div>
+
+            <!-- Instructions Card -->
+            <div class="instructions-card">
+                <div class="instructions-content">
+                    <div class="instruction-item">
+                        <span class="instruction-label">Total Questions:</span>
+                        <span class="instruction-value">20</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-label">Maximum Marks:</span>
+                        <span class="instruction-value">100</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-label">Each Question carries:</span>
+                        <span class="instruction-value">5 marks</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-label">Negative marking:</span>
+                        <span class="instruction-value">No</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-label">Time Limit:</span>
+                        <span class="instruction-value">30 Minutes</span>
+                    </div>
+                    <div class="instruction-item">
+                        <span class="instruction-label">Minimum Passing Marks:</span>
+                        <span class="instruction-value">7</span>
+                    </div>
+                </div>
+
+                <!-- Important Notes -->
+                <div class="important-notes">
+                    <div class="note-title">⚠️ Important Notes:</div>
+                    <ul class="note-list">
+                        <li>Once you start the test you cannot pause</li>
+                        <li>Do not refresh or close the window</li>
+                        <li>Answer all questions to submit the test</li>
+                        <li>Results will be shown immediately after submission</li>
+                    </ul>
+                </div>
+
+                <!-- Good Luck Message -->
+                <div class="good-luck-message">
+                    <div class="luck-icon">🍀</div>
+                    <div class="luck-text">Good Luck!</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="instructions-actions">
+                <button class="btn btn-secondary" onclick="history.back()">Back</button>
+                <button class="btn btn-primary start-test-btn" id="startTestBtn">
+                    Next ➜
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startTestBtn = document.getElementById('startTestBtn');
+
+        // Prefer values from localStorage (set on previous pages)
+        const storedCompany = (localStorage.getItem('selectedCompany') || '').trim();
+        const storedDifficulty = (localStorage.getItem('selectedDifficulty') || '').trim();
+
+        // Fallback to URL params if localStorage not present
+        const urlParams = new URLSearchParams(window.location.search);
+        const difficulty = storedDifficulty || urlParams.get('difficulty') || 'medium';
+        const companyKey = storedCompany || (urlParams.get('company') || 'company');
+
+        // Map canonical company key to display name and folder/file patterns
+        const displayName = (companyKey.charAt(0).toUpperCase() + companyKey.slice(1)).replace('-', ' ');
+
+        // Update header with company name
+        const headerTitle = document.getElementById('headerTitle');
+        headerTitle.textContent = displayName + ' - Test Instructions';
+
+        // Map difficulty -> counts and time
+        const mapping = {
+            easy: { questions: 10, minutes: 10, negative: 'No' },
+            medium: { questions: 15, minutes: 20, negative: 'No' },
+            hard: { questions: 20, minutes: 30, negative: 'No' }
+        };
+
+        const cfg = mapping[difficulty] || mapping.medium;
+
+        // Update instruction values in the DOM
+        const items = document.querySelectorAll('.instruction-item');
+        // Use selectors by label text where possible
+        document.querySelectorAll('.instruction-item').forEach(el => {
+            const label = el.querySelector('.instruction-label')?.textContent?.trim()?.toLowerCase();
+            if (!label) return;
+            if (label.includes('total questions')) el.querySelector('.instruction-value').textContent = cfg.questions;
+            if (label.includes('time limit')) el.querySelector('.instruction-value').textContent = cfg.minutes + ' Minutes';
+            if (label.includes('negative marking')) el.querySelector('.instruction-value').textContent = cfg.negative;
+            if (label.includes('maximum marks')) el.querySelector('.instruction-value').textContent = (cfg.questions * 1) + ' pts';
+            if (label.includes('each question')) el.querySelector('.instruction-value').textContent = '1 mark';
+        });
+
+        // Start test button logic: redirect to friendly test path inside /tests/
+        startTestBtn.addEventListener('click', function() {
+            startTestBtn.disabled = true;
+            startTestBtn.textContent = 'Starting...';
+
+            // Small delay for UX
+            setTimeout(() => {
+                // Build test URL mapping. Some templates use lowercase folders, TCS uses uppercase in templates.
+                const key = companyKey.toLowerCase();
+                let folder = key;
+                let filePrefix = key;
+
+                // Handle special-case folder names
+                if (key === 'tcs') { folder = 'TCS'; filePrefix = 'TCS'; }
+
+                const file = `${filePrefix}-${difficulty}.html`;
+                const url = `/tests/${folder}/${file}`;
+
+                window.location.href = url;
+            }, 400);
+        });
+
+        // Prevent accidental refresh warnings
+        window.addEventListener('beforeunload', function(e) {
+            if (startTestBtn.disabled && !startTestBtn.textContent.includes('Starting')) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+    });
+</script>
+</body>
+</html>

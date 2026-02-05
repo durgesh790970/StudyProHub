@@ -1,0 +1,34 @@
+{% include 'test-page.html' with company='amazon' difficulty='medium' company_logo_url='/static/accounts/img/logos/amazon.svg' %}
+
+<script>
+// Amazon MEDIUM - 15 logical + coding MCQ
+window.INLINE_QUESTIONS = [
+  { question_text: 'Logical: If 7x = 42, x = ?', option_a: '6', option_b: '7', option_c: '5', option_d: '8', correct_answer: 'A' },
+  { question_text: 'Coding: Which HTTP method is idempotent?', option_a: 'POST', option_b: 'GET', option_c: 'PATCH', option_d: 'CONNECT', correct_answer: 'B' },
+  { question_text: 'Logical: Sequence: 3, 6, 11, 18, ?', option_a: '27', option_b: '26', option_c: '28', option_d: '25', correct_answer: 'B' },
+  { question_text: 'Coding: Which structure best represents a FIFO queue?', option_a: 'Stack', option_b: 'Queue', option_c: 'Tree', option_d: 'Graph', correct_answer: 'B' },
+  { question_text: 'Logical: If two angles of triangle are 50 and 60, third?', option_a: '70', option_b: '80', option_c: '90', option_d: '60', correct_answer: 'A' },
+  { question_text: 'Coding: In Python, what does len([]) return?', option_a: '0', option_b: '1', option_c: 'None', option_d: 'Error', correct_answer: 'A' },
+  { question_text: 'Logical: Missing number: 2, 5, 10, 17, ?', option_a: '26', option_b: '25', option_c: '24', option_d: '23', correct_answer: 'B' },
+  { question_text: 'Coding: Which SQL clause filters groups?', option_a: 'WHERE', option_b: 'GROUP BY', option_c: 'HAVING', option_d: 'ORDER BY', correct_answer: 'C' },
+  { question_text: 'Logical: Which is palindrome?', option_a: '101', option_b: '123', option_c: '210', option_d: '120', correct_answer: 'A' },
+  { question_text: 'Coding: Which is used for asynchronous JS?', option_a: 'Promises', option_b: 'Threads', option_c: 'Sockets', option_d: 'Processes', correct_answer: 'A' },
+  { question_text: 'Logical: If A implies B and B implies C, A implies C?', option_a: 'Yes', option_b: 'No', option_c: 'Sometimes', option_d: 'Cannot determine', correct_answer: 'A' },
+  { question_text: 'Coding: Which HTTP status is for Not Found?', option_a: '200', option_b: '404', option_c: '500', option_d: '302', correct_answer: 'B' },
+  { question_text: 'Logical: 5*4 - 3 = ?', option_a: '17', option_b: '20', option_c: '13', option_d: '7', correct_answer: 'A' },
+  { question_text: 'Coding: Which data structure is used for BFS?', option_a: 'Queue', option_b: 'Stack', option_c: 'Heap', option_d: 'Tree', correct_answer: 'A' },
+  { question_text: 'Logical: If 9x=81, x=?', option_a: '9', option_b: '8', option_c: '7', option_d: '6', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 20 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

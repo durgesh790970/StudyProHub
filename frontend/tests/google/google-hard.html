@@ -1,0 +1,41 @@
+{% include 'test-page.html' with company='google' difficulty='hard' company_logo_url='/static/accounts/img/logos/google.svg' %}
+
+<script>
+// Inline question data for Google - HARD (20 questions)
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What is the worst-case time complexity of quicksort?', option_a: 'O(n log n)', option_b: 'O(n^2)', option_c: 'O(n)', option_d: 'O(log n)', correct_answer: 'B' },
+	{ question_text: 'Which algorithm finds strongly connected components?', option_a: 'Dijkstra', option_b: 'Kosaraju', option_c: 'Prim', option_d: 'Kruskal', correct_answer: 'B' },
+	{ question_text: 'Which data structure provides O(1) average time for lookup?', option_a: 'Array', option_b: 'Balanced BST', option_c: 'Hash Table', option_d: 'LinkedList', correct_answer: 'C' },
+	{ question_text: 'What is the complexity of building a heap from n elements?', option_a: 'O(n)', option_b: 'O(n log n)', option_c: 'O(n^2)', option_d: 'O(log n)', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is used for minimum spanning tree?', option_a: 'Dijkstra', option_b: 'Kruskal', option_c: 'Bellman-Ford', option_d: 'Floyd-Warshall', correct_answer: 'B' },
+	{ question_text: 'What technique optimizes dynamic programming by iteratively improving?', option_a: 'Greedy', option_b: 'Memoization', option_c: 'Tabulation', option_d: 'Branch and Bound', correct_answer: 'B' },
+	{ question_text: 'In NP problems, what does NP stand for?', option_a: 'Non-polynomial', option_b: 'Nondeterministic Polynomial', option_c: 'Non-primitive', option_d: 'Negligible Probability', correct_answer: 'B' },
+	{ question_text: 'Which is used to detect a cycle in directed graph?', option_a: 'Coloring DFS', option_b: 'KMP', option_c: 'Binary search', option_d: 'Heap', correct_answer: 'A' },
+	{ question_text: 'Which is best for shortest path in graphs with negative edges?', option_a: 'Dijkstra', option_b: 'Bellman-Ford', option_c: 'Floyd', option_d: 'Prim', correct_answer: 'B' },
+	{ question_text: 'What is the Ford-Fulkerson algorithm used for?', option_a: 'Shortest path', option_b: 'Max flow', option_c: 'Minimum cut', option_d: 'Sorting', correct_answer: 'B' },
+	{ question_text: 'Aptitude: If 5^x = 125, x = ?', option_a: '3', option_b: '2', option_c: '4', option_d: '5', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is used for substring search with linear time guarantee?', option_a: 'Naive', option_b: 'KMP', option_c: 'Rabin-Karp', option_d: 'Boyer-Moore', correct_answer: 'B' },
+	{ question_text: 'Which is true about AVL tree?', option_a: 'Always balanced by height', option_b: 'Not a BST', option_c: 'Uses hashing', option_d: 'Is a graph', correct_answer: 'A' },
+	{ question_text: 'Which algorithmic paradigm uses divide and conquer?', option_a: 'Dynamic programming', option_b: 'Greedy', option_c: 'Divide and Conquer', option_d: 'Backtracking', correct_answer: 'C' },
+	{ question_text: 'What is the complexity of matrix multiplication (naive)?', option_a: 'O(n^2)', option_b: 'O(n^3)', option_c: 'O(n log n)', option_d: 'O(n)', correct_answer: 'B' },
+	{ question_text: 'Which structure supports range queries efficiently?', option_a: 'Segment tree', option_b: 'Queue', option_c: 'Stack', option_d: 'Array', correct_answer: 'A' },
+	{ question_text: 'Which algorithm solves 2-SAT efficiently?', option_a: 'Tarjan + SCC', option_b: 'Dijkstra', option_c: 'Prim', option_d: 'Kruskal', correct_answer: 'A' },
+	{ question_text: 'Which algorithm is best for matching in bipartite graphs?', option_a: 'Ford-Fulkerson', option_b: 'Hopcroft–Karp', option_c: 'Dijkstra', option_d: 'Kruskal', correct_answer: 'B' },
+	{ question_text: 'What is the time complexity of checking if array is palindrome?', option_a: 'O(n)', option_b: 'O(log n)', option_c: 'O(n log n)', option_d: 'O(1)', correct_answer: 'A' }
+];
+
+// 30 minutes
+window.INLINE_TIME_LIMIT = 30 * 60;
+
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>

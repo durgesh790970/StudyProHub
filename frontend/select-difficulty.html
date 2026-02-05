@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Difficulty - StudyPro Hub</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/test-flow.css' %}">
+</head>
+<body>
+<div class="test-flow-container">
+    <!-- Header -->
+    <div class="test-flow-header">
+        <div class="header-content">
+            <a href="{% url 'accounts:dashboard' %}" class="back-link">← Back</a>
+            <h1 class="page-title" id="headerTitle">Select Difficulty Level</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="test-flow-main">
+        <div class="difficulty-section">
+            <h2>Choose Your Test Difficulty</h2>
+            <p class="subtitle">Select the difficulty level that matches your skill level</p>
+
+            <!-- Difficulty Buttons -->
+            <div class="difficulty-buttons">
+                <button class="difficulty-btn" data-difficulty="easy">
+                    <div class="difficulty-icon">🟢</div>
+                    <div class="difficulty-name">Easy</div>
+                    <div class="difficulty-desc">Perfect for beginners</div>
+                </button>
+
+                <button class="difficulty-btn" data-difficulty="medium">
+                    <div class="difficulty-icon">🟡</div>
+                    <div class="difficulty-name">Medium</div>
+                    <div class="difficulty-desc">Challenge yourself</div>
+                </button>
+
+                <button class="difficulty-btn" data-difficulty="hard">
+                    <div class="difficulty-icon">🔴</div>
+                    <div class="difficulty-name">Hard</div>
+                    <div class="difficulty-desc">For the experts</div>
+                </button>
+            </div>
+
+            <!-- Selected Difficulty Display -->
+            <div class="selected-difficulty" id="selectedDifficulty" style="display: none;">
+                <p>Selected: <strong id="difficultyText"></strong></p>
+            </div>
+
+            <!-- Next Button -->
+            <div class="next-button-container">
+                <button class="btn btn-primary next-btn" id="nextBtn" disabled style="display: none;">
+                    Next ➜
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/test-flow.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Prefer company saved in localStorage (set by mock_test), fallback to URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const companyFromUrl = urlParams.get('company');
+        const storedCompany = (localStorage.getItem('selectedCompany') || '').trim();
+        const companyKey = storedCompany || (companyFromUrl ? companyFromUrl.toLowerCase() : 'company');
+
+        // Friendly display name
+        const displayName = companyKey.charAt(0).toUpperCase() + companyKey.slice(1);
+
+        // Update header with company name
+        const headerTitle = document.getElementById('headerTitle');
+        headerTitle.textContent = displayName + ' - Select Difficulty';
+        
+        const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+        const nextBtn = document.getElementById('nextBtn');
+        const selectedDifficultyDiv = document.getElementById('selectedDifficulty');
+        const difficultyText = document.getElementById('difficultyText');
+        let selectedDifficulty = null;
+
+        // Handle difficulty button clicks
+        difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all buttons
+                difficultyBtns.forEach(b => b.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Store selected difficulty
+                selectedDifficulty = this.dataset.difficulty;
+                
+                // Show selected difficulty text
+                difficultyText.textContent = selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1);
+                selectedDifficultyDiv.style.display = 'block';
+                
+                // Show and enable next button
+                nextBtn.style.display = 'inline-block';
+                nextBtn.disabled = false;
+                nextBtn.classList.add('show');
+            });
+        });
+
+        // Handle next button click
+        nextBtn.addEventListener('click', function() {
+            if (!selectedDifficulty) return;
+            try { localStorage.setItem('selectedDifficulty', selectedDifficulty); } catch (err) { console.warn(err); }
+            // Redirect to instructions page
+            window.location.href = '/test-instructions/';
+        });
+    });
+</script>
+</body>
+</html>

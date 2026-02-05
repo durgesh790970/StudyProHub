@@ -1,0 +1,28 @@
+{% load static %}
+<header class="site-header">
+    <div class="container">
+        <div class="nav-wrap">
+            <a href="{% url 'accounts:index' %}" class="brand">
+                <span class="logo">SP</span>
+                <span>StudyPro Hub</span>
+            </a>
+
+            <nav class="main-nav">
+                <a href="{% url 'accounts:pdfs_page' %}">PDF</a>
+                <a href="{% url 'accounts:videos_page' %}">Video</a>
+                <a href="{% url 'accounts:quiz_page' %}">Quiz</a>
+                <a href="{% url 'accounts:BTech_page' %}">BTech</a>
+                <a href="{% url 'accounts:select_difficulty' %}">Mock Test</a>
+                <a href="{% url 'accounts:interview_page' %}">Interview</a>
+                <a href="{% url 'accounts:contect_page' %}">Contact</a>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:profile' %}" class="profile-link">👤</a>
+                {% else %}
+                    <a href="{% url 'accounts:login_page' %}" class="cta">Login</a>
+                {% endif %}
+            </nav>
+
+        </div>
+    </div>
+</header>

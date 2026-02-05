@@ -1,0 +1,59 @@
+{% include 'test-page.html' with company='hcl' difficulty='easy' company_logo_url='/static/accounts/img/logos/hcl.svg' %}
+
+<script>
+// HCL EASY - 10 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'What does HTML stand for?', option_a: 'Hyperlinks and Text Markup Language', option_b: 'Hyper Text Markup Language', option_c: 'Home Tool Markup Language', option_d: 'Hyperlinking Text Markup Language', correct_answer: 'B' },
+	{ question_text: 'Which HTML tag is used for paragraph?', option_a: '<p>', option_b: '<a>', option_c: '<div>', option_d: '<span>', correct_answer: 'A' },
+	{ question_text: 'What is CSS used for?', option_a: 'Structure', option_b: 'Styling', option_c: 'Database', option_d: 'Server-side scripting', correct_answer: 'B' },
+	{ question_text: 'Which is a programming language?', option_a: 'HTML', option_b: 'CSS', option_c: 'Python', option_d: 'SQL', correct_answer: 'C' },
+	{ question_text: 'Which company created Java?', option_a: 'Microsoft', option_b: 'Sun Microsystems', option_c: 'Apple', option_d: 'Google', correct_answer: 'B' },
+	{ question_text: 'Which HTTP status code means OK?', option_a: '404', option_b: '500', option_c: '200', option_d: '301', correct_answer: 'C' },
+	{ question_text: 'What does CPU stand for?', option_a: 'Central Processing Unit', option_b: 'Computer Personal Unit', option_c: 'Central Performance Unit', option_d: 'Computer Processing Unit', correct_answer: 'A' },
+	{ question_text: 'Which is a NoSQL database?', option_a: 'MySQL', option_b: 'Postgres', option_c: 'MongoDB', option_d: 'SQLite', correct_answer: 'C' },
+	{ question_text: 'What is the time complexity of binary search?', option_a: 'O(n)', option_b: 'O(log n)', option_c: 'O(n log n)', option_d: 'O(1)', correct_answer: 'B' },
+	{ question_text: 'Which data structure uses FIFO?', option_a: 'Stack', option_b: 'Queue', option_c: 'Tree', option_d: 'Graph', correct_answer: 'B' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+
+
+<script>
+// HCL EASY - 10 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Which layer is responsible for routing in OSI?', option_a: 'Transport', option_b: 'Network', option_c: 'Application', option_d: 'Data Link', correct_answer: 'B' },
+	{ question_text: 'What is HTTP status for Not Found?', option_a: '200', option_b: '404', option_c: '500', option_d: '301', correct_answer: 'B' },
+	{ question_text: 'Simple math: 8*7 = ?', option_a: '56', option_b: '48', option_c: '64', option_d: '49', correct_answer: 'A' },
+	{ question_text: 'Which is a symmetric data structure?', option_a: 'Stack', option_b: 'Queue', option_c: 'Tree', option_d: 'None', correct_answer: 'D' },
+	{ question_text: 'Which keyword defines a function in Python?', option_a: 'def', option_b: 'func', option_c: 'function', option_d: 'lambda', correct_answer: 'A' },
+	{ question_text: 'What is binary of decimal 5?', option_a: '101', option_b: '110', option_c: '100', option_d: '111', correct_answer: 'A' },
+	{ question_text: 'Which is mutable?', option_a: 'Tuple', option_b: 'List', option_c: 'String', option_d: 'Int', correct_answer: 'B' },
+	{ question_text: 'What does CPU stand for?', option_a: 'Central Processing Unit', option_b: 'Central Program Unit', option_c: 'Core Processing Unit', option_d: 'Compute Performance Unit', correct_answer: 'A' },
+	{ question_text: 'Simple aptitude: 50% of 80 = ?', option_a: '40', option_b: '30', option_c: '20', option_d: '50', correct_answer: 'A' },
+	{ question_text: 'Which is used to store key-value pairs?', option_a: 'Array', option_b: 'Hash Map', option_c: 'Stack', option_d: 'Queue', correct_answer: 'B' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+

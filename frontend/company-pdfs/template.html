@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company PDF Materials</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .pdf-container {
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .pdf-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .pdf-title {
+            color: #1a56db;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        .pdf-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% include 'includes/site_header.html' %}
+
+    <main class="pdf-container">
+        <div class="breadcrumb">
+            <a href="../pdfs.html">PDFs</a> &raquo; 
+            <span class="company-name">Company</span> Materials
+        </div>
+
+        <h1 class="company-name">Company PDF Materials</h1>
+        
+        <div class="pdf-grid">
+            <!-- PDF cards will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // Get company name from the HTML filename
+        const companyName = document.location.pathname.split('/').pop().replace('.html', '').replace('pdf-', '');
+        
+        // Update page title and headings
+        document.title = `${companyName} PDF Materials — StudyPro Hub`;
+        document.querySelectorAll('.company-name').forEach(el => {
+            el.textContent = companyName;
+        });
+
+        // Sample PDF data - this would typically come from your backend
+        const pdfData = [
+            {
+                title: `${companyName} Interview Questions`,
+                description: "Common technical and HR interview questions with detailed answers",
+                pages: 25,
+                year: 2023,
+                url: "#"
+            },
+            {
+                title: `${companyName} Coding Questions`,
+                description: "Practice coding problems with solutions and explanations",
+                pages: 40,
+                year: 2023,
+                url: "#"
+            },
+            {
+                title: `${companyName} Technical Topics`,
+                description: "Key technical concepts and topics for preparation",
+                pages: 35,
+                year: 2023,
+                url: "#"
+            },
+            {
+                title: `${companyName} Previous Papers`,
+                description: "Previous year question papers with solutions",
+                pages: 50,
+                year: 2023,
+                url: "#"
+            }
+        ];
+
+        // Populate PDF grid
+        const pdfGrid = document.querySelector('.pdf-grid');
+        pdfData.forEach(pdf => {
+            const card = document.createElement('div');
+            card.className = 'pdf-card';
+            card.innerHTML = `
+                <h3 class="pdf-title">${pdf.title}</h3>
+                <p>${pdf.description}</p>
+                <div class="pdf-meta">${pdf.pages} pages • ${pdf.year}</div>
+                <button class="download-btn" onclick="openPDF('${pdf.url}')">Open PDF</button>
+            `;
+            pdfGrid.appendChild(card);
+        });
+
+        // Function to open PDF file
+        function openPDF(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>

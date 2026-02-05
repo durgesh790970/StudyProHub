@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HR Mock — StudyPro Hub</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/quiz-hr.css' %}">
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="index.html" class="brand"><span class="logo">SP</span> StudyPro Hub</a>
+      <nav class="main-nav">
+        
+        <a href="videos.html">Videos</a>
+        <a href="pdfs.html">PDFs</a>
+		<a href="quiz.html">Mock</a>
+          
+
+      </nav>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <div style="display:flex;gap:1.25rem;align-items:flex-start;flex-wrap:wrap">
+      <div style="flex:1;min-width:320px">
+        <h2 style="margin:.2rem 0">HR Mock — Interview Practice</h2>
+        <p class="muted">Practice common HR questions. Click each question to view a short sample answer (2–3 lines).</p>
+
+        <div id="quizApp" class="quiz-card" style="margin-top:1rem">
+          <!-- Quiz UI will be rendered here by JS -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script id="quiz-data" type="application/json">
+{
+  "sections": [
+    {
+      "id": "hr",
+      "title": "HR (Personal and situational interview questions)",
+      "questions": [
+        { "q": "Tell me about yourself.", "sampleAnswer": "I am a computer science graduate with hands-on experience building web applications and a strong interest in backend systems. I enjoy problem solving and continuously learning.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "Describe a time you worked in a team.", "sampleAnswer": "During a semester project, I collaborated with three teammates to build a web app. I handled API design and coordinated tasks through daily stand-ups, delivering on schedule.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "What are your strengths?", "sampleAnswer": "My strengths include analytical thinking, clear communication, and attention to detail, which help me debug problems and explain solutions effectively.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "How do you handle tight deadlines?", "sampleAnswer": "I break tasks into smaller milestones, prioritize critical work, and communicate early if scope needs adjustment to ensure delivery.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "Describe a challenge you faced and how you resolved it.", "sampleAnswer": "I found a performance bottleneck in a service, profiled it, and optimized a slow database query, reducing response time by about 60%.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "Why do you want to work here?", "sampleAnswer": "I admire the company's product focus and engineering culture; I see opportunities to contribute my skills and grow alongside experienced engineers.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "How do you keep your technical skills up to date?", "sampleAnswer": "I follow industry blogs, take short online courses, and build small projects to practice new tools and frameworks.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "Tell me about feedback you received and how you reacted.", "sampleAnswer": "I received feedback about improving code readability; I refactored the module, added comments and tests, and incorporated the style guidelines going forward.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "How do you prioritize when multiple tasks arrive?", "sampleAnswer": "I assess impact and urgency, discuss priorities with stakeholders, and focus on high-impact tasks while keeping progress on smaller items.", "options": ["See sample answer","","",""], "answer": 0 },
+        { "q": "Where do you see yourself in 3–5 years?", "sampleAnswer": "I aim to own larger features, mentor juniors, and contribute to architectural decisions while continuing to learn and take on responsibility.", "options": ["See sample answer","","",""], "answer": 0 }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

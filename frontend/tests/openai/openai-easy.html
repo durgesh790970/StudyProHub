@@ -1,0 +1,30 @@
+{% include 'test-page.html' with company='openai' difficulty='easy' company_logo_url='/static/accounts/img/logos/openai.svg' %}
+
+<script>
+// OpenAI EASY - 10 questions
+window.INLINE_QUESTIONS = [
+  { question_text: 'What is an LLM?', option_a: 'Large Language Model', option_b: 'Local Link Manager', option_c: 'Lightweight Logic Machine', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which is a transformer paper?', option_a: 'Attention is All You Need', option_b: 'ImageNet', option_c: 'AlexNet', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Which activation is common in transformers?', option_a: 'ReLU', option_b: 'Sigmoid', option_c: 'Tanh', option_d: 'Softmax', correct_answer: 'D' },
+  { question_text: 'Which is tokenization?', option_a: 'Splitting text into tokens', option_b: 'Encrypting text', option_c: 'Styling', option_d: 'Indexing', correct_answer: 'A' },
+  { question_text: 'Which is for embeddings?', option_a: 'Vector representation', option_b: 'HTML', option_c: 'CSS', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is used for inference speedup?', option_a: 'Quantization', option_b: 'CSS', option_c: 'HTML', option_d: 'PNG', correct_answer: 'A' },
+  { question_text: 'Which is RLHF?', option_a: 'Reinforcement Learning from Human Feedback', option_b: 'Randomized Learning', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+  { question_text: 'Aptitude: 5+7 = ?', option_a: '12', option_b: '11', option_c: '13', option_d: '10', correct_answer: 'A' },
+  { question_text: 'Which is for vector DB?', option_a: 'FAISS', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+  { question_text: 'Which is few-shot learning?', option_a: 'Learning with few examples', option_b: 'Large dataset only', option_c: 'None', option_d: 'All', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>
+{% include 'test-page.html' with company='openai' difficulty='easy' company_logo_url='/static/accounts/img/logos/openai.svg' %}

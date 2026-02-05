@@ -1,0 +1,31 @@
+{% include 'test-page.html' with company='amazon' difficulty='easy' company_logo_url='/static/accounts/img/logos/amazon.svg' %}
+
+<script>
+// Amazon EASY - 10 logical + coding MCQ
+window.CODING_QUESTIONS = [
+  { question_text: 'Coding: What is the output of: 3 + "4" in JavaScript?', option_a: '7', option_b: '34', option_c: 'TypeError', option_d: 'Undefined', correct_answer: 'B' },
+  { question_text: 'Coding: Which is immutable in Python?', option_a: 'List', option_b: 'Dict', option_c: 'Tuple', option_d: 'Set', correct_answer: 'C' },
+  { question_text: 'Coding: Which operator checks equality without type coercion in JS?', option_a: '==', option_b: '===', option_c: '!=', option_d: '=>', correct_answer: 'B' },
+  { question_text: 'Coding: Which data type is not JSON serializable in JS?', option_a: 'Object', option_b: 'Function', option_c: 'Array', option_d: 'Number', correct_answer: 'B' },
+  { question_text: 'Coding: Which sorting algorithm has O(n log n) average case?', option_a: 'Bubble', option_b: 'Insertion', option_c: 'Merge', option_d: 'Selection', correct_answer: 'C' },
+
+  { question_text: 'Logical: Which number comes next: 2, 4, 8, 16, ?', option_a: '18', option_b: '20', option_c: '32', option_d: '24', correct_answer: 'C' },
+  { question_text: 'Logical: If all Bloops are Razzies and some Razzies are Lazzies, are all Bloops Lazzies?', option_a: 'Yes', option_b: 'No', option_c: 'Sometimes', option_d: 'Cannot determine', correct_answer: 'D' },
+  { question_text: 'Logical: If A > B and B > C, which is true?', option_a: 'A > C', option_b: 'C > A', option_c: 'A = B', option_d: 'None', correct_answer: 'A' },
+  { question_text: 'Logical: Find missing number: 5, 9, 17, 33, ?', option_a: '65', option_b: '57', option_c: '49', option_d: '66', correct_answer: 'A' },
+  { question_text: 'Logical: If train runs 60 km/h for 3 hours, distance?', option_a: '120 km', option_b: '180 km', option_c: '60 km', option_d: '200 km', correct_answer: 'B' },
+
+];
+window.INLINE_TIME_LIMIT = 10 * 60;
+(function(){
+  const orig = TestPage.prototype.loadQuestions;
+  TestPage.prototype.loadQuestions = async function(){
+    if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+      this.questions = window.INLINE_QUESTIONS;
+      if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+      return;
+    }
+    return orig.apply(this, arguments);
+  };
+})();
+</script>

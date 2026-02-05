@@ -1,0 +1,40 @@
+{% include 'test-page.html' with company='wipro' difficulty='hard' company_logo_url='/static/accounts/img/logos/wipro.svg' %}
+
+<script>
+// Wipro HARD - 20 questions
+window.INLINE_QUESTIONS = [
+	{ question_text: 'Which is NP-hard problem?', option_a: 'Travelling Salesman Problem', option_b: 'Binary search', option_c: 'Merge sort', option_d: 'Matrix add', correct_answer: 'A' },
+	{ question_text: 'Which consensus algorithm is used in blockchain?', option_a: 'Paxos', option_b: 'Proof of Work / Proof of Stake', option_c: 'Dijkstra', option_d: 'RSA', correct_answer: 'B' },
+	{ question_text: 'What is backpressure in streaming?', option_a: 'Rate control between producer/consumer', option_b: 'Memory leak', option_c: 'Security issue', option_d: 'Database lock', correct_answer: 'A' },
+	{ question_text: 'Which is eventual consistency example?', option_a: 'DNS', option_b: 'ACID DB', option_c: 'Single node', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which scheduling algorithm minimizes average wait time?', option_a: 'FCFS', option_b: 'SJF', option_c: 'Round Robin', option_d: 'Priority', correct_answer: 'B' },
+	{ question_text: 'Which is used for high availability?', option_a: 'Replication', option_b: 'Single server', option_c: 'No backup', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'What is tail-call elimination?', option_a: 'Compiler optimization to reuse stack', option_b: 'Garbage collection', option_c: 'Memory leak', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is used for approximate membership?', option_a: 'Bloom filter', option_b: 'Hash map', option_c: 'Tree', option_d: 'Array', correct_answer: 'A' },
+	{ question_text: 'What does CAP theorem state?', option_a: 'Consistency, Availability, Partition tolerance', option_b: 'Cache, Access, Performance', option_c: 'Compute, Allocate, Persist', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is quorum-based protocol?', option_a: 'Paxos/Raft', option_b: 'HTTP', option_c: 'FTP', option_d: 'SMTP', correct_answer: 'A' },
+	{ question_text: 'Which is linearizable?', option_a: 'Strong consistency systems', option_b: 'Eventual systems', option_c: 'None', option_d: 'All', correct_answer: 'A' },
+	{ question_text: 'Which is used for vector search?', option_a: 'FAISS', option_b: 'MySQL', option_c: 'Postgres', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'Aptitude: 25*4 = ?', option_a: '100', option_b: '90', option_c: '110', option_d: '120', correct_answer: 'A' },
+	{ question_text: 'Which is used for immutable logs?', option_a: 'Kafka', option_b: 'MySQL', option_c: 'Redis', option_d: 'SQLite', correct_answer: 'A' },
+	{ question_text: 'Which cryptography uses same key?', option_a: 'Symmetric', option_b: 'Asymmetric', option_c: 'Hashing', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is used for event-driven systems?', option_a: 'Pub/Sub', option_b: 'RDBMS', option_c: 'Static files', option_d: 'CSS', correct_answer: 'A' },
+	{ question_text: 'Which technique reduces latency for read-heavy systems?', option_a: 'Caching', option_b: 'Dropping indexes', option_c: 'Increasing writes', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is for consistent hashing?', option_a: 'Ring hashing', option_b: 'Linear probing', option_c: 'Chaining', option_d: 'Open addressing', correct_answer: 'A' },
+	{ question_text: 'Which is used for RPC?', option_a: 'gRPC', option_b: 'CSS', option_c: 'HTML', option_d: 'None', correct_answer: 'A' },
+	{ question_text: 'Which is typical for microservices comms?', option_a: 'gRPC/HTTP/Message brokers', option_b: 'Monolith only', option_c: 'Direct SQL', option_d: 'None', correct_answer: 'A' }
+];
+window.INLINE_TIME_LIMIT = 35 * 60;
+(function(){
+	const orig = TestPage.prototype.loadQuestions;
+	TestPage.prototype.loadQuestions = async function(){
+		if (window.INLINE_QUESTIONS && window.INLINE_QUESTIONS.length){
+			this.questions = window.INLINE_QUESTIONS;
+			if (window.INLINE_TIME_LIMIT) this.config.timeLimit = window.INLINE_TIME_LIMIT;
+			return;
+		}
+		return orig.apply(this, arguments);
+	};
+})();
+</script>
+

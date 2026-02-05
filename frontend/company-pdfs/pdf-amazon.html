@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon PDF Materials</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .pdf-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .pdf-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .pdf-title {
+            color: #1a56db;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        .pdf-meta {
+            color: #666;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .download-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background: #1d4ed8;
+        }
+        .breadcrumb {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        .breadcrumb a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    {% include 'includes/site_header.html' %}
+
+    <main class="pdf-container">
+        <div class="breadcrumb">
+            <a href="../pdfs.html">PDFs</a> &raquo; 
+            <span>Amazon Materials</span>
+        </div>
+
+        <div class="page-header">
+            <h1>Amazon PDF Materials</h1>
+            <p>Access comprehensive PDF materials for Amazon interview preparation including coding challenges and behavioral assessments.</p>
+        </div>
+        
+        <div class="pdf-grid">
+            <!-- PDF cards will be populated by JavaScript -->
+        </div>
+    </main>
+
+    <script>
+        // Sample PDF data specific to Amazon
+        const pdfData = [
+            {
+                title: "Amazon SDE Interview Guide",
+                description: "Complete preparation guide for Amazon SDE positions",
+                pages: 95,
+                year: 2023,
+                url: "pdfs/amazon-sde-guide.pdf"
+            },
+            {
+                title: "Amazon Coding Questions",
+                description: "Extensive collection of coding problems with solutions",
+                pages: 120,
+                year: 2023,
+                url: "pdfs/amazon-coding-problems.pdf"
+            },
+            {
+                title: "Amazon System Design",
+                description: "System design concepts and case studies",
+                pages: 100,
+                year: 2023,
+                url: "pdfs/amazon-system-design.pdf"
+            },
+            {
+                title: "Amazon Leadership Principles",
+                description: "Detailed guide on Amazon's Leadership Principles",
+                pages: 80,
+                year: 2023,
+                url: "pdfs/amazon-leadership.pdf"
+            },
+            {
+                title: "Amazon Behavioral Questions",
+                description: "STAR method and behavioral interview preparation",
+                pages: 70,
+                year: 2023,
+                url: "pdfs/amazon-behavioral.pdf"
+            },
+            {
+                title: "Amazon AWS Services",
+                description: "Key AWS services and architecture patterns",
+                pages: 110,
+                year: 2023,
+                url: "pdfs/amazon-aws.pdf"
+            }
+        ];
+
+        // Populate PDF grid
+        const pdfGrid = document.querySelector('.pdf-grid');
+        pdfData.forEach(pdf => {
+            const card = document.createElement('div');
+            card.className = 'pdf-card';
+            card.innerHTML = `
+                <h3 class="pdf-title">${pdf.title}</h3>
+                <p class="pdf-description">${pdf.description}</p>
+                <div class="pdf-meta">${pdf.pages} pages • ${pdf.year}</div>
+                <button class="download-btn" onclick="openPDF('${pdf.url}')">Open PDF</button>
+            `;
+            pdfGrid.appendChild(card);
+        });
+
+        // Function to open PDF file
+        function openPDF(url) {
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
