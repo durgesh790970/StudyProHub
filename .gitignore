@@ -3,3 +3,7 @@ node_modules/
 *.db
 venv/
 __pycache__/
+backend/node_modules/
+backend/.env
+backend/*.db
+backend/__pycache__/
