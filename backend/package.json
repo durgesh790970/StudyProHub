@@ -1,0 +1,51 @@
+{
+  "name": "studyhub-backend",
+  "version": "1.0.0",
+  "description": "StudyHub Coding Contest Platform - Backend API",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "nodemon main.js",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "seed": "node db_seed.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "coding",
+    "contest",
+    "platform",
+    "judge",
+    "leaderboard"
+  ],
+  "author": "StudyHub Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "express-rate-limit": "^6.7.0",
+    "dotenv": "^16.0.3",
+    "axios": "^1.4.0",
+    "socket.io": "^4.7.0",
+    "redis": "^4.6.5",
+    "bull": "^4.11.2",
+    "nodemailer": "^6.9.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3",
+    "eslint": "^8.40.0",
+    "prettier": "^2.8.8"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}
