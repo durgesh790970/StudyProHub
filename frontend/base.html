@@ -17,7 +17,6 @@
         </a>
 
         <nav class="main-nav">
-          <a href="{% url 'accounts:index' %}">Home</a>
           <a href="{% url 'accounts:videos_page' %}">Videos</a>
           <a href="{% url 'accounts:pdfs_page' %}">PDFs</a>
           <a href="{% url 'accounts:quiz_page' %}">Quiz</a>
@@ -25,7 +24,7 @@
           <a href="{% url 'accounts:contect_page' %}">Contact</a>
 		
           {% if request.session.user_id or request.session.phone %}
-            <a href="{% url 'accounts:logout_page' %}" class="cta">Logout</a>
+            <a href="{% url 'accounts:logout_page' %}" class="cta">Login</a>
           {% else %}
             <a href="{% url 'accounts:login_page' %}" class="cta">Login</a>
           {% endif %}
@@ -44,5 +43,7 @@
     </div>
   </footer>
   <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/api-client.js' %}"></script>
+  <script src="{% static 'js/activity-tracker.js' %}"></script>
 </body>
 </html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Editor - StudyHub Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .form-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        input[type="datetime-local"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        .code-editor {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .code-editor textarea {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 0;
+            margin: 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .tag-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background: white;
+            min-height: 44px;
+        }
+
+        .tag {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+        }
+
+        .tag-input input {
+            border: none;
+            padding: 0;
+            margin: 0;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .test-case {
+            background: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .test-case h4 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .test-case .close {
+            float: right;
+            cursor: pointer;
+            color: #e74c3c;
+            font-size: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn.secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn.secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .btn.small {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+
+        .btn.danger {
+            background: #e74c3c;
+        }
+
+        .btn.danger:hover {
+            background: #c0392b;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .char-count {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .difficulty-selector input[type="radio"] {
+            display: none;
+        }
+
+        .difficulty-selector label {
+            margin: 0;
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: normal;
+        }
+
+        .difficulty-selector input[type="radio"]:checked + label {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .difficulty-selector input[type="radio"]:checked + label.easy {
+            border-color: #27ae60;
+            background: #d4edda;
+        }
+
+        .difficulty-selector input[type="radio"]:checked + label.medium {
+            border-color: #f39c12;
+            background: #fff3cd;
+        }
+
+        .difficulty-selector input[type="radio"]:checked + label.hard {
+            border-color: #e74c3c;
+            background: #f8d7da;
+        }
+
+        .preview-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .preview-section h4 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📝 Problem Editor</h1>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">← Back to Dashboard</a>
+        </div>
+
+        <div class="success-message" id="successMsg">✓ Problem saved successfully!</div>
+        <div class="error-message" id="errorMsg">✗ Error saving problem</div>
+
+        <form id="problemForm" onsubmit="submitForm(event)">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h2>📋 Basic Information</h2>
+
+                <div class="form-group">
+                    <label for="title">Problem Title *</label>
+                    <input type="text" id="title" name="title" required 
+                           placeholder="e.g., Two Sum, Palindrome Check, etc.">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="difficulty">Difficulty Level *</label>
+                        <div class="difficulty-selector">
+                            <input type="radio" id="easy" name="difficulty" value="Easy" required checked>
+                            <label for="easy" class="easy">🟢 Easy</label>
+
+                            <input type="radio" id="medium" name="difficulty" value="Medium">
+                            <label for="medium" class="medium">🟡 Medium</label>
+
+                            <input type="radio" id="hard" name="difficulty" value="Hard">
+                            <label for="hard" class="hard">🔴 Hard</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tags">Tags (comma-separated)</label>
+                        <input type="text" id="tags" name="tags" 
+                               placeholder="e.g., array, string, sorting, dynamic-programming">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Problem Description *</label>
+                    <textarea id="description" name="description" required
+                              placeholder="Detailed problem statement..."></textarea>
+                    <div class="char-count"><span id="descCount">0</span>/5000 characters</div>
+                </div>
+            </div>
+
+            <!-- Input/Output Format -->
+            <div class="form-section">
+                <h2>🔄 Input/Output Format</h2>
+
+                <div class="form-group">
+                    <label for="inputFormat">Input Format *</label>
+                    <textarea id="inputFormat" name="inputFormat" required
+                              placeholder="Describe input format here..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="outputFormat">Output Format *</label>
+                    <textarea id="outputFormat" name="outputFormat" required
+                              placeholder="Describe output format here..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="constraints">Constraints *</label>
+                        <textarea id="constraints" name="constraints" required
+                                  placeholder="1 ≤ n ≤ 10^5&#10;Time Limit: 1 sec&#10;Memory Limit: 256 MB"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editorial">Solution Editorial</label>
+                        <textarea id="editorial" name="editorial"
+                                  placeholder="Explanation and solution approach..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Execution Limits -->
+            <div class="form-section">
+                <h2>⚙️ Execution Limits</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="timeLimit">Time Limit (seconds) *</label>
+                        <input type="number" id="timeLimit" name="timeLimit" value="1" 
+                               min="0.1" step="0.1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memoryLimit">Memory Limit (MB) *</label>
+                        <input type="number" id="memoryLimit" name="memoryLimit" value="256"
+                               min="32" step="32" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Cases -->
+            <div class="form-section">
+                <h2>🧪 Test Cases</h2>
+
+                <p style="color: #666; margin-bottom: 15px;">Add at least 2 test cases (1 example, 1 hidden)</p>
+
+                <div id="testCasesContainer"></div>
+
+                <button type="button" class="btn secondary" onclick="addTestCase()">
+                    + Add Test Case
+                </button>
+            </div>
+
+            <!-- Submit -->
+            <div class="button-group">
+                <button type="button" class="btn secondary" onclick="goBack()">Cancel</button>
+                <button type="submit" class="btn">Save Problem</button>
+            </div>
+        </form>
+
+        <!-- Preview -->
+        <div class="preview-section">
+            <h4>📌 Preview</h4>
+            <p><strong>Title:</strong> <span id="previewTitle">Enter title...</span></p>
+            <p><strong>Difficulty:</strong> <span id="previewDifficulty">Easy</span></p>
+            <p><strong>Test Cases:</strong> <span id="previewTestCount">0</span></p>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        let testCaseCount = 0;
+        let editingId = null;
+
+        // Get URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('edit')) {
+            editingId = urlParams.get('edit');
+            loadProblem(editingId);
+        } else {
+            addTestCase(); // Add initial test case
+            addTestCase();
+        }
+
+        // Real-time preview
+        document.getElementById('title')?.addEventListener('input', function() {
+            document.getElementById('previewTitle').textContent = this.value || 'Enter title...';
+        });
+
+        document.getElementById('description')?.addEventListener('input', function() {
+            document.getElementById('descCount').textContent = this.value.length;
+        });
+
+        document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('previewDifficulty').textContent = this.value;
+            });
+        });
+
+        function addTestCase() {
+            testCaseCount++;
+            const container = document.getElementById('testCasesContainer');
+
+            const testCase = document.createElement('div');
+            testCase.className = 'test-case';
+            testCase.id = `testCase-${testCaseCount}`;
+            testCase.innerHTML = `
+                <h4>Test Case #${testCaseCount}
+                    <span class="close" onclick="removeTestCase(${testCaseCount})">×</span>
+                </h4>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Input</label>
+                        <div class="code-editor">
+                            <textarea class="test-input" placeholder="Enter test input..." required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Expected Output</label>
+                        <div class="code-editor">
+                            <textarea class="test-output" placeholder="Enter expected output..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" class="test-example"> Example Test Case
+                    </label>
+                </div>
+            `;
+
+            container.appendChild(testCase);
+            updateTestCaseCount();
+        }
+
+        function removeTestCase(id) {
+            const element = document.getElementById(`testCase-${id}`);
+            if (element) {
+                element.remove();
+                updateTestCaseCount();
+            }
+        }
+
+        function updateTestCaseCount() {
+            const count = document.querySelectorAll('.test-case').length;
+            document.getElementById('previewTestCount').textContent = count;
+        }
+
+        async function loadProblem(id) {
+            try {
+                const response = await fetch(`/api/problems/${id}`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    const problem = data.data;
+
+                    document.getElementById('title').value = problem.title;
+                    document.getElementById('description').value = problem.description;
+                    document.getElementById('inputFormat').value = problem.inputFormat || '';
+                    document.getElementById('outputFormat').value = problem.outputFormat || '';
+                    document.getElementById('constraints').value = problem.constraints || '';
+                    document.getElementById('editorial').value = problem.editorial || '';
+                    document.getElementById('timeLimit').value = problem.timeLimit || 1;
+                    document.getElementById('memoryLimit').value = problem.memoryLimit || 256;
+                    document.getElementById('tags').value = (problem.tags || []).join(', ');
+
+                    document.querySelector(`input[value="${problem.difficulty}"]`).checked = true;
+
+                    // Load test cases
+                    document.getElementById('testCasesContainer').innerHTML = '';
+                    testCaseCount = 0;
+
+                    if (problem.testCases && problem.testCases.length > 0) {
+                        problem.testCases.forEach(tc => {
+                            addTestCase();
+                            const testCase = document.getElementById(`testCase-${testCaseCount}`);
+                            testCase.querySelector('.test-input').value = tc.input;
+                            testCase.querySelector('.test-output').value = tc.output;
+                            if (tc.isExample) {
+                                testCase.querySelector('.test-example').checked = true;
+                            }
+                        });
+                    }
+
+                    document.querySelector('form').onsubmit = (e) => updateProblem(e, id);
+                    document.querySelector('h1').textContent += ' - Edit';
+                }
+            } catch (error) {
+                console.error('Error loading problem:', error);
+                showError('Failed to load problem');
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            const formData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                difficulty: document.querySelector('input[name="difficulty"]:checked').value,
+                tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(t => t),
+                inputFormat: document.getElementById('inputFormat').value,
+                outputFormat: document.getElementById('outputFormat').value,
+                constraints: document.getElementById('constraints').value,
+                editorial: document.getElementById('editorial').value,
+                timeLimit: parseFloat(document.getElementById('timeLimit').value),
+                memoryLimit: parseInt(document.getElementById('memoryLimit').value),
+                testCases: []
+            };
+
+            // Collect test cases
+            document.querySelectorAll('.test-case').forEach(tc => {
+                const input = tc.querySelector('.test-input').value;
+                const output = tc.querySelector('.test-output').value;
+                const isExample = tc.querySelector('.test-example').checked;
+
+                if (input && output) {
+                    formData.testCases.push({ input, output, isExample });
+                }
+            });
+
+            if (formData.testCases.length < 2) {
+                showError('Please add at least 2 test cases');
+                return;
+            }
+
+            if (editingId) {
+                updateProblem(event, editingId);
+            } else {
+                createProblem(formData);
+            }
+        }
+
+        async function createProblem(formData) {
+            try {
+                const response = await fetch('/api/admin/problems', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Problem created successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html?tab=problems';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Failed to create problem');
+                }
+            } catch (error) {
+                console.error('Error creating problem:', error);
+                showError('Error creating problem');
+            }
+        }
+
+        async function updateProblem(event, id) {
+            event.preventDefault();
+
+            const formData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                difficulty: document.querySelector('input[name="difficulty"]:checked').value,
+                tags: document.getElementById('tags').value.split(',').map(t => t.trim()).filter(t => t),
+                inputFormat: document.getElementById('inputFormat').value,
+                outputFormat: document.getElementById('outputFormat').value,
+                constraints: document.getElementById('constraints').value,
+                editorial: document.getElementById('editorial').value,
+                timeLimit: parseFloat(document.getElementById('timeLimit').value),
+                memoryLimit: parseInt(document.getElementById('memoryLimit').value),
+                testCases: []
+            };
+
+            document.querySelectorAll('.test-case').forEach(tc => {
+                const input = tc.querySelector('.test-input').value;
+                const output = tc.querySelector('.test-output').value;
+                const isExample = tc.querySelector('.test-example').checked;
+
+                if (input && output) {
+                    formData.testCases.push({ input, output, isExample });
+                }
+            });
+
+            try {
+                const response = await fetch(`/api/admin/problems/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Problem updated successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html?tab=problems';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Failed to update problem');
+                }
+            } catch (error) {
+                console.error('Error updating problem:', error);
+                showError('Error updating problem');
+            }
+        }
+
+        function showSuccess(message) {
+            const msg = document.getElementById('successMsg');
+            msg.textContent = message;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+        }
+
+        function showError(message) {
+            const msg = document.getElementById('errorMsg');
+            msg.textContent = message;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 4000);
+        }
+
+        function goBack() {
+            window.location.href = 'admin-dashboard.html?tab=problems';
+        }
+    </script>
+</body>
+</html>

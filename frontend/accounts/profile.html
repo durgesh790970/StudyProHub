@@ -75,11 +75,19 @@
 <div class="container">
   <div class="profile-grid">
 
-    <!-- Profile Left Section (Glassmorphic Card) -->
-    <aside class="profile-side" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 2rem; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2);">
+    <!-- Profile Left Section (White Card) -->
+    <aside class="profile-side">
       <div class="profile-header">
-        <img src="https://ui-avatars.com/api/?name={{ user_obj.first_name }}&background=1565d8&color=fff&size=150"
-             class="avatar" alt="Profile">
+        <div style="position: relative; display: inline-block; cursor: pointer;" id="avatar-container" title="Click to change profile picture">
+          <img id="profile-avatar"
+               src="https://ui-avatars.com/api/?name={{ user_obj.first_name }}&background=1565d8&color=fff&size=150"
+               class="avatar" alt="Profile"
+               style="cursor: pointer; transition: opacity 0.2s ease;">
+          <div id="avatar-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; color: white; font-size: 12px; font-weight: bold;">
+            📷 Change
+          </div>
+          <input type="file" id="profile-picture-input" accept="image/*" style="display: none;">
+        </div>
         <h2>{{ user_obj.first_name }}</h2>
       </div>
 
@@ -95,13 +103,13 @@
         <p><strong>🏢 Paid companies:</strong></p>
 
         {% if purchases %}
-          <ul class="purchases-list" style="color: rgba(255,255,255,0.9);">
+          <ul class="purchases-list" style="color: #333;">
             {% for c in purchases %}
               <li style="padding: 0.3rem 0;">✓ {{ c }}</li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="muted" style="color: rgba(255,255,255,0.7); padding: 0;">No purchases yet</p>
+          <p class="muted" style="color: #999; padding: 0;">No purchases yet</p>
         {% endif %}
       {% endif %}
     </aside>
@@ -214,6 +222,97 @@
 <script defer src="{% static 'js/profile.js' %}"></script>
 
 <script>
+  // ============================================================================
+  // PROFILE PICTURE UPLOAD FUNCTIONALITY
+  // ============================================================================
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    const avatarContainer = document.getElementById('avatar-container');
+    const profileAvatar = document.getElementById('profile-avatar');
+    const avatarOverlay = document.getElementById('avatar-overlay');
+    const fileInput = document.getElementById('profile-picture-input');
+    
+    // Show overlay on hover
+    avatarContainer.addEventListener('mouseenter', function() {
+      avatarOverlay.style.opacity = '1';
+    });
+    
+    avatarContainer.addEventListener('mouseleave', function() {
+      avatarOverlay.style.opacity = '0';
+    });
+    
+    // Open file picker on click
+    avatarContainer.addEventListener('click', function() {
+      fileInput.click();
+    });
+    
+    // Handle file selection
+    fileInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert('Image size should be less than 5MB');
+        return;
+      }
+      
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file');
+        return;
+      }
+      
+      // Read and display image
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const imageData = event.target.result;
+        
+        // Update profile picture
+        profileAvatar.src = imageData;
+        
+        // Save to localStorage
+        const userId = localStorage.getItem('userId');
+        if (userId) {
+          localStorage.setItem(`profile-picture-${userId}`, imageData);
+        }
+        
+        // Also save to backend if API available
+        if (typeof activityTracker !== 'undefined' && userId) {
+          // Track profile picture change
+          activityTracker.trackActivity(
+            'profile_update',
+            'Updated Profile Picture',
+            'User changed their profile picture'
+          ).catch(err => console.log('Activity tracked'));
+        }
+        
+        showToast('✓ Profile picture updated successfully!');
+        
+        // Reset file input
+        fileInput.value = '';
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+  
+  // Load saved profile picture on page load
+  window.addEventListener('load', function() {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      const savedImage = localStorage.getItem(`profile-picture-${userId}`);
+      if (savedImage) {
+        const profileAvatar = document.getElementById('profile-avatar');
+        if (profileAvatar) {
+          profileAvatar.src = savedImage;
+        }
+      }
+    }
+  });
+</script>
+
+<script>
   // Delete test result from profile
   async function deleteResult(btn, resultId) {
     if (!confirm('Are you sure you want to delete this test result? This cannot be undone.')) {
@@ -279,7 +378,13 @@
 
   // Show notification
   function showToast(message) {
-    const toast = document.createElement('div');
+    let toast = document.getElementById('toast-notification');
+    if (toast) {
+      toast.remove();
+    }
+    
+    toast = document.createElement('div');
+    toast.id = 'toast-notification';
     toast.style.cssText = `
       position: fixed;
       top: 20px;

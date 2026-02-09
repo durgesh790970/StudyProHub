@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - StudyHub Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .controls-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        input[type="text"],
+        input[type="search"],
+        select {
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        input[type="search"] {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .table-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f5f5f5;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 2px solid #e0e0e0;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge.danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .badge.warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .btn-view {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #764ba2;
+        }
+
+        .btn-ban {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-ban:hover {
+            background: #c0392b;
+        }
+
+        .btn-unban {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-unban:hover {
+            background: #229954;
+        }
+
+        .btn-verify {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-verify:hover {
+            background: #2980b9;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #999;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .modal-buttons .btn-confirm {
+            background: #667eea;
+            color: white;
+        }
+
+        .modal-buttons .btn-confirm:hover {
+            background: #764ba2;
+        }
+
+        .modal-buttons .btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .modal-buttons .btn-cancel:hover {
+            background: #d0d0d0;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .pagination button.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            input[type="search"] {
+                width: 100%;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👥 User Management</h1>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">← Back to Dashboard</a>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-label">Total Users</div>
+                <div class="stat-value" id="totalUsersCount">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Active Users</div>
+                <div class="stat-value" id="activeUsersCount">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Banned Users</div>
+                <div class="stat-value" id="bannedUsersCount">0</div>
+            </div>
+            <div class="stat">
+                <div class="stat-label">Unverified</div>
+                <div class="stat-value" id="unverifiedCount">0</div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-section">
+            <div class="controls">
+                <input type="search" id="searchInput" placeholder="Search username or email...">
+                <select id="roleFilter">
+                    <option value="">All Roles</option>
+                    <option value="user">User</option>
+                    <option value="moderator">Moderator</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <select id="statusFilter">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="banned">Banned</option>
+                    <option value="unverified">Unverified</option>
+                </select>
+                <button onclick="loadUsers()" style="padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 5px; cursor: pointer;">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="table-section">
+            <table id="usersTable">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Joined</th>
+                        <th>Submissions</th>
+                        <th>Problems Solved</th>
+                        <th>Points</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersBody">
+                    <tr>
+                        <td colspan="9" style="text-align: center; color: #999;">Loading users...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination"></div>
+        </div>
+    </div>
+
+    <!-- Ban Modal -->
+    <div id="banModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('banModal')">&times;</span>
+            <div class="modal-header">Ban User</div>
+            <div class="form-group">
+                <label>Username</label>
+                <p id="banUsername" style="color: #667eea; font-weight: bold; margin: 0;"></p>
+            </div>
+            <div class="form-group">
+                <label>Ban Reason *</label>
+                <textarea id="banReason" placeholder="Why is this user being banned?"></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeModal('banModal')">Cancel</button>
+                <button class="btn-confirm" onclick="confirmBan()">Ban User</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('detailsModal')">&times;</span>
+            <div class="modal-header">User Details</div>
+            <div id="userDetailsContent">Loading...</div>
+        </div>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let allUsers = [];
+        let currentBanUserId = null;
+
+        // Event listeners
+        document.getElementById('searchInput')?.addEventListener('input', () => {
+            currentPage = 1;
+            loadUsers();
+        });
+
+        document.getElementById('roleFilter')?.addEventListener('change', () => {
+            currentPage = 1;
+            loadUsers();
+        });
+
+        document.getElementById('statusFilter')?.addEventListener('change', () => {
+            currentPage = 1;
+            loadUsers();
+        });
+
+        // Initial load
+        loadUsers();
+        loadStatistics();
+
+        async function loadStatistics() {
+            try {
+                const response = await fetch('/api/admin/stats', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+
+                if (data.success && data.data) {
+                    const stats = data.data;
+                    document.getElementById('totalUsersCount').textContent = stats.usersCount || 0;
+                    document.getElementById('activeUsersCount').textContent = 
+                        (stats.usersCount || 0) - (stats.bannedCount || 0);
+                    document.getElementById('bannedUsersCount').textContent = stats.bannedCount || 0;
+                    document.getElementById('unverifiedCount').textContent = stats.unverifiedCount || 0;
+                }
+            } catch (error) {
+                console.error('Error loading statistics:', error);
+            }
+        }
+
+        async function loadUsers() {
+            try {
+                const search = document.getElementById('searchInput')?.value || '';
+                const role = document.getElementById('roleFilter')?.value || '';
+                const status = document.getElementById('statusFilter')?.value || '';
+
+                let url = `/api/admin/users?page=${currentPage}&limit=20`;
+                if (search) url += `&search=${search}`;
+                if (role) url += `&role=${role}`;
+
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    let users = data.data;
+
+                    // Filter by status
+                    if (status === 'active') {
+                        users = users.filter(u => !u.isBanned && u.verified);
+                    } else if (status === 'banned') {
+                        users = users.filter(u => u.isBanned);
+                    } else if (status === 'unverified') {
+                        users = users.filter(u => !u.verified);
+                    }
+
+                    renderUsers(users);
+                    totalPages = Math.ceil((data.pagination?.total || 0) / 20);
+                    renderPagination();
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        function renderUsers(users) {
+            const tbody = document.getElementById('usersBody');
+            tbody.innerHTML = '';
+
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: #999;">No users found</td></tr>';
+                return;
+            }
+
+            users.forEach(user => {
+                const statusBadge = user.isBanned ? 'danger' : (user.verified ? 'success' : 'warning');
+                const statusText = user.isBanned ? 'Banned' : (user.verified ? 'Active' : 'Unverified');
+
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${user.username}</strong></td>
+                    <td>${user.email}</td>
+                    <td><span class="badge info">${user.role || 'user'}</span></td>
+                    <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td>${user.totalSubmissions || 0}</td>
+                    <td>${user.problemsSolved || 0}</td>
+                    <td><strong>${user.totalPoints || 0}</strong></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn-small btn-view" onclick="viewUserDetails('${user._id}')">View</button>
+                            ${!user.isBanned ? 
+                                `<button class="btn-small btn-ban" onclick="openBanModal('${user._id}', '${user.username}')">Ban</button>` : 
+                                `<button class="btn-small btn-unban" onclick="unbanUser('${user._id}', '${user.username}')">Unban</button>`
+                            }
+                            ${!user.verified ? 
+                                `<button class="btn-small btn-verify" onclick="verifyUser('${user._id}', '${user.username}')">Verify</button>` : 
+                                ''
+                            }
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderPagination() {
+            const container = document.getElementById('pagination');
+            container.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.textContent = i;
+                btn.className = i === currentPage ? 'active' : '';
+                btn.onclick = () => {
+                    currentPage = i;
+                    loadUsers();
+                };
+                container.appendChild(btn);
+            }
+        }
+
+        function openBanModal(userId, username) {
+            currentBanUserId = userId;
+            document.getElementById('banUsername').textContent = username;
+            document.getElementById('banReason').value = '';
+            openModal('banModal');
+        }
+
+        async function confirmBan() {
+            const reason = document.getElementById('banReason').value.trim();
+
+            if (!reason) {
+                alert('Please enter a ban reason');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/admin/users/${currentBanUserId}/ban`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ reason })
+                });
+
+                if (response.ok) {
+                    alert('User banned successfully');
+                    closeModal('banModal');
+                    loadUsers();
+                    loadStatistics();
+                }
+            } catch (error) {
+                console.error('Error banning user:', error);
+                alert('Failed to ban user');
+            }
+        }
+
+        async function unbanUser(userId, username) {
+            if (!confirm(`Unban user "${username}"?`)) return;
+
+            try {
+                const response = await fetch(`/api/admin/users/${userId}/unban`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+
+                if (response.ok) {
+                    alert('User unbanned successfully');
+                    loadUsers();
+                    loadStatistics();
+                }
+            } catch (error) {
+                console.error('Error unbanning user:', error);
+                alert('Failed to unban user');
+            }
+        }
+
+        async function verifyUser(userId, username) {
+            if (!confirm(`Verify email for "${username}"?`)) return;
+
+            try {
+                const response = await fetch(`/api/admin/users/${userId}/verify`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+
+                if (response.ok) {
+                    alert('User verified successfully');
+                    loadUsers();
+                    loadStatistics();
+                }
+            } catch (error) {
+                console.error('Error verifying user:', error);
+                alert('Failed to verify user');
+            }
+        }
+
+        async function viewUserDetails(userId) {
+            try {
+                const response = await fetch(`/api/users/${userId}/stats`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    const user = data.data;
+                    const content = document.getElementById('userDetailsContent');
+
+                    content.innerHTML = `
+                        <div style="margin-bottom: 20px;">
+                            <p><strong>Username:</strong> ${user.username}</p>
+                            <p><strong>Email:</strong> ${user.email}</p>
+                            <p><strong>Joined:</strong> ${new Date(user.createdAt).toLocaleString()}</p>
+                        </div>
+
+                        <div style="margin-bottom: 20px; padding: 15px; background: #f5f5f5; border-radius: 5px;">
+                            <h4 style="margin-bottom: 10px;">Statistics</h4>
+                            <p>Problems Solved: <strong>${user.problemsSolved || 0}</strong></p>
+                            <p>Total Submissions: <strong>${user.totalSubmissions || 0}</strong></p>
+                            <p>Accuracy: <strong>${((user.accuracy || 0) * 100).toFixed(1)}%</strong></p>
+                            <p>Points: <strong>${user.totalPoints || 0}</strong></p>
+                        </div>
+
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="margin-bottom: 10px;">Language Proficiency</h4>
+                            ${generateLanguageStats(user.languageStats)}
+                        </div>
+
+                        <p style="font-size: 12px; color: #999; margin-top: 20px;">
+                            <a href="/user-profile.html?id=${user._id}" style="color: #667eea; text-decoration: none;">View Full Profile →</a>
+                        </p>
+                    `;
+
+                    openModal('detailsModal');
+                }
+            } catch (error) {
+                console.error('Error loading user details:', error);
+                alert('Failed to load user details');
+            }
+        }
+
+        function generateLanguageStats(stats) {
+            if (!stats || Object.keys(stats).length === 0) {
+                return '<p style="color: #999;">No submissions yet</p>';
+            }
+
+            return Object.entries(stats).map(([lang, count]) => 
+                `<p>${lang}: <strong>${count}</strong> submissions</p>`
+            ).join('');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Click outside modal to close
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

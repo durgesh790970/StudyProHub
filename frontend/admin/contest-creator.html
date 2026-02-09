@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contest Creator - StudyHub Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .form-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .form-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="datetime-local"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .type-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .type-selector input[type="radio"] {
+            display: none;
+        }
+
+        .type-selector label {
+            margin: 0;
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: normal;
+        }
+
+        .type-selector input[type="radio"]:checked + label {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .problem-list {
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            background: #f9f9f9;
+        }
+
+        .problem-item {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .problem-item:hover {
+            background: #f0f4ff;
+        }
+
+        .problem-item input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .problem-item .info {
+            flex: 1;
+        }
+
+        .problem-item .title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .problem-item .meta {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .selected-problems {
+            background: #f0f4ff;
+            border: 1px solid #667eea;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .selected-problems h4 {
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .selected-problem {
+            background: white;
+            padding: 10px;
+            border-radius: 3px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .selected-problem .remove {
+            color: #e74c3c;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .schedule-info {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+
+        .schedule-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .schedule-info .duration {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn.secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn.secondary:hover {
+            background: #d0d0d0;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .breadcrumb {
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .info-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏆 Contest Creator</h1>
+    </div>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="admin-dashboard.html">← Back to Dashboard</a>
+        </div>
+
+        <div class="success-message" id="successMsg">✓ Contest saved successfully!</div>
+        <div class="error-message" id="errorMsg">✗ Error saving contest</div>
+
+        <form id="contestForm" onsubmit="submitForm(event)">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h2>📋 Basic Information</h2>
+
+                <div class="form-group">
+                    <label for="title">Contest Title *</label>
+                    <input type="text" id="title" name="title" required 
+                           placeholder="e.g., Weekly Contest 50">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description"
+                              placeholder="Contest details and rules..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Contest Type *</label>
+                    <div class="type-selector">
+                        <input type="radio" id="typeLive" name="type" value="live" required checked>
+                        <label for="typeLive">⚡ Live Contest</label>
+
+                        <input type="radio" id="typePractice" name="type" value="practice">
+                        <label for="typePractice">📚 Practice</label>
+
+                        <input type="radio" id="typeHiring" name="type" value="hiring">
+                        <label for="typeHiring">💼 Hiring</label>
+
+                        <input type="radio" id="typeMock" name="type" value="mock-interview">
+                        <label for="typeMock">🎯 Mock Interview</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Schedule -->
+            <div class="form-section">
+                <h2>⏰ Schedule</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">Start Time *</label>
+                        <input type="datetime-local" id="startTime" name="startTime" required>
+                        <div class="info-text">When the contest begins</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endTime">End Time *</label>
+                        <input type="datetime-local" id="endTime" name="endTime" required>
+                        <div class="info-text">When the contest ends</div>
+                    </div>
+                </div>
+
+                <div class="schedule-info">
+                    <p><strong>Duration:</strong> <span id="durationText">Click to set times</span></p>
+                    <p id="statusText"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="allowVirtual">
+                        <input type="checkbox" id="allowVirtual" name="allowVirtual">
+                        Allow Virtual Participation (users can participate after contest ends)
+                    </label>
+                </div>
+            </div>
+
+            <!-- Problems Selection -->
+            <div class="form-section">
+                <h2>📚 Select Problems</h2>
+
+                <div class="form-group">
+                    <label>Available Problems</label>
+                    <input type="text" id="problemSearch" placeholder="Search problems..." style="margin-bottom: 10px;">
+                    <div class="problem-list" id="problemList">
+                        <div style="padding: 20px; text-align: center; color: #999;">Loading problems...</div>
+                    </div>
+                </div>
+
+                <div class="selected-problems" id="selectedProblems" style="display: none;">
+                    <h4>Selected Problems</h4>
+                    <div id="selectedList"></div>
+                </div>
+            </div>
+
+            <!-- Scoring -->
+            <div class="form-section">
+                <h2>⭐ Scoring Settings</h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="basePoints">Base Points per Problem *</label>
+                        <input type="number" id="basePoints" name="basePoints" value="100" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="penaltyPerWA">Penalty per Wrong Answer *</label>
+                        <input type="number" id="penaltyPerWA" name="penaltyPerWA" value="5" min="0" required>
+                    </div>
+                </div>
+
+                <div class="info-text">
+                    Standard ICPC-style scoring: (Base Points - Penalty × Wrong Answers)
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="button-group">
+                <button type="button" class="btn secondary" onclick="goBack()">Cancel</button>
+                <button type="submit" class="btn">Create Contest</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="../js/api.js"></script>
+    <script>
+        let selectedProblems = [];
+        let allProblems = [];
+        let editingId = null;
+
+        // Get URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('edit')) {
+            editingId = urlParams.get('edit');
+            loadContest(editingId);
+        }
+
+        // Load problems on page load
+        loadProblems();
+
+        // Real-time duration calculation
+        document.getElementById('startTime')?.addEventListener('change', updateDuration);
+        document.getElementById('endTime')?.addEventListener('change', updateDuration);
+
+        function updateDuration() {
+            const start = new Date(document.getElementById('startTime').value);
+            const end = new Date(document.getElementById('endTime').value);
+
+            if (start && end && end > start) {
+                const duration = (end - start) / (1000 * 60); // minutes
+                const hours = Math.floor(duration / 60);
+                const mins = duration % 60;
+
+                const durationStr = hours > 0 
+                    ? `${hours}h ${mins}m`
+                    : `${mins}m`;
+
+                document.getElementById('durationText').textContent = durationStr;
+
+                const now = new Date();
+                const status = now > end ? 'Contest Ended' : (now > start ? 'Contest Live' : 'Contest Upcoming');
+                document.getElementById('statusText').textContent = `Status: ${status}`;
+            }
+        }
+
+        async function loadProblems() {
+            try {
+                const response = await fetch('/api/problems?limit=100', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    allProblems = data.data;
+                    renderProblems(allProblems);
+                }
+            } catch (error) {
+                console.error('Error loading problems:', error);
+            }
+        }
+
+        function renderProblems(problems) {
+            const list = document.getElementById('problemList');
+            list.innerHTML = '';
+
+            if (problems.length === 0) {
+                list.innerHTML = '<div style="padding: 20px; text-align: center; color: #999;">No problems found</div>';
+                return;
+            }
+
+            problems.forEach(problem => {
+                const isSelected = selectedProblems.some(p => p._id === problem._id);
+
+                const item = document.createElement('div');
+                item.className = 'problem-item';
+                item.innerHTML = `
+                    <input type="checkbox" ${isSelected ? 'checked' : ''} 
+                           onchange="toggleProblem('${problem._id}', '${problem.title}', ${isSelected})">
+                    <div class="info">
+                        <div class="title">${problem.title}</div>
+                        <div class="meta">
+                            <span>${problem.difficulty}</span> • 
+                            ${problem.submissions || 0} submissions
+                        </div>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        document.getElementById('problemSearch')?.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const filtered = allProblems.filter(p => 
+                p.title.toLowerCase().includes(query) ||
+                (p.tags || []).some(t => t.toLowerCase().includes(query))
+            );
+            renderProblems(filtered);
+        });
+
+        function toggleProblem(id, title, wasSelected) {
+            if (wasSelected) {
+                selectedProblems = selectedProblems.filter(p => p._id !== id);
+            } else {
+                selectedProblems.push({ _id: id, title });
+            }
+
+            updateSelectedDisplay();
+        }
+
+        function updateSelectedDisplay() {
+            const container = document.getElementById('selectedProblems');
+            const list = document.getElementById('selectedList');
+
+            if (selectedProblems.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            list.innerHTML = '';
+
+            selectedProblems.forEach((problem, index) => {
+                const item = document.createElement('div');
+                item.className = 'selected-problem';
+                item.innerHTML = `
+                    <span>${String.fromCharCode(65 + index)}. ${problem.title}</span>
+                    <span class="remove" onclick="removeProblem('${problem._id}')">Remove</span>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function removeProblem(id) {
+            selectedProblems = selectedProblems.filter(p => p._id !== id);
+            updateSelectedDisplay();
+            
+            // Update checkbox
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                if (selectedProblems.some(p => p._id === cb.dataset.id)) {
+                    cb.checked = false;
+                }
+            });
+        }
+
+        async function loadContest(id) {
+            try {
+                const response = await fetch(`/api/contests/${id}`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    const contest = data.data;
+
+                    document.getElementById('title').value = contest.title;
+                    document.getElementById('description').value = contest.description || '';
+                    document.querySelector(`input[value="${contest.type}"]`).checked = true;
+                    document.getElementById('allowVirtual').checked = contest.allowVirtualParticipation || false;
+                    document.getElementById('basePoints').value = contest.basePoints || 100;
+                    document.getElementById('penaltyPerWA').value = contest.penaltyPerWA || 5;
+
+                    // Set times
+                    document.getElementById('startTime').value = new Date(contest.startTime)
+                        .toISOString().slice(0, 16);
+                    document.getElementById('endTime').value = new Date(contest.endTime)
+                        .toISOString().slice(0, 16);
+
+                    // Load problems
+                    if (contest.problems && contest.problems.length > 0) {
+                        selectedProblems = contest.problems.map((p, idx) => ({
+                            _id: p._id,
+                            title: p.title
+                        }));
+                        updateSelectedDisplay();
+                    }
+
+                    document.querySelector('form').onsubmit = (e) => updateContest(e, id);
+                    document.querySelector('h1').textContent += ' - Edit';
+                    updateDuration();
+                }
+            } catch (error) {
+                console.error('Error loading contest:', error);
+                showError('Failed to load contest');
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+
+            if (selectedProblems.length === 0) {
+                showError('Please select at least one problem');
+                return;
+            }
+
+            const formData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                type: document.querySelector('input[name="type"]:checked').value,
+                startTime: new Date(document.getElementById('startTime').value).toISOString(),
+                endTime: new Date(document.getElementById('endTime').value).toISOString(),
+                problems: selectedProblems.map(p => p._id),
+                allowVirtualParticipation: document.getElementById('allowVirtual').checked,
+                basePoints: parseInt(document.getElementById('basePoints').value),
+                penaltyPerWA: parseInt(document.getElementById('penaltyPerWA').value)
+            };
+
+            if (editingId) {
+                updateContest(event, editingId);
+            } else {
+                createContest(formData);
+            }
+        }
+
+        async function createContest(formData) {
+            try {
+                const response = await fetch('/api/admin/contests', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Contest created successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html?tab=contests';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Failed to create contest');
+                }
+            } catch (error) {
+                console.error('Error creating contest:', error);
+                showError('Error creating contest');
+            }
+        }
+
+        async function updateContest(event, id) {
+            event.preventDefault();
+
+            if (selectedProblems.length === 0) {
+                showError('Please select at least one problem');
+                return;
+            }
+
+            const formData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                type: document.querySelector('input[name="type"]:checked').value,
+                startTime: new Date(document.getElementById('startTime').value).toISOString(),
+                endTime: new Date(document.getElementById('endTime').value).toISOString(),
+                problems: selectedProblems.map(p => p._id),
+                allowVirtualParticipation: document.getElementById('allowVirtual').checked,
+                basePoints: parseInt(document.getElementById('basePoints').value),
+                penaltyPerWA: parseInt(document.getElementById('penaltyPerWA').value)
+            };
+
+            try {
+                const response = await fetch(`/api/admin/contests/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showSuccess('Contest updated successfully!');
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html?tab=contests';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Failed to update contest');
+                }
+            } catch (error) {
+                console.error('Error updating contest:', error);
+                showError('Error updating contest');
+            }
+        }
+
+        function showSuccess(message) {
+            const msg = document.getElementById('successMsg');
+            msg.textContent = message;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 3000);
+        }
+
+        function showError(message) {
+            const msg = document.getElementById('errorMsg');
+            msg.textContent = message;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 4000);
+        }
+
+        function goBack() {
+            window.location.href = 'admin-dashboard.html?tab=contests';
+        }
+    </script>
+</body>
+</html>

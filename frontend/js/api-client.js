@@ -62,10 +62,14 @@ class DatabaseAPIClient {
                 };
             }
 
+            // Handle both thrown objects and Error objects
+            const errorMessage = error?.message || error?.error || 'Unknown error occurred';
+            const errorStatus = error?.status || 0;
+
             return {
                 success: false,
-                error: error.message || 'Unknown error occurred',
-                status: error.status || 0,
+                error: errorMessage,
+                status: errorStatus,
                 originalError: error
             };
         }
@@ -176,6 +180,89 @@ class DatabaseAPIClient {
     async getStats() {
         return this.fetch('/api/stats/');
     }
+
+    /**
+     * Track user activity
+     * POST /api/track-activity/
+     */
+    async trackActivity(userId, activityType, title = '', description = '', data = {}) {
+        return this.fetch('/api/track-activity/', {
+            method: 'POST',
+            body: JSON.stringify({
+                userId,
+                activityType,
+                title,
+                description,
+                data
+            })
+        });
+    }
+
+    /**
+     * Record PDF purchase
+     * POST /api/purchases/pdf/
+     */
+    async recordPdfPurchase(userId, pdfId, pdfTitle, company, amount, transactionId = '') {
+        return this.fetch('/api/purchases/pdf/', {
+            method: 'POST',
+            body: JSON.stringify({
+                userId,
+                pdfId,
+                pdfTitle,
+                company,
+                amount,
+                transactionId
+            })
+        });
+    }
+
+    /**
+     * Record mock test attempt
+     * POST /api/attempts/mock/
+     */
+    async recordMockAttempt(userId, mockId, mockTitle, score, totalQuestions, correctAnswers, duration = 0) {
+        return this.fetch('/api/attempts/mock/', {
+            method: 'POST',
+            body: JSON.stringify({
+                userId,
+                mockId,
+                mockTitle,
+                score,
+                totalQuestions,
+                correctAnswers,
+                duration,
+                timestamp: new Date().toISOString()
+            })
+        });
+    }
+
+    /**
+     * Record quiz/interview attempt
+     * POST /api/attempts/quiz/
+     */
+    async recordQuizAttempt(userId, quizId, quizTitle, quizType, score, totalQuestions, correctAnswers) {
+        return this.fetch('/api/attempts/quiz/', {
+            method: 'POST',
+            body: JSON.stringify({
+                userId,
+                quizId,
+                quizTitle,
+                quizType,
+                score,
+                totalQuestions,
+                correctAnswers,
+                timestamp: new Date().toISOString()
+            })
+        });
+    }
+
+    /**
+     * Get complete user profile with all activities
+     * GET /api/user-complete-profile/<user_id>/
+     */
+    async getUserCompleteProfile(userId) {
+        return this.fetch(`/api/user-complete-profile/${userId}/`);
+    }
 }
 
 /**
@@ -215,13 +302,13 @@ class FormHandler {
             } else {
                 return {
                     success: false,
-                    error: response.data.error || response.error
+                    error: response.data?.error || response.error || 'Registration failed'
                 };
             }
         } catch (error) {
             return {
                 success: false,
-                error: 'Registration failed: ' + error.message
+                error: 'Registration failed: ' + (error.message || 'Unknown error')
             };
         }
     }
@@ -241,28 +328,32 @@ class FormHandler {
         try {
             const response = await this.api.login(email, password);
 
-            if (response.success) {
+            // Check if response is successful
+            if (response.success && response.data && response.data.user) {
                 // Store user info
                 const user = response.data.user;
                 localStorage.setItem('userId', user.id);
                 localStorage.setItem('userEmail', user.email);
-                localStorage.setItem('userName', user.first_name);
+                localStorage.setItem('userName', user.first_name || user.email);
                 
                 return {
                     success: true,
-                    message: response.data.message,
+                    message: response.data.message || 'Login successful',
                     user: user
                 };
             } else {
+                // Get error message from multiple possible locations
+                const errorMsg = response.data?.error || response.error || response.message || 'Login failed';
                 return {
                     success: false,
-                    error: response.data.error || response.error
+                    error: String(errorMsg)
                 };
             }
         } catch (error) {
+            const errorMsg = error?.message || error?.error || 'Login failed';
             return {
                 success: false,
-                error: 'Login failed: ' + error.message
+                error: 'Login failed: ' + String(errorMsg)
             };
         }
     }
@@ -274,22 +365,24 @@ class FormHandler {
         try {
             const response = await this.api.updateProfile(userId, profileData);
 
-            if (response.success) {
+            if (response.success && response.data) {
                 return {
                     success: true,
-                    message: response.data.message,
+                    message: response.data.message || 'Profile updated successfully',
                     profile: response.data.profile
                 };
             } else {
+                const errorMsg = response.data?.error || response.error || response.message || 'Profile update failed';
                 return {
                     success: false,
-                    error: response.data.error || response.error
+                    error: String(errorMsg)
                 };
             }
         } catch (error) {
+            const errorMsg = error?.message || error?.error || 'Profile update failed';
             return {
                 success: false,
-                error: 'Profile update failed: ' + error.message
+                error: 'Profile update failed: ' + String(errorMsg)
             };
         }
     }
@@ -404,7 +497,7 @@ class EventManager {
                 
                 setTimeout(() => {
                     window.location.href = '/dashboard/';
-                }, 2000);
+                }, 1500);
             } else {
                 this.showMessage(form, result.error, 'error');
             }

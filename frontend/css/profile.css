@@ -11,10 +11,41 @@
   gap: 2rem;
 }
 
+/* Profile Main Content */
+.profile-main {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Profile Side */
 
 .profile-side {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
   text-align: center;
+  transition: transform .2s ease, box-shadow .2s ease;
+  border: 1px solid #f0f0f0;
+}
+
+.profile-side:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+
+.profile-side p {
+  color: #333;
+  font-size: 0.95rem;
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.profile-side h2 {
+  color: #1565d8;
+  font-size: 1.8rem;
+  margin: 0.8rem 0;
+  font-weight: 700;
 }
 
 .profile-header {
@@ -28,6 +59,13 @@
   margin-bottom: .8rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   border: 3px solid #1565d8;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  object-fit: cover;
+}
+
+#avatar-container:hover .avatar {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(21, 101, 216, 0.4);
 }
 
 .profile-link {
@@ -37,6 +75,12 @@
   text-decoration: none;
   color: #1565d8;
   font-weight: 600;
+  transition: .2s ease;
+}
+
+.profile-link:hover {
+  color: #0d47a1;
+  text-decoration: underline;
 }
 
 /* Cards */
@@ -46,6 +90,8 @@
   border-radius: 14px;
   box-shadow: 0 4px 14px rgba(0,0,0,0.15);
   transition: transform .2s ease, box-shadow .2s ease;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 2rem;
 }
 
 .card:hover {
@@ -53,9 +99,27 @@
   box-shadow: 0 6px 20px rgba(0,0,0,0.18);
 }
 
+.card h3 {
+  color: #1565d8;
+  font-size: 1.4rem;
+  margin: 0 0 1.2rem 0;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card h4 {
+  color: #1565d8;
+  font-size: 1.1rem;
+  margin: 0.8rem 0;
+  font-weight: 600;
+}
+
 .pdf-list, .tx-list, .purchases-list {
   list-style: none;
   padding: 0;
+  color: #333;
 }
 
 .pdf-item, .tx-list li {
@@ -77,6 +141,30 @@
   text-decoration: none;
   color: #1565d8;
   font-weight: 600;
+}
+
+.results-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.results-list li {
+  background: #f9fafb;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+  transition: .2s ease;
+}
+
+.results-list li:hover {
+  background: #f5f8ff;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
+}
+
+.results-list li:last-child {
+  margin-bottom: 0;
 }
 
 .meta {

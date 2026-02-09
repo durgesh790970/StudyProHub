@@ -1,0 +1,91 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+.classpath
+.project
+.settings/
+
+# Build artifacts
+build/
+dist/
+out/
+*.o
+*.a
+*.so
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Documentation
+docs/
+*.md
+README.md
+CONTRIBUTING.md
+LICENSE
+
+# Testing
+__tests__
+__test__
+test/
+spec/
+*.spec.js
+*.test.js
+coverage/
+.nyc_output/
+
+# Cache
+.cache/
+node_modules/.cache
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+azure-pipelines.yml
+
+# Others
+.eslintignore
+.prettierignore
+.editorconfig
+Makefile
+scripts/
